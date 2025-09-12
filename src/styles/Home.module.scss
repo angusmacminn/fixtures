@@ -1,0 +1,51 @@
+// SCSS Variables
+$container-max-width: 1200px;
+$container-padding: 20px;
+$title-size: 2.5rem;
+$description-size: 1.1rem;
+$spacing-unit: 1rem;
+
+// SCSS Mixins
+@mixin center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin text-fade {
+  color: var(--foreground);
+  opacity: 0.8;
+}
+
+/* Home module styles - ready for your custom components */
+
+.container {
+  padding: $container-padding;
+  max-width: $container-max-width;
+  margin: 0 auto;
+}
+
+.main {
+  @include center-content;
+  flex-direction: column;
+  min-height: 80vh;
+  text-align: center;
+}
+
+.title {
+  font-size: $title-size;
+  margin-bottom: $spacing-unit;
+  color: var(--foreground);
+  
+  &:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+  }
+}
+
+.description {
+  font-size: $description-size;
+  @include text-fade;
+  max-width: 600px;
+  line-height: 1.6;
+}
