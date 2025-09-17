@@ -1,7 +1,12 @@
 {
   "compilerOptions": {
+    "jsx": "preserve",
     "paths": {
       "@/*": ["./src/*"]
     }
-  }
+  },
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx"
+  ]
 }

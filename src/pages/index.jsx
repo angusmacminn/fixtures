@@ -1,7 +1,12 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.scss";
+import {useState, useEffect} from 'react';
 
 export default function Home() {
+
+  
+
+
   return (
     <>
       <Head>
@@ -12,9 +17,9 @@ export default function Home() {
       </Head>
       <div className={styles.container}>
         <main className={styles.main}>
-          <h1 className={styles.title}>Welcome to my app</h1>
+          <h1 className={styles.title}>Fixtures</h1>
           <p className={styles.description}>
-            This is a clean Next.js application with SCSS support ready for development.
+          Football match visualizations. 
           </p>
         </main>
       </div>
