@@ -2,7 +2,7 @@
 const baseUrl = 'https://api.sportmonks.com/v3/football/fixtures'
 
 
-export default async function(req, res) {
+export default async function SingleGame(req, res) {
     // only allow GET requests
     if (req.method !== 'GET'){
         return res.status(405).json({ message: 'Method not allowed' });
