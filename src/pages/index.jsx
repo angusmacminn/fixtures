@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.scss";
 import {useState, useEffect} from 'react';
+import Link from "next/link";
 
 export default function Home() {
 
@@ -21,6 +22,10 @@ export default function Home() {
           <p className={styles.description}>
           Football match visualizations. 
           </p>
+
+          <Link href="/fixtures">
+          Rangers vs Motherwell
+          </Link>
         </main>
       </div>
     </>
