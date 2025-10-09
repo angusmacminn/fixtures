@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>My App</title>
+        <title>Fixtures</title>
         <meta name="description" content="My Next.js application" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
-
+import MatchVis from "@/components/MatchVis";
+import * as THREE from "three";
 
 
 export default function Fixtures(){
@@ -42,26 +43,29 @@ export default function Fixtures(){
         return stat?.data?.value || 0;
     };
 
-    // Extract home team stats
-    const homeGoals = getStat(home, "Goals");
-    const homeCorners = getStat(home, "Corners");
-    const homePossession = getStat(home, "Ball Possession %");
-    const homeYellowCards = getStat(home, "Yellowcards");
-    const homeAssists = getStat(home, "Assists");
-    const homeDribbleSuccess = getStat(home, "Successful Dribbles Percentage");
+    const matchStats = {
+        // home team stats
+        homeGoals: getStat(home, "Goals"),
+        homeCorners: getStat(home, "Corners"),
+        homePossession: getStat(home, "Ball Possession %"),
+        homeYellowCards: getStat(home, "Yellowcards"),
+        homeAssists: getStat(home, "Assists"),
+        homeDribbleSuccess: getStat(home, "Successful Dribbles Percentage"),
 
-    // Extract away team stats
-    const awayGoals = getStat(away, "Goals");
-    const awayCorners = getStat(away, "Corners");
-    const awayPossession = getStat(away, "Ball Possession %");
-    const awayYellowCards = getStat(away, "Yellowcards");
-    const awayAssists = getStat(away, "Assists");
-    const awayDribbleSuccess = getStat(away, "Successful Dribbles Percentage");
+        // away team stats
+        awayGoals: getStat(away, "Goals"),
+        awayCorners: getStat(away, "Corners"),
+        awayPossession: getStat(away, "Ball Possession %"),
+        awayYellowCards: getStat(away, "Yellowcards"),
+        awayAssists: getStat(away, "Assists"),
+        awayDribbleSuccess: getStat(away, "Successful Dribbles Percentage"),
+    }
+
 
     return(
         <div>
             <h1>{fixtureData.name}</h1>
-            <h2>{homeGoals}</h2>
+            <MatchVis stats={matchStats} />
         </div>
     )
 }
