@@ -67,6 +67,19 @@ export default function Fixtures(){
         <section className={styles.container}>
             <h1>{fixtureData.name}</h1>
             <MatchVis matchStats={matchStats} />
+            <div>
+                <ul>
+                    <li>Home Goals: {matchStats.homeGoals}</li>
+                    <li>Away Goals: {matchStats.awayGoals}</li>
+                    <li>Home Corners: {matchStats.homeCorners}</li>
+                    <li>Away Corners: {matchStats.awayCorners}</li>
+                    <li>Home Possession: {matchStats.homePossession}</li>
+                    <li>Home Yellow Cards: {matchStats.homeYellowCards}</li>
+                    <li>Home Assists: {matchStats.homeAssists}</li>
+                    <li>Home Dribble Success: {matchStats.homeDribbleSuccess}</li>
+                </ul>
+                
+            </div>
         </section>
     )
 }
