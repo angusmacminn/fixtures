@@ -48,6 +48,20 @@ export default function MatchVis({ matchStats }) {
             const resolution = new THREE.Vector2(800, 400);
             const time = { value: 0 };
             const mouse = new THREE.Vector2();
+            
+            const homeGoals = matchStats.homeGoals;
+            const homeCorners = matchStats.homeCorners;
+            const homePossession = matchStats.homePossession;
+            const homeYellowCards = matchStats.homeYellowCards;
+            const homeAssists = matchStats.homeAssists;
+            const homeDribbleSuccess = matchStats.homeDribbleSuccess;
+            const awayGoals = matchStats.awayGoals;
+            const awayCorners = matchStats.awayCorners;
+            const awayPossession = matchStats.awayPossession;
+            const awayYellowCards = matchStats.awayYellowCards;
+            const awayAssists = matchStats.awayAssists;
+            const awayDribbleSuccess = matchStats.awayDribbleSuccess;
+            
 
             const material = new THREE.ShaderMaterial({
                 vertexShader: vertexShader,
@@ -55,7 +69,19 @@ export default function MatchVis({ matchStats }) {
                 uniforms: {
                     u_resolution: { value: resolution },
                     u_mouse: { value: new THREE.Vector2(0, 0) },
-                    u_time: { value: 0 }
+                    u_time: { value: 0 },
+                    u_homeGoals: { value: homeGoals },
+                    u_homeCorners: { value: homeCorners },
+                    u_homePossession: { value: homePossession },
+                    u_homeYellowCards: { value: homeYellowCards },
+                    u_homeAssists: { value: homeAssists },
+                    u_homeDribbleSuccess: { value: homeDribbleSuccess },
+                    u_awayGoals: { value: awayGoals },
+                    u_awayCorners: { value: awayCorners },
+                    u_awayPossession: { value: awayPossession },
+                    u_awayYellowCards: { value: awayYellowCards },
+                    u_awayAssists: { value: awayAssists },
+                    u_awayDribbleSuccess: { value: awayDribbleSuccess },
                 }
             });
 

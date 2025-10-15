@@ -66,7 +66,7 @@ export default function Fixtures(){
     return(
         <section className={styles.container}>
             <h1>{fixtureData.name}</h1>
-            <MatchVis stats={matchStats} />
+            <MatchVis matchStats={matchStats} />
         </section>
     )
 }
