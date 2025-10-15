@@ -25,11 +25,14 @@ export default function MatchVis({ matchStats }) {
 
             const scene = new THREE.Scene();
 
-            const camera = new THREE.PerspectiveCamera(
-                75,
-                window.innerWidth / window.innerHeight,
-                0.1,
-                10
+            // Replace the PerspectiveCamera with:
+            const camera = new THREE.OrthographicCamera(
+                -1,  // left
+                1,   // right
+                1,   // top
+                -1,  // bottom
+                0.1, // near
+                10   // far
             );
             camera.position.z = 1;
 
@@ -38,20 +41,31 @@ export default function MatchVis({ matchStats }) {
             renderer.setSize(800, 400);
             mountRef.current.appendChild(renderer.domElement);
             
-            const controls = new OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
+            // const controls = new OrbitControls(camera, renderer.domElement);
+            // controls.enableDamping = true;
+
+            // uniforms
+            const resolution = new THREE.Vector2(800, 400);
+            const time = { value: 0 };
+            const mouse = new THREE.Vector2();
 
             const material = new THREE.ShaderMaterial({
                 vertexShader: vertexShader,
                 fragmentShader: fragmentShader,
+                uniforms: {
+                    u_resolution: { value: resolution },
+                    u_mouse: { value: new THREE.Vector2(0, 0) },
+                    u_time: { value: 0 }
+                }
             });
 
-            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(), material);
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
             scene.add(mesh);
 
             function animate() {
-                controls.update();
+                // controls.update();
                 renderer.render(scene, camera);
+                time.value += 1.00;
             }
             
             renderer.setAnimationLoop(animate);
