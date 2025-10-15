@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import MatchVis from "@/components/MatchVis";
+import styles from "@/styles/Home.module.scss";
 import * as THREE from "three";
 
 
@@ -63,9 +64,9 @@ export default function Fixtures(){
 
 
     return(
-        <div>
+        <section className={styles.container}>
             <h1>{fixtureData.name}</h1>
             <MatchVis stats={matchStats} />
-        </div>
+        </section>
     )
 }

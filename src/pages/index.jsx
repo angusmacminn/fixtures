@@ -16,8 +16,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={styles.container}>
+      
         <main className={styles.main}>
+        <div className={styles.container}>
           <h1 className={styles.title}>Fixtures</h1>
           <p className={styles.description}>
           Football match visualizations. 
@@ -26,8 +27,8 @@ export default function Home() {
           <Link href="/fixtures">
           Rangers vs Motherwell
           </Link>
+        </div>
         </main>
-      </div>
     </>
   );
 }
