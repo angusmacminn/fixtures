@@ -52,7 +52,17 @@ export default function MatchVis({ matchStats }) {
                     u_mouse: { value: new THREE.Vector2(0, 0) },
                     u_time: { value: 0 },
                     u_homeGoals: { value: matchStats.homeGoals },
-                    u_awayGoals: { value: matchStats.awayGoals }
+                    u_awayGoals: { value: matchStats.awayGoals },
+                    u_homeCorners: { value: matchStats.homeCorners },
+                    u_awayCorners: { value: matchStats.awayCorners },
+                    u_homePossession: { value: matchStats.homePossession },
+                    u_awayPossession: { value: matchStats.awayPossession },
+                    u_homeYellowCards: { value: matchStats.homeYellowCards },
+                    u_awayYellowCards: { value: matchStats.awayYellowCards },
+                    u_homeAssists: { value: matchStats.homeAssists },
+                    u_awayAssists: { value: matchStats.awayAssists },
+                    u_homeDribbleSuccess: { value: matchStats.homeDribbleSuccess },
+                    u_awayDribbleSuccess: { value: matchStats.awayDribbleSuccess }
                 }
             });
 

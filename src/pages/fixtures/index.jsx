@@ -29,6 +29,7 @@ export default function Fixtures(){
 
     // object property access using dot notation 
     const fixtureData = matchData.data;
+    console.log(fixtureData)
 
     // Split stats by home/away
     // filter loops through each element in fixtureData, creates a new array for home and away
