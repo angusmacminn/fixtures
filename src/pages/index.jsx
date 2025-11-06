@@ -24,8 +24,8 @@ export default function Home() {
           Football match visualizations. 
           </p>
 
-          <Link href="/fixtures">
-          Rangers vs Motherwell
+          <Link href="/game">
+          Arsenal vs Manchester United
           </Link>
         </div>
         </main>
