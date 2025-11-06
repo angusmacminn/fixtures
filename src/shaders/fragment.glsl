@@ -81,8 +81,13 @@ float fbm(vec2 p) {
 
 // Domain warping function with time animation
 vec2 domainWarp(vec2 p, float time) {
-    vec2 offset1 = vec2(fbm(p + vec2(time * 0.1, time * 0.15)), fbm(p + vec2(5.2, 1.3 + time * 0.12)));
-    vec2 offset2 = vec2(fbm(p + normalizePossession(u_homePossession) * offset1 + vec2(1.7 + time * 0.08, 9.2)), fbm(p + normalizePossession(u_awayPossession) * offset1 + vec2(8.3, 2.8 + time * 0.1)));
+    float homeSpeed = normalizePossession(u_homePossession) * 2.0;
+    float awaySpeed = normalizePossession(u_awayPossession) * 2.0;
+    
+    vec2 offset1 = vec2(fbm(p + vec2(time * 0.1 * awaySpeed, time * 0.15 * awaySpeed)), 
+                        fbm(p + vec2(5.2, 1.3 + time * 0.12 * awaySpeed)));
+    vec2 offset2 = vec2(fbm(p + 4.0 * offset1 + vec2(1.7 + time * 0.08 * homeSpeed, 9.2)), 
+                        fbm(p + 4.0 * offset1 + vec2(8.3, 2.8 + time * 0.1 * homeSpeed)));
     return p + 2.5 * offset2;
 }
 
@@ -103,8 +108,11 @@ void main() {
     float pixelSize = 100.0;
     vec2 pixelUV = pixelate(uv, pixelSize);
     
-    // Animate domain warping patterns in place
-    vec2 warpedUV = domainWarp(pixelUV, u_time);
+    // Create separate warped UVs for each team
+    // Home uses warp influenced by home possession (offset2)
+    vec2 homeWarpedUV = domainWarp(pixelUV, u_time);
+    // Away uses warp influenced by away possession (offset1) - add offset for variation
+    vec2 awayWarpedUV = domainWarp(pixelUV + vec2(50.0, 50.0), u_time);
     
     // Calculate noise scale based on goals (more goals = bigger patterns = lower frequency)
     // Map goals to a frequency range (higher goals -> lower frequency -> bigger blocks)
@@ -112,23 +120,24 @@ void main() {
     float awayGoalRatio = normalizeGoals(u_awayGoals);
     
     // Inverse relationship: more goals = lower frequency = bigger patterns
-    float homeFreq = mix(4.0, 1.0, homeGoalRatio); // Higher ratio -> lower frequency
-    float awayFreq = mix(4.0, 1.0, awayGoalRatio);
+    float homeFreq = mix(10.0, 0.5, homeGoalRatio); // Higher ratio -> lower frequency
+    float awayFreq = mix(10.0, 0.5, awayGoalRatio);
     
-    // Generate separate noise patterns for each team
-    float homeNoise = fbm(warpedUV * homeFreq);
-    float awayNoise = fbm(warpedUV * awayFreq + vec2(100.0, 100.0)); // Offset for different pattern
+    // Generate separate noise patterns for each team using their own warped UVs
+    float homeNoise = fbm(homeWarpedUV * homeFreq);
+    float awayNoise = fbm(awayWarpedUV * awayFreq);
     
     // Team colors
-    vec3 homeColor = vec3(0.0, 0.4, 1.0);  // Blue
+    vec3 homeColor = vec3(0.0, 0.2, 1.0);  // Blue
     vec3 awayColor = vec3(1.0, 0.2, 0.0);  // Red
     
-    // Apply colors with their noise patterns
-    vec3 homeLayer = homeColor * homeNoise;
-    vec3 awayLayer = awayColor * awayNoise;
+    // Apply colors with their noise patterns AND scale by goal ratio
+    // This makes the winning team's color more prominent
+    vec3 homeLayer = homeColor * homeNoise * homeGoalRatio * 2.0;
+    vec3 awayLayer = awayColor * awayNoise * awayGoalRatio * 2.0;
     
     // Blend both layers together
-    vec3 finalColor = homeLayer + awayLayer;
+    vec3 finalColor = smoothstep(homeLayer, awayLayer, 0.5);
     
     gl_FragColor = vec4(finalColor, 1.0);
     
