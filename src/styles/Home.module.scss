@@ -23,10 +23,10 @@ $spacing-unit: 1rem;
   padding: $container-padding;
   max-width: $container-max-width;
   margin: 0 auto;
+  color: #171717;
 }
 
 .main {
-  @include center-content;
   flex-direction: column;
   min-height: 80vh;
   text-align: center;
@@ -35,12 +35,12 @@ $spacing-unit: 1rem;
 .title {
   font-size: $title-size;
   margin-bottom: $spacing-unit;
-  color: var(--foreground);
+  color: #171717;
   
-  &:hover {
-    transform: scale(1.02);
-    transition: transform 0.2s ease;
-  }
+  // &:hover {
+  //   transform: scale(1.02);
+  //   transition: transform 0.2s ease;
+  // }
 }
 
 .description {
@@ -49,3 +49,69 @@ $spacing-unit: 1rem;
   max-width: 600px;
   line-height: 1.6;
 }
+
+.placeholder {
+  height: 500px;
+  background-color: #195800;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 20px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+  }
+}
+
+.player {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00ff87, #60efff);
+  box-shadow: 0 0 12px rgba(0, 255, 135, 0.6);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 0 18px rgba(0, 255, 135, 0.9);
+  }
+}
+
+.playerExpanded {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #004cff, #74a9f8);
+  box-shadow: 0 0 12px rgba(0, 76, 255, 0.6);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  &:hover {
+    box-shadow: 0 0 18px rgba(0, 76, 255, 0.9);
+  }
+}
+
+.playerName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #171717;
+}
+
+.playerPosition {
+  font-size: 1rem;
+  color: #171717;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat {
+  font-size: 1rem;
+  color: #171717;
+}
+

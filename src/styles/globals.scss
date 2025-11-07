@@ -1,5 +1,5 @@
 // SCSS Variables
-$background-light: #ffffff;
+$background-light: #eceaea;
 $foreground-light: #171717;
 $background-dark: #0a0a0a;
 $foreground-dark: #ededed;
@@ -23,7 +23,7 @@ body {
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: $background-light;
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
