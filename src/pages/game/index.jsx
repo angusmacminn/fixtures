@@ -6,12 +6,23 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState } from "react";
 
 export default function Game() {
-
+    // state to control the player modal
     const [isOpen, setIsOpen] = useState(false);
 
-    const shots = data.filter(event => event.type.name === "Shot");
-    console.log(shots)
-
+    // filter the data to only include shots
+    const shots = data.filter(event => event.type.name === "Shot")
+    .map(shot => ({
+        id: shot.id,
+        player: shot.player?.name,
+        team: shot.team?.name,
+        location: shot.location,
+        outcome: shot.shot?.outcome?.name,
+        xg: shot.shot.statsbomb_xg || 0,
+        minute: shot.minute,
+    }))
+    
+    console.log('Shots with xG:', shots)
+    
     return (
         <section className={styles.main}>
             <motion.div 
@@ -66,9 +77,6 @@ export default function Game() {
                     </motion.div>
                 )}
             </div>
-
-            
-
             </AnimatePresence>
             
         </section>
