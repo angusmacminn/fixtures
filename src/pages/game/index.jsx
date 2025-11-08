@@ -1,5 +1,7 @@
 "use client";
 
+import MatchHeader from '@/components/MatchHeader';
+import matchInfo from '../../data/15-16-PLFixtures.json';
 import data from '../../data/GameData.json';
 import styles from "@/styles/Home.module.scss";
 import { motion, AnimatePresence } from "motion/react";
@@ -8,6 +10,10 @@ import { useState } from "react";
 export default function Game() {
     // state to control the player modal
     const [isOpen, setIsOpen] = useState(false);
+
+    // filter match and team data to send to header
+    const headerData = matchInfo.find(event => event.match_id === 3754171)
+    console.log('MatchInfo:', headerData) 
 
     // filter the data to only include shots
     const shots = data.filter(event => event.type.name === "Shot")
@@ -21,18 +27,14 @@ export default function Game() {
         minute: shot.minute,
     }))
     
-    console.log('Shots with xG:', shots)
+    // console.log('Shots with xG:', shots)
     
     return (
         <section className={styles.main}>
-            <motion.div 
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            ease="easeInOut"
-            >
-                <h1 className={styles.title}>Arsenal vs Manchester United</h1>
-            </motion.div>
+
+            <MatchHeader matchData={headerData}/>
+
+            
 
             <AnimatePresence>
             <div className={styles.placeholder}>
