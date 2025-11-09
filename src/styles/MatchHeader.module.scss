@@ -1,8 +1,8 @@
 .matchHeader {
     width: 100%;
-    padding: 2rem;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    border-radius: 16px;
+    padding: 2rem 1rem;
+    // background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    // border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     margin-bottom: 2rem;
 }
@@ -10,10 +10,10 @@
 .scorebug {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
     max-width: 800px;
     margin: 0 auto;
-    gap: 2rem;
+    // gap: 0.5rem;
 }
 
 .headerContent {
@@ -23,7 +23,7 @@
 .teamSection {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.5rem;
     flex: 1;
 
     &:first-child {
@@ -38,7 +38,7 @@
 .teamName {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #ffffff;
+    color: #171717;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     
@@ -48,14 +48,14 @@
 }
 
 .score {
-    font-size: 3rem;
-    font-weight: 900;
-    color: #00ff87;
-    min-width: 60px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #171717;
+    // min-width: 60px;
     text-align: center;
     
     @media (max-width: 768px) {
-        font-size: 2rem;
+        // font-size: 2rem;
         min-width: 40px;
     }
 }
@@ -64,7 +64,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;
+    // padding: 0 0.25rem;
 }
 
 .vs {
