@@ -1,15 +1,33 @@
 import styles from "@/styles/MatchHeader.module.scss";
 import { motion, AnimatePresence } from 'motion/react'
+import { getTeamAcronym } from "@/data/teamAcronyms";
+import { useState, useEffect } from "react";
 
 export default function MatchHeader( {matchData} ){
 
     const homeTeamName = matchData.home_team.home_team_name
     const homeTeamScore = matchData.home_score
-    console.log(homeTeamScore)
-    
     const awayTeamName = matchData.away_team.away_team_name
     const awayTeamScore = matchData.away_score
+    const stadium = matchData.stadium.name
 
+    // detect if using mobile
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile)
+
+        return () => window.removeEventListener('resize', checkMobile)
+    }, [])
+
+    // use acronym on mobile
+    const displayHomeTeam = isMobile ? getTeamAcronym(homeTeamName) : homeTeamName
+    const displayAwayTeam = isMobile ? getTeamAcronym(awayTeamName) : awayTeamName
 
     return(
         <div className={styles.matchHeader}>
@@ -20,10 +38,9 @@ export default function MatchHeader( {matchData} ){
             transition={{ duration: 0.8 }}
         >
             <div className={styles.headerContent}>
-                
                 <div className={styles.scorebug}>
                     <div className={styles.teamSection}>
-                        <span className={styles.teamName}>{homeTeamName}</span>
+                        <span className={styles.teamName}>{displayHomeTeam}</span>
                         <span className={styles.score}>{homeTeamScore}</span>
                     </div>
     
@@ -33,10 +50,12 @@ export default function MatchHeader( {matchData} ){
     
                     <div className={styles.teamSection}>
                         <span className={styles.score}>{awayTeamScore}</span>
-                        <span className={styles.teamName}>{awayTeamName}</span>
+                        <span className={styles.teamName}>{displayAwayTeam}</span>
                     </div>
                 </div>
-
+                <div className={styles.stadium}>
+                    <span className={styles.stadiumName}>{stadium}</span>
+                </div>
             </div>
         </motion.div>
         </div>
