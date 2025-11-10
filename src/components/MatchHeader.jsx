@@ -3,13 +3,25 @@ import { motion, AnimatePresence } from 'motion/react'
 import { getTeamAcronym } from "@/data/teamAcronyms";
 import { useState, useEffect } from "react";
 
-export default function MatchHeader( {matchData} ){
+export default function MatchHeader( {matchData, gameData} ){
 
     const homeTeamName = matchData.home_team.home_team_name
     const homeTeamScore = matchData.home_score
     const awayTeamName = matchData.away_team.away_team_name
     const awayTeamScore = matchData.away_score
     const stadium = matchData.stadium.name
+
+    const goalScorers = gameData.filter(event => 
+        event.type?.name === 'Shot' &&
+        event.shot?.outcome?.name === 'Goal'
+    )
+    .map(goal => ({
+        lastName: goal.player?.name.trim().split(" ").pop(),
+        minute: goal.minute,
+        team: goal.team?.name
+    }))
+
+    console.log(goalScorers)
 
     // detect if using mobile
     const [isMobile, setIsMobile] = useState(false)

@@ -13,7 +13,8 @@ export default function Game() {
 
     // filter match and team data to send to header
     const headerData = matchInfo.find(event => event.match_id === 3754171)
-    console.log('MatchInfo:', headerData) 
+    console.log('MatchInfo:', headerData)
+
 
     // filter the data to only include shots
     const shots = data.filter(event => event.type.name === "Shot")
@@ -32,7 +33,7 @@ export default function Game() {
     return (
         <section className={styles.main}>
 
-            <MatchHeader matchData={headerData}/>
+            <MatchHeader matchData={headerData} gameData={data}/>
 
             
 
