@@ -1,0 +1,28 @@
+.shotMapContainer {
+    width: 100%;
+    max-width: 1000px;
+    aspect-ratio: 3 / 2; // Modern CSS - matches 120:80 ratio
+    position: relative;
+    padding: 0 1rem
+}
+
+.pitchSvg {
+    background-color: green;
+    width: 100%;
+    height: 100%;
+}
+
+// Fallback for older browsers that don't support aspect-ratio:
+@supports not (aspect-ratio: 3 / 2) {
+    .shotMapContainer {
+        padding-bottom: 66.67%; // 2/3 = 66.67% (inverse of 3:2)
+        height: 0;
+        position: relative;
+    }
+    
+    .pitchSvg {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}

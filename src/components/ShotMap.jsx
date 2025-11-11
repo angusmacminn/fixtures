@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
-import styles from "@/styles/Home.module.scss";
+// import styles from "@/styles/Home.module.scss";
 import { motion, AnimatePresence } from "motion/react";
+import styles from "@/styles/ShotMap.module.scss";
+
 
 export default function ShotMap({gameData}){
 
@@ -19,7 +21,10 @@ export default function ShotMap({gameData}){
         minute: shot.minute,
     }))
     
-    console.log('Shots with xG:', shots)
+    // console.log('Shots with xG:', shots)
+
+    const firstShot = shots[0]
+    const [shotX, shotY] = firstShot?.location || [0,0]
 
     return(
         // <AnimatePresence>
@@ -66,14 +71,32 @@ export default function ShotMap({gameData}){
         //     )}
         // </div>
         // </AnimatePresence>
-        <div>
+        <div className={styles.shotMapContainer}>
             <svg 
-            width={600}  // your display width
-            height={400} // your display height
             viewBox="0 0 120 80" // match the actual pitch dimensions
             className={styles.pitchSvg}
+            preserveAspectRatio="xMidYMid meet"
             >
-              {/* This creates a coordinate system matching the data */}
+                {/* Background pitch */}
+                <rect x="0" y="0" width="120" height="80" fill="#2d5016" />
+                
+                {/* Half-way line */}
+                <rect x="60" y="0" width="0.3" height="80" fill="white" />
+                
+                {/* Left penalty box */}
+                <rect x="0" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.3" />
+                
+                {/* Right penalty box */}
+                <rect x="102" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.3" />
+
+                <circle
+                    cx={shotX}
+                    cy={shotY}
+                    r={2}
+                    fill="red"
+                    opacity={0.8}
+                />
+              
             </svg>
         </div>
     )
