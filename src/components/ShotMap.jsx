@@ -20,11 +20,19 @@ export default function ShotMap({gameData}){
         xg: shot.shot.statsbomb_xg || 0,
         minute: shot.minute,
     }))
-    
-    // console.log('Shots with xG:', shots)
 
     const firstShot = shots[0]
     const [shotX, shotY] = firstShot?.location || [0,0]
+
+    // create a grid pattern for pitch overlay / animation
+    const gridSpacing = 10; // Fewer, larger cells
+    const gridCells = [];
+    
+    for (let y = 0; y < 80; y += gridSpacing) {
+        for (let x = 0; x < 120; x += gridSpacing) {
+            gridCells.push({ x, y });
+        }
+    }
 
     return(
         // <AnimatePresence>
@@ -77,17 +85,36 @@ export default function ShotMap({gameData}){
             className={styles.pitchSvg}
             preserveAspectRatio="xMidYMid meet"
             >
-                {/* Background pitch */}
-                <rect x="0" y="0" width="120" height="80" fill="#2d5016" />
+                
+                
+                <rect x="0" y="0" width="120" height="80" fill="" stroke="none" />
+                
+                {/* Animated larger grid overlay */}
+                {gridCells.map((cell, i) => (
+                    <motion.rect
+                        key={i}
+                        x={cell.x}
+                        y={cell.y}
+                        width={gridSpacing }
+                        height={gridSpacing}
+                        fill="#55B500" //cell fill
+                        stroke="#418902" //cell border
+                        strokeWidth="0.5"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1.0 }}
+                        whileHover={{ fill: "#d1ff92", }} //cell hover fill
+                        transition={{ type: "easeInOut", stiffness: 300 }}
+                    />
+                ))}
                 
                 {/* Half-way line */}
-                <rect x="60" y="0" width="0.3" height="80" fill="white" />
+                <rect x="60" y="0" width="0.5" height="80" fill="white" />
                 
                 {/* Left penalty box */}
-                <rect x="0" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.3" />
+                <rect x="0" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
                 
                 {/* Right penalty box */}
-                <rect x="102" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.3" />
+                <rect x="102" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
 
                 <circle
                     cx={shotX}
