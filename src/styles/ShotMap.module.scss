@@ -12,6 +12,54 @@
     height: 100%;
 }
 
+.tooltip {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    pointer-events: none; // Allow mouse to pass through
+    z-index: 10;
+    min-width: 200px;
+    backdrop-filter: blur(10px);
+    
+    h4 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .team {
+        margin: 0 0 0.75rem 0;
+        color: #aaa;
+        font-size: 0.9rem;
+    }
+    
+    .tooltipStats {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+        
+        span {
+            font-size: 0.9rem;
+            
+            strong {
+                color: #4ade80;
+            }
+        }
+    }
+    
+    .outcome {
+        margin: 0.5rem 0 0 0;
+        padding-top: 0.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 0.85rem;
+        color: #fbbf24;
+    }
+}
+
 // Fallback for older browsers that don't support aspect-ratio:
 @supports not (aspect-ratio: 3 / 2) {
     .shotMapContainer {

@@ -21,7 +21,7 @@ export default function MatchHeader( {matchData, gameData} ){
         team: goal.team?.name
     }))
 
-    console.log(goalScorers)
+    // console.log(goalScorers)
 
     // detect if using mobile
     const [isMobile, setIsMobile] = useState(false)

@@ -8,6 +8,7 @@ export default function ShotMap({gameData}){
 
     // state to control the player modal
     const [isOpen, setIsOpen] = useState(false);
+    const [hoveredShot, setHoveredShot] = useState(null)
 
     // filter the data to only include shots
     const shots = gameData.filter(event => event.type.name === "Shot")
@@ -19,10 +20,26 @@ export default function ShotMap({gameData}){
         outcome: shot.shot?.outcome?.name,
         xg: shot.shot.statsbomb_xg || 0,
         minute: shot.minute,
-    }))
+    }))    
 
-    const firstShot = shots[0]
-    const [shotX, shotY] = firstShot?.location || [0,0]
+    // get the two teams
+    const teams = [...new Set(shots.map(shot => shot.team))]
+    const homeTeam = teams[0] 
+    const awayTeam = teams[1]
+    
+    // normalize function for shot position
+    const normalizePosition = (shot) => {
+        const [x, y] = shot.location
+
+        // if away team, flip horizontally
+        if(shot.team === awayTeam){
+            return{
+                x: 120 - x, //flip x-coordinate
+                y: y // keep y the same
+            }
+        }
+        return { x, y};
+    }
 
     // create a grid pattern for pitch overlay / animation
     const gridSpacing = 10; // Fewer, larger cells
@@ -35,58 +52,13 @@ export default function ShotMap({gameData}){
     }
 
     return(
-        // <AnimatePresence>
-        // <div className={styles.placeholder}>
-        //     {!isOpen && (<motion.div 
-        //          layoutId="player"
-        //          onClick={() => setIsOpen(true)}
-        //          className={styles.player}
-        //          whileHover={{ scale: 1.1 }}
-        //          transition={{ type: "spring", stiffness: 200, damping: 15 }}
-        //         />
-        //     )}
-
-        //     {isOpen && (
-        //         <motion.div
-        //           layoutId="player"
-        //           onClick={() => setIsOpen(false)}
-        //           className={`${styles.player} ${styles.playerExpanded}`}
-        //         //   animate={{ scale: 1.5 }}
-        //           transition={{ type: "spring", stiffness: 150, damping: 18 }}
-        //         >
-        //           <motion.h3 layout="position" className={styles.playerName}>
-        //             Erling Haaland
-        //           </motion.h3>
-        //           <motion.p layout="position" className={styles.playerPosition}>
-        //             Striker · Manchester City
-        //           </motion.p>
-        //           <motion.div
-        //             className={styles.stats}
-        //             initial={{ opacity: 0, y: 10 }}
-        //             animate={{ opacity: 1, y: 0 }}
-        //             transition={{ delay: 0.2 }}
-        //           >
-        //             <div>
-        //               <p className={styles.stat}>Shots</p>
-        //               <p className={styles.statValue}>6</p>
-        //             </div>
-        //             <div>
-        //               <p className={styles.stat}>xG</p>
-        //               <p className={styles.statValue}>1.42</p>
-        //             </div>
-        //           </motion.div>
-        //         </motion.div>
-        //     )}
-        // </div>
-        // </AnimatePresence>
+    
         <div className={styles.shotMapContainer}>
             <svg 
             viewBox="0 0 120 80" // match the actual pitch dimensions
             className={styles.pitchSvg}
             preserveAspectRatio="xMidYMid meet"
-            >
-                
-                
+            >   
                 <rect x="0" y="0" width="120" height="80" fill="" stroke="none" />
                 
                 {/* Animated larger grid overlay */}
@@ -116,15 +88,52 @@ export default function ShotMap({gameData}){
                 {/* Right penalty box */}
                 <rect x="102" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
 
-                <circle
-                    cx={shotX}
-                    cy={shotY}
-                    r={2}
-                    fill="red"
-                    opacity={0.8}
-                />
-              
+                {/* Map all shots */}
+                {shots.map(shot => {
+                    const pos = normalizePosition(shot);
+                    const isHovered = hoveredShot?.id === shot.id;
+                    const isAwayTeam = shot.team === awayTeam
+                    
+                    return (
+                        <motion.circle
+                            key={shot.id}
+                            cx={pos.x}
+                            cy={pos.y}
+                            r={1 + shot.xg * 5}
+                            fill={shot.team === homeTeam ? "#3b82f6" : "#ef4444"}
+                            opacity={isHovered ? 1 : 0.7}
+                            stroke="white"
+                            strokeWidth={isHovered ? 0.5 : 0}
+                            whileHover={{ scale: 1.3 }}
+                            onMouseEnter={() => setHoveredShot(shot)}
+                            onMouseLeave={() => setHoveredShot(null)}
+                            style={{ cursor: 'pointer' }}
+                        />
+                    );
+                })}
             </svg>
+
+            {/* Tootip */}
+            <AnimatePresence>
+                {hoveredShot && (
+                    <motion.div
+                        className={styles.tooltip}
+                        initial={{ opacity: 0, y: -10}}
+                        animate={{ opacity: 1, y: 0}}
+                        exit={{ opacity: 0, y: -10}}
+                        transition={{ duration: 0.2}}
+                    >
+                        <h4>{hoveredShot.player}</h4>
+                        <p className={styles.team}>{hoveredShot.team}</p>
+                        <div className={styles.tooltipStats}>
+                            <span>xG: <strong>{hoveredShot.xg.toFixed(2)}</strong></span>
+                            <span>Min: <strong>{hoveredShot.minute}'</strong></span>
+                        </div>
+                        <p className={styles.outcome}>{hoveredShot.outcome}</p>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
         </div>
     )
 }

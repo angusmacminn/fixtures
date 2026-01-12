@@ -11,7 +11,7 @@ export default function Game() {
 
     // filter match and team data to send to header
     const headerData = matchInfo.find(event => event.match_id === 3754171)
-    console.log('MatchInfo:', headerData)
+    // console.log('MatchInfo:', headerData)
 
     
     
