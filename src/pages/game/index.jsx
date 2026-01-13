@@ -5,6 +5,7 @@ import matchInfo from '../../data/15-16-PLFixtures.json';
 import data from '../../data/GameData.json';
 import styles from "@/styles/Home.module.scss";
 import ShotMap from '@/components/ShotMap';
+import GridHeatMap from '@/components/GridHeatMap';
 
 export default function Game() {
     
@@ -20,6 +21,7 @@ export default function Game() {
 
             <MatchHeader matchData={headerData} gameData={data}/>
             <ShotMap gameData={data}/>
+            <GridHeatMap gameData={data}/>
             
             
         </section>

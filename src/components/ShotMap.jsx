@@ -22,6 +22,15 @@ export default function ShotMap({gameData}){
         minute: shot.minute,
     }))    
 
+    const getShotColor = (shot) => {
+        const isHome = shot.team === homeTeam;
+        
+        if (shot.outcome === "Goal") {
+            return isHome ? "#10b981" : "#059669"; // Light/dark green
+        }
+        
+        return isHome ? "#3b82f6" : "#ef4444"; // Blue/red
+    };
     // get the two teams
     const teams = [...new Set(shots.map(shot => shot.team))]
     const homeTeam = teams[0] 
@@ -92,18 +101,20 @@ export default function ShotMap({gameData}){
                 {shots.map(shot => {
                     const pos = normalizePosition(shot);
                     const isHovered = hoveredShot?.id === shot.id;
-                    const isAwayTeam = shot.team === awayTeam
+                    const isGoal = shot.outcome === "Goal";
+    const isHome = shot.team === homeTeam;
                     
                     return (
                         <motion.circle
                             key={shot.id}
                             cx={pos.x}
                             cy={pos.y}
-                            r={1 + shot.xg * 5}
-                            fill={shot.team === homeTeam ? "#3b82f6" : "#ef4444"}
-                            opacity={isHovered ? 1 : 0.7}
-                            stroke="white"
-                            strokeWidth={isHovered ? 0.5 : 0}
+                            r={2.2 + shot.xg * 5.5}
+                            fill={isGoal ? "#fbbf24" : (isHome ? "#3b82f6" : "#ef4444")}
+                            stroke={isGoal ? (isHome ? "#3b82f6" : "#ef4444") : "#000000"}
+                            opacity={isHovered ? 1 : 0.85}
+                            
+                            strokeWidth={isHovered ? 0.5 : 0.3}
                             whileHover={{ scale: 1.3 }}
                             onMouseEnter={() => setHoveredShot(shot)}
                             onMouseLeave={() => setHoveredShot(null)}
