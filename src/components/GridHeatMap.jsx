@@ -1,5 +1,9 @@
-export default function GridHeatMap({gameData, team}){
-    const gridSize = 8;
+import styles from "@/styles/ShotMap.module.scss";
+import { motion, AnimatePresence } from "motion/react";
+import { hexToRgb } from '@/data/teamColours';
+
+export default function GridHeatMap({gameData, team, color}){
+    const gridSize = 6;
     const cols = Math.ceil(120 / gridSize);
     const rows = Math.ceil(80 / gridSize);
     
@@ -29,15 +33,72 @@ export default function GridHeatMap({gameData, team}){
     });
 
     // After the forEach loop, add:
-const totalEvents = gridCounts.flat().reduce((sum, count) => sum + count, 0);
-const maxCount = Math.max(...gridCounts.flat());
-const activeCells = gridCounts.flat().filter(count => count > 0).length;
+    const totalEvents = gridCounts.flat().reduce((sum, count) => sum + count, 0);
+    const maxCount = Math.max(...gridCounts.flat());
+    const activeCells = gridCounts.flat().filter(count => count > 0).length;
 
-console.log(`Total events counted: ${totalEvents}`);
-console.log(`Hottest cell has: ${maxCount} events`);
-console.log(`Active cells: ${activeCells} / ${cols * rows}`);
+    // console.log(`Total events counted: ${totalEvents}`);
+    // console.log(`Hottest cell has: ${maxCount} events`);
+    // console.log(`Active cells: ${activeCells} / ${cols * rows}`);
     
     console.log('Grid after counting:', gridCounts);
+
+    // create a grid pattern for pitch overlay / animation
+    const gridSpacing = 10; // Fewer, larger cells
+    const gridCells = [];
     
-    return <div>Grid Heat Map</div>
+    for (let y = 0; y < 80; y += gridSpacing) {
+        for (let x = 0; x < 120; x += gridSpacing) {
+            gridCells.push({ x, y });
+        }
+    }
+    
+    return (
+
+        <>
+            <svg 
+            viewBox="0 0 120 80" // match the actual pitch dimensions
+            className={styles.pitchSvg}
+            preserveAspectRatio="xMidYMid meet"
+            >   
+                
+                {/* Animated larger grid overlay */}
+                {gridCounts.map((row, rowIndex) => (
+                    row.map((count, colIndex) => (
+                        <motion.rect
+                        key={`${rowIndex}-${colIndex}`}
+                        x={colIndex * gridSize}
+                        y={rowIndex * gridSize}
+                        width={gridSize}
+                        height={gridSize}
+                        stroke="#418902" //cell border
+                        strokeWidth="0.1"
+                        initial={{ opacity: 0 }}
+                        animate={{ 
+                            opacity: 1.0,
+                            fill: `rgba(${hexToRgb(color)}, ${maxCount > 0 ? count / maxCount : 0})`
+                        }}
+                        whileHover={{ fill: "#d1ff92" }}
+                        transition={{ type: "easeInOut", stiffness: 300 }}
+                    />
+                    ))
+                    
+                ))}
+                
+                {/* Half-way line */}
+                <rect x="60" y="0" width="0.5" height="80" fill="white" />
+                
+                {/* Left penalty box */}
+                <rect x="0" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
+                
+                {/* Right penalty box */}
+                <rect x="102" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
+
+                
+            </svg>
+    
+    
+        
+        </>
+    )
 }

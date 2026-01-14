@@ -1,5 +1,5 @@
 export const teamColors = {
-    "Arsenal": { primary: "#EF0107", secondary: "#FFFFFF" },
+    "Arsenal": { primary: "#EF0107", secondary: "#f0e854" },
     "Aston Villa": { primary: "#670E36", secondary: "#95BFE5" },
     "AFC Bournemouth": { primary: "#DA291C", secondary: "#000000" },
     "Chelsea": { primary: "#034694", secondary: "#FFFFFF" },
@@ -57,3 +57,11 @@ export const teamColors = {
     const b = parseInt(hex.slice(5, 7), 16);
     return `rgba(${r}, ${g}, ${b}, ${opacity})`;
   };
+
+  export const hexToRgb = (hex) => {
+    if (!hex) return "255, 0, 0"; // fallback red
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `${r}, ${g}, ${b}`;
+};

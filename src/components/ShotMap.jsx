@@ -2,12 +2,12 @@ import { useState, useEffect } from "react"
 // import styles from "@/styles/Home.module.scss";
 import { motion, AnimatePresence } from "motion/react";
 import styles from "@/styles/ShotMap.module.scss";
+import { teamColors, getTeamColor, getTeamColorWithOpacity } from "@/data/teamColours";
 
 
 export default function ShotMap({gameData}){
 
     // state to control the player modal
-    const [isOpen, setIsOpen] = useState(false);
     const [hoveredShot, setHoveredShot] = useState(null)
 
     // filter the data to only include shots
@@ -68,7 +68,6 @@ export default function ShotMap({gameData}){
             className={styles.pitchSvg}
             preserveAspectRatio="xMidYMid meet"
             >   
-                <rect x="0" y="0" width="120" height="80" fill="" stroke="none" />
                 
                 {/* Animated larger grid overlay */}
                 {gridCells.map((cell, i) => (
@@ -102,19 +101,20 @@ export default function ShotMap({gameData}){
                     const pos = normalizePosition(shot);
                     const isHovered = hoveredShot?.id === shot.id;
                     const isGoal = shot.outcome === "Goal";
-    const isHome = shot.team === homeTeam;
-                    
+                    const isHome = shot.team === homeTeam;
+                    const size = (2.2 + shot.xg * 5.5) * 2;
+
                     return (
-                        <motion.circle
-                            key={shot.id}
-                            cx={pos.x}
-                            cy={pos.y}
-                            r={2.2 + shot.xg * 5.5}
-                            fill={isGoal ? "#fbbf24" : (isHome ? "#3b82f6" : "#ef4444")}
+                        <motion.rect
+                            x={pos.x - size / 2}
+                            y={pos.y - size / 2}
+                            width={size}
+                            height={size}
+                            fill={isGoal ? "#fbbf24" : getTeamColorWithOpacity(shot.team, 0.85)}
                             stroke={isGoal ? (isHome ? "#3b82f6" : "#ef4444") : "#000000"}
                             opacity={isHovered ? 1 : 0.85}
                             
-                            strokeWidth={isHovered ? 0.5 : 0.3}
+                            strokeWidth={isHovered ? 0.3 : 0.0}
                             whileHover={{ scale: 1.3 }}
                             onMouseEnter={() => setHoveredShot(shot)}
                             onMouseLeave={() => setHoveredShot(null)}
