@@ -51,7 +51,7 @@ export default function ShotMap({gameData}){
     }
 
     // create a grid pattern for pitch overlay / animation
-    const gridSpacing = 10; // Fewer, larger cells
+    const gridSpacing = 5; // Fewer, larger cells
     const gridCells = [];
     
     for (let y = 0; y < 80; y += gridSpacing) {
@@ -91,10 +91,10 @@ export default function ShotMap({gameData}){
                 <rect x="60" y="0" width="0.5" height="80" fill="white" />
                 
                 {/* Left penalty box */}
-                <rect x="0" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
+                <rect x="0" y="20" width="20" height="40" fill="none" stroke="white" strokeWidth="0.5" />
                 
                 {/* Right penalty box */}
-                <rect x="102" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
+                <rect x="100" y="20" width="20" height="40" fill="none" stroke="white" strokeWidth="0.5" />
 
                 {/* Map all shots */}
                 {shots.map(shot => {

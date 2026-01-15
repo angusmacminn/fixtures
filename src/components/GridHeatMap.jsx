@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { hexToRgb } from '@/data/teamColours';
 
 export default function GridHeatMap({gameData, team, color}){
-    const gridSize = 6;
+    const gridSize = 5;
     const cols = Math.ceil(120 / gridSize);
     const rows = Math.ceil(80 / gridSize);
     
@@ -71,7 +71,7 @@ export default function GridHeatMap({gameData, team, color}){
                         y={rowIndex * gridSize}
                         width={gridSize}
                         height={gridSize}
-                        stroke="#418902" //cell border
+                        stroke="#000000" //cell border
                         strokeWidth="0.1"
                         initial={{ opacity: 0 }}
                         animate={{ 
@@ -89,10 +89,10 @@ export default function GridHeatMap({gameData, team, color}){
                 <rect x="60" y="0" width="0.5" height="80" fill="white" />
                 
                 {/* Left penalty box */}
-                <rect x="0" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
+                <rect x="0" y="20" width="20" height="40" fill="none" stroke="white" strokeWidth="0.5" />
                 
                 {/* Right penalty box */}
-                <rect x="102" y="18" width="18" height="44" fill="none" stroke="white" strokeWidth="0.5" />
+                <rect x="100" y="20" width="20" height="40" fill="none" stroke="white" strokeWidth="0.5" />
 
                 
             </svg>
