@@ -2,7 +2,7 @@ import styles from "@/styles/ShotMap.module.scss";
 import { motion, AnimatePresence } from "motion/react";
 import { hexToRgb } from '@/data/teamColours';
 
-export default function GridHeatMap({gameData, team, color}){
+export default function GridHeatMap({gameData, team, color, eventType}){
     const gridSize = 5;
     const cols = Math.ceil(120 / gridSize);
     const rows = Math.ceil(80 / gridSize);
@@ -18,6 +18,9 @@ export default function GridHeatMap({gameData, team, color}){
         
         // Skip if wrong team (if team filter is provided)
         if (team && event.team?.name !== team) return;
+
+        // filter by event type if provided
+        if(event.type && event.type?.name !== eventType) return;
         
         // Extract coordinates
         const [x, y] = event.location;

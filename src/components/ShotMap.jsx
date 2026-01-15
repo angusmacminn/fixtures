@@ -106,6 +106,7 @@ export default function ShotMap({gameData}){
 
                     return (
                         <motion.rect
+                            
                             x={pos.x - size / 2}
                             y={pos.y - size / 2}
                             width={size}

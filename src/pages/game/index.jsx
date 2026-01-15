@@ -10,11 +10,14 @@ import { getMatchColors } from '@/data/teamColours';
 
 
 import { useState } from 'react';
+import HeatMapControls from '@/components/HeatMapControls';
 
 
 export default function Game() {
+    // state for team selection
     const [selectedTeam, setSelectedTeam] = useState("home"); // "home" | "away" | "both"
-
+    // state for event selection
+    const [selectedEventType, setSelectedEventType] =useState("Pass")
     
     // filter match and team data to send to header
     const headerData = matchInfo.find(event => event.match_id === 3754171)
@@ -44,24 +47,18 @@ export default function Game() {
 
             <MatchHeader matchData={headerData} gameData={data}/>
             <ShotMap gameData={data}/>
-            <div className={styles.teamSelector}>
-                <button 
-                    onClick={() => setSelectedTeam("home")}
-                    style={{ background: selectedTeam === "home" ? colors.home : "transparent" }}
-                >
-                    {homeTeam}
-                </button>
-                <button 
-                    onClick={() => setSelectedTeam("away")}
-                    style={{ background: selectedTeam === "away" ? colors.away : "transparent" }}
-                >
-                    {awayTeam}
-                </button>
-            </div>
+            <HeatMapControls 
+                teams={[homeTeam, awayTeam]}
+                selectedTeam={teamFilter}
+                onTeamChange={(team) => setSelectedTeam(team === homeTeam ? "home" : "away")}
+                selectedEventType={selectedEventType}
+                onEventTypeChange={setSelectedEventType}
+            />
             <GridHeatMap 
                 gameData={data}
                 team={teamFilter}
                 color={teamColor}
+                eventType={selectedEventType}
             />
             
             
