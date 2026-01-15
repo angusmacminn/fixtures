@@ -61,7 +61,6 @@ export default function ShotMap({gameData}){
     }
 
     return(
-    
         <div className={styles.shotMapContainer}>
             <svg 
             viewBox="0 0 120 80" // match the actual pitch dimensions

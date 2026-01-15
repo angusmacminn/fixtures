@@ -3,7 +3,11 @@
     max-width: 1000px;
     aspect-ratio: 3 / 2; // Modern CSS - matches 120:80 ratio
     position: relative;
-    padding: 0 1rem
+    padding: 0 1rem;
+    
+    // Rounded corners - adjust or remove as needed
+    border-radius: 8px;
+    overflow: hidden; // Required to clip SVG to rounded corners
 }
 
 .pitchSvg {

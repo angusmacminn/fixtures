@@ -57,35 +57,32 @@ export default function GridHeatMap({gameData, team, color, eventType}){
     }
     
     return (
-
-        <>
+        <div className={styles.shotMapContainer}>
             <svg 
-            viewBox="0 0 120 80" // match the actual pitch dimensions
-            className={styles.pitchSvg}
-            preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 120 80"
+                className={styles.pitchSvg}
+                preserveAspectRatio="xMidYMid meet"
             >   
-                
                 {/* Animated larger grid overlay */}
                 {gridCounts.map((row, rowIndex) => (
                     row.map((count, colIndex) => (
                         <motion.rect
-                        key={`${rowIndex}-${colIndex}`}
-                        x={colIndex * gridSize}
-                        y={rowIndex * gridSize}
-                        width={gridSize}
-                        height={gridSize}
-                        stroke="#000000" //cell border
-                        strokeWidth="0.1"
-                        initial={{ opacity: 0 }}
-                        animate={{ 
-                            opacity: 1.0,
-                            fill: `rgba(${hexToRgb(color)}, ${maxCount > 0 ? count / maxCount : 0})`
-                        }}
-                        whileHover={{ fill: "#d1ff92" }}
-                        transition={{ type: "easeInOut", stiffness: 300 }}
-                    />
+                            key={`${rowIndex}-${colIndex}`}
+                            x={colIndex * gridSize}
+                            y={rowIndex * gridSize}
+                            width={gridSize}
+                            height={gridSize}
+                            stroke="#000000"
+                            strokeWidth="0.1"
+                            initial={{ opacity: 0 }}
+                            animate={{ 
+                                opacity: 1.0,
+                                fill: `rgba(${hexToRgb(color)}, ${maxCount > 0 ? count / maxCount : 0})`
+                            }}
+                            whileHover={{ fill: "#d1ff92" }}
+                            transition={{ type: "easeInOut", stiffness: 300 }}
+                        />
                     ))
-                    
                 ))}
                 
                 {/* Half-way line */}
@@ -96,12 +93,7 @@ export default function GridHeatMap({gameData, team, color, eventType}){
                 
                 {/* Right penalty box */}
                 <rect x="100" y="20" width="20" height="40" fill="none" stroke="white" strokeWidth="0.5" />
-
-                
             </svg>
-    
-    
-        
-        </>
+        </div>
     )
 }
