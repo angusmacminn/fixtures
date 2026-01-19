@@ -57,6 +57,7 @@ export default function GridHeatMap({gameData, team, color, eventType}){
     }
     
     return (
+
         <div className={styles.shotMapContainer}>
             <svg 
                 viewBox="0 0 120 80"
@@ -72,12 +73,14 @@ export default function GridHeatMap({gameData, team, color, eventType}){
                             y={rowIndex * gridSize}
                             width={gridSize}
                             height={gridSize}
-                            stroke="#000000"
-                            strokeWidth="0.1"
+                            stroke="#418902"
+                            strokeWidth="0.5"
                             initial={{ opacity: 0 }}
                             animate={{ 
                                 opacity: 1.0,
-                                fill: `rgba(${hexToRgb(color)}, ${maxCount > 0 ? count / maxCount : 0})`
+                                fill: count > 0 
+                                    ? `rgba(${hexToRgb(color)}, ${maxCount > 0 ? count / maxCount : 0})`
+                                    : "#55B500"
                             }}
                             whileHover={{ fill: "#d1ff92" }}
                             transition={{ type: "easeInOut", stiffness: 300 }}

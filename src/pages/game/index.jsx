@@ -17,7 +17,9 @@ export default function Game() {
     // state for team selection
     const [selectedTeam, setSelectedTeam] = useState("home"); // "home" | "away" | "both"
     // state for event selection
-    const [selectedEventType, setSelectedEventType] =useState("Pass")
+    const [selectedEventType, setSelectedEventType] = useState("Pass")
+    // state for minute selection for slider
+    const [selectedMinute, setSelectedMinute] = useState(0)
     
     // filter match and team data to send to header
     const headerData = matchInfo.find(event => event.match_id === 3754171)
@@ -46,7 +48,7 @@ export default function Game() {
         <section className={styles.main}>
 
             <MatchHeader matchData={headerData} gameData={data}/>
-            <ShotMap gameData={data}/>
+            <ShotMap gameData={data} team={teamFilter} minute={selectedMinute}/>
             <HeatMapControls 
                 teams={[homeTeam, awayTeam]}
                 selectedTeam={teamFilter}
