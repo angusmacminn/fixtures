@@ -6,6 +6,7 @@ export default function TimeSlider({ minute, onChange }) {
     const [isDragging, setIsDragging] = useState(false);
     
     const handleClick = (clickedMinute) => {
+        if (isDragging) return;
         onChange(clickedMinute);
     };
     
@@ -25,6 +26,8 @@ export default function TimeSlider({ minute, onChange }) {
         if (distance === 1) return 16; // Adjacent
         return 8; // Default
     };
+
+    console.log(minute)
     
     return (
         <div className={styles.sliderWrapper}>
