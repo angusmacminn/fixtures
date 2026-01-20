@@ -53,3 +53,17 @@ a {
     color-scheme: dark;
   }
 }
+
+// Hide Next.js watermark/badge
+[data-nextjs-toast],
+[data-nextjs-dialog],
+.__nextjs-toast,
+.__nextjs-dialog,
+#__next-build-watcher,
+#__nextjs-toast,
+#__nextjs-dialog,
+a[href*="vercel.com"][target="_blank"]:has(img),
+a[href*="nextjs.org"][target="_blank"]:has(img) {
+  display: none !important;
+  visibility: hidden !important;
+}

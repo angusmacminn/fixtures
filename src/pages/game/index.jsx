@@ -11,6 +11,7 @@ import { getMatchColors } from '@/data/teamColours';
 
 import { useState } from 'react';
 import HeatMapControls from '@/components/HeatMapControls';
+import TimeSlider from '@/components/TimeSlider';
 
 
 export default function Game() {
@@ -19,7 +20,7 @@ export default function Game() {
     // state for event selection
     const [selectedEventType, setSelectedEventType] = useState("Pass")
     // state for minute selection for slider
-    const [selectedMinute, setSelectedMinute] = useState(0)
+    const [selectedMinute, setSelectedMinute] = useState(90)
     
     // filter match and team data to send to header
     const headerData = matchInfo.find(event => event.match_id === 3754171)
@@ -30,7 +31,7 @@ export default function Game() {
 
     // Get non-clashing colors
     const colors = getMatchColors(homeTeam, awayTeam);
-    console.log(colors)
+    // console.log(colors)
 
     // Determine which team name to pass (or null for both)
     const teamFilter = selectedTeam === "home" ? homeTeam 
@@ -49,6 +50,7 @@ export default function Game() {
 
             <MatchHeader matchData={headerData} gameData={data}/>
             <ShotMap gameData={data} team={teamFilter} minute={selectedMinute}/>
+            <TimeSlider minute={selectedMinute} onChange={setSelectedMinute}/> 
             <HeatMapControls 
                 teams={[homeTeam, awayTeam]}
                 selectedTeam={teamFilter}

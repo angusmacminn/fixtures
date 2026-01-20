@@ -44,7 +44,7 @@ export default function GridHeatMap({gameData, team, color, eventType}){
     // console.log(`Hottest cell has: ${maxCount} events`);
     // console.log(`Active cells: ${activeCells} / ${cols * rows}`);
     
-    console.log('Grid after counting:', gridCounts);
+    // console.log('Grid after counting:', gridCounts);
 
     // create a grid pattern for pitch overlay / animation
     const gridSpacing = 10; // Fewer, larger cells
