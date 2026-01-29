@@ -14,7 +14,8 @@
     height: 40px;
     cursor: pointer;
     position: relative;
-    padding-bottom: 10px; // Space for labels
+    padding-top: 24px; // Space for selected label above
+    padding-bottom: 24px; // Space for labels below
 }
 
 .line {
@@ -37,4 +38,15 @@
     color: #666;
     pointer-events: none; // Don't interfere with slider interaction
     white-space: nowrap;
+}
+
+.selectedLabel {
+    position: absolute;
+    bottom: -18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #171717;
+    pointer-events: none;
+    white-space: nowrap;
+    transition: left 0.15s ease-out;
 }

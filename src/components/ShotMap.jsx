@@ -1,42 +1,38 @@
-import { useState, useEffect } from "react"
-// import styles from "@/styles/Home.module.scss";
+import { useState, useMemo } from "react"
 import { motion, AnimatePresence } from "motion/react";
 import styles from "@/styles/ShotMap.module.scss";
-import { teamColors, getTeamColor, getTeamColorWithOpacity } from "@/data/teamColours";
+import { getTeamColorWithOpacity } from "@/data/teamColours";
 
 
-export default function ShotMap({gameData, team, minute}){
+export default function ShotMap({gameData, team, minute, homeTeam, awayTeam}){
     
-    // state to control the player modal
     const [hoveredShot, setHoveredShot] = useState(null)
 
-    // filter the data to only include shots
-    const shots = gameData.filter(event => event.type.name === "Shot")
-    .filter(shot => !team || shot.team?.name === team)
-    .filter(shot => shot.minute <= minute)
-    .map(shot => ({
-        id: shot.id,
-        player: shot.player?.name,
-        team: shot.team?.name,
-        location: shot.location,
-        outcome: shot.shot?.outcome?.name,
-        xg: shot.shot.statsbomb_xg || 0,
-        minute: shot.minute,
-    }))    
+    // Pre-compute shots by minute - only recalculates when gameData or team changes
+    const shotsByMinute = useMemo(() => {
+        const rawShots = gameData.filter(event => event.type?.name === "Shot");
+        const teamFiltered = !team ? rawShots : rawShots.filter(shot => shot.team?.name === team);
+        
+        const mapShot = (shot) => ({
+            id: shot.id,
+            player: shot.player?.name,
+            team: shot.team?.name,
+            location: shot.location,
+            outcome: shot.shot?.outcome?.name,
+            xg: shot.shot?.statsbomb_xg || 0,
+            minute: shot.minute,
+        });
 
-    const getShotColor = (shot) => {
-        const isHome = shot.team === homeTeam;
-        
-        if (shot.outcome === "Goal") {
-            return isHome ? "#10b981" : "#059669"; // Light/dark green
+        const lookup = {};
+        for (let m = 0; m <= 90; m++) {
+            lookup[m] = teamFiltered
+                .filter(shot => shot.minute <= m)
+                .map(mapShot);
         }
-        
-        return isHome ? "#3b82f6" : "#ef4444"; // Blue/red
-    };
-    // get the two teams
-    const teams = [...new Set(shots.map(shot => shot.team))]
-    const homeTeam = teams[0] 
-    const awayTeam = teams[1]
+        return lookup;
+    }, [gameData, team]);
+
+    const shots = shotsByMinute[Math.max(0, Math.min(90, minute))] ?? shotsByMinute[90]
     
     // normalize function for shot position
     const normalizePosition = (shot) => {

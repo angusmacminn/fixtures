@@ -49,7 +49,13 @@ export default function Game() {
         <section className={styles.main}>
 
             <MatchHeader matchData={headerData} gameData={data}/>
-            <ShotMap gameData={data} team={teamFilter} minute={selectedMinute}/>
+            <ShotMap 
+                gameData={data} 
+                team={teamFilter} 
+                minute={selectedMinute}
+                homeTeam={homeTeam}
+                awayTeam={awayTeam}
+            />
             <TimeSlider minute={selectedMinute} onChange={setSelectedMinute}/> 
             <HeatMapControls 
                 teams={[homeTeam, awayTeam]}
