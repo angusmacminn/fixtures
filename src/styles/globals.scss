@@ -3,22 +3,35 @@ $background-light: #eceaea;
 $foreground-light: #171717;
 $background-dark: #0a0a0a;
 $foreground-dark: #ededed;
+$accent-color: #565556;
+$primary-green: #70E000;
+$light-green: #F0FCE5;
 
 // CSS Custom Properties (for dynamic theming)
 :root {
   --background: #{$background-light};
   --foreground: #{$foreground-light};
-
+  --accent-color: #{$accent-color};
+  --primary-green: #{$primary-green};
+  --light-green: #{$light-green};
   @media (prefers-color-scheme: dark) {
     --background: #{$background-dark};
     --foreground: #{$foreground-dark};
   }
 }
 
-html,
+html {
+  max-width: 100vw;
+  overflow-x: hidden;
+  overflow-y: hidden; /* Prevent double vertical scrollbar – only body scrolls */
+  height: 100%;
+}
+
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
 }
 
 body {

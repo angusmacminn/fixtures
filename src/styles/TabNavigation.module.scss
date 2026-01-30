@@ -1,0 +1,33 @@
+.tabNavigation {
+    display: flex;
+    margin-bottom: 1rem;
+    background-color: #3a3a3a;
+
+
+    button {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: none;
+        background-color: #3a3a3a;
+        color: #ffffff;
+        font-family: inherit;
+        font-weight: 500;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        cursor: pointer;
+        transition: background-color 0.2s ease, color 0.2s ease;
+
+        &:hover {
+            color: #e8e8e8;
+        }
+
+        &.active {
+            background-color: #f0ffed;
+            color: #171717;
+            font-weight: 500;
+            border: 2px solid #80ff00;
+            // border-bottom-color: #3a3a3a; // blend with bar so no green on bottom
+        }
+    }
+}
