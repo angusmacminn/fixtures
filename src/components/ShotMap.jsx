@@ -33,7 +33,6 @@ export default function ShotMap({gameData, team, minute, homeTeam, awayTeam}){
     }, [gameData, team]);
 
     const shots = shotsByMinute[Math.max(0, Math.min(90, minute))] ?? shotsByMinute[90]
-    
     // normalize function for shot position
     const normalizePosition = (shot) => {
         const [x, y] = shot.location
@@ -49,7 +48,7 @@ export default function ShotMap({gameData, team, minute, homeTeam, awayTeam}){
     }
 
     // create a grid pattern for pitch overlay / animation
-    const gridSpacing = 5; // Fewer, larger cells
+    const gridSpacing = 10; // Fewer, larger cells
     const gridCells = [];
     
     for (let y = 0; y < 80; y += gridSpacing) {
@@ -112,19 +111,24 @@ export default function ShotMap({gameData, team, minute, homeTeam, awayTeam}){
     
                         return (
                             <motion.rect
+                                key={shot.id}
                                 x={pos.x - size / 2}
                                 y={pos.y - size / 2}
                                 width={size}
                                 height={size}
                                 fill={isGoal ? "#fbbf24" : getTeamColorWithOpacity(shot.team, 0.85)}
                                 stroke={isGoal ? (isHome ? "#3b82f6" : "#ef4444") : "#000000"}
-                                opacity={isHovered ? 1 : 0.85}
-                                
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                animate={{ 
+                                    opacity: isHovered ? 1 : 0.85, 
+                                    scale: 1 
+                                }}
                                 strokeWidth={isHovered ? 0.5 : 0.0}
                                 whileHover={{ scale: 1.3 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                                 onMouseEnter={() => setHoveredShot(shot)}
                                 onMouseLeave={() => setHoveredShot(null)}
-                                style={{ cursor: 'pointer' }}
+                                style={{ cursor: 'pointer', transformOrigin: 'center' }}
                             />
                         );
                     })}
@@ -135,10 +139,11 @@ export default function ShotMap({gameData, team, minute, homeTeam, awayTeam}){
                     {hoveredShot && (
                         <motion.div
                             className={styles.tooltip}
-                            initial={{ opacity: 0, y: -10}}
-                            animate={{ opacity: 1, y: 0}}
-                            exit={{ opacity: 0, y: -10}}
-                            transition={{ duration: 0.2}}
+                            initial={{ opacity: 0, y: -10, scale: 0.97}}
+                            animate={{ opacity: 1, y: 0, scale: 1}}
+                            exit={{ opacity: 0, y: -10, scale: 0.9}}
+                            transition={{ duration: 0.2, ease: "easeOut"}}
+                            
                         >
                             <h4>{hoveredShot.player}</h4>
                             <p className={styles.team}>{hoveredShot.team}</p>
