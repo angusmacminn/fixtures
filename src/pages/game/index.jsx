@@ -19,8 +19,10 @@ export default function Game() {
     const [selectedTeam, setSelectedTeam] = useState("home"); // "home" | "away" | "both"
     // state for event selection
     const [selectedEventType, setSelectedEventType] = useState("Pass")
-    // state for minute selection for slider
+    // state for minute selection for slider (ShotMap)
     const [selectedMinute, setSelectedMinute] = useState(90)
+    // state for heat map time slider – cells animate in/out as this progresses
+    const [heatMapMinute, setHeatMapMinute] = useState(90)
     
     // filter match and team data to send to header
     const headerData = matchInfo.find(event => event.match_id === 3754171)
@@ -64,12 +66,15 @@ export default function Game() {
                 selectedEventType={selectedEventType}
                 onEventTypeChange={setSelectedEventType}
             />
+            
             <GridHeatMap 
                 gameData={data}
                 team={teamFilter}
                 color={teamColor}
                 eventType={selectedEventType}
+                minute={heatMapMinute}
             />
+            <TimeSlider minute={heatMapMinute} onChange={setHeatMapMinute} />
             
             
         </section>

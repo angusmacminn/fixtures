@@ -1,8 +1,8 @@
 import styles from "@/styles/ShotMap.module.scss";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
 import { hexToRgb } from '@/data/teamColours';
 
-export default function GridHeatMap({gameData, team, color, eventType}){
+export default function GridHeatMap({ gameData, team, color, eventType, minute = 90 }){
     const gridSize = 5;
     const cols = Math.ceil(120 / gridSize);
     const rows = Math.ceil(80 / gridSize);
@@ -11,10 +11,14 @@ export default function GridHeatMap({gameData, team, color, eventType}){
         .fill(0)
         .map(() => Array(cols).fill(0));
     
-    // STEP 3: Count events in each cell
+    // Count events in each cell – only events up to the selected minute (for time-slider animation)
     gameData.forEach(event => {
         // Skip if no location data
         if (!event.location) return;
+        
+        // Only include events at or before the selected minute
+        const eventMin = event.minute != null ? event.minute : 0;
+        if (eventMin > minute) return;
         
         // Skip if wrong team (if team filter is provided)
         if (team && event.team?.name !== team) return;
@@ -75,15 +79,15 @@ export default function GridHeatMap({gameData, team, color, eventType}){
                             height={gridSize}
                             stroke="#418902"
                             strokeWidth="0.5"
-                            initial={{ opacity: 0 }}
+                            initial={false}
                             animate={{ 
-                                opacity: 1.0,
+                                opacity: 1,
                                 fill: count > 0 
                                     ? `rgba(${hexToRgb(color)}, ${maxCount > 0 ? count / maxCount : 0})`
                                     : "#55B500"
                             }}
                             whileHover={{ fill: "#d1ff92" }}
-                            transition={{ type: "easeInOut", stiffness: 300 }}
+                            transition={{ duration: 0.35, ease: "easeOut" }}
                         />
                     ))
                 ))}
