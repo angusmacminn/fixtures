@@ -5,12 +5,14 @@
     padding: 0.35rem;
     background-color: #E7EAED;
     border-radius: 9999px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow:
+        0 1px 2px 0 rgba(0, 0, 0, 0.3),
+        0 1px 3px 1px rgba(0, 0, 0, 0.15);
     margin: 0 1rem;
     
     button {
         flex: 1;
-        padding: 0.6rem 1rem;
+        padding: 0.6rem;
         border: none;
         background: none;
         color: #666;
@@ -30,9 +32,9 @@
         &.active {
             color: #171717;
             font-weight: 700;
-            background-color: #f0fff0;
-            border: 2px solid #80ff00;
+            background-color: var(--primary-green);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 0 10px 0 rgba(112, 224, 0, 0.5);
         }
     }
 }
