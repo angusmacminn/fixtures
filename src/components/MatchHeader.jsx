@@ -1,75 +1,54 @@
 import styles from "@/styles/MatchHeader.module.scss";
-import { motion, AnimatePresence } from 'motion/react'
+import { motion } from "motion/react";
 import { getTeamAcronym } from "@/data/teamAcronyms";
-import { useState, useEffect } from "react";
 
-export default function MatchHeader( {matchData, gameData} ){
+function formatMatchDate(dateStr) {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    return d.toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+}
 
-    const homeTeamName = matchData.home_team.home_team_name
-    const homeTeamScore = matchData.home_score
-    const awayTeamName = matchData.away_team.away_team_name
-    const awayTeamScore = matchData.away_score
-    const stadium = matchData.stadium.name
+export default function MatchHeader({ matchData }) {
+    const homeTeamName = matchData.home_team.home_team_name;
+    const homeTeamScore = matchData.home_score;
+    const awayTeamName = matchData.away_team.away_team_name;
+    const awayTeamScore = matchData.away_score;
+    const stadium = matchData.stadium?.name ?? "";
+    const matchWeek = matchData.match_week;
+    const matchDate = formatMatchDate(matchData.match_date);
 
-    const goalScorers = gameData.filter(event => 
-        event.type?.name === 'Shot' &&
-        event.shot?.outcome?.name === 'Goal'
-    )
-    .map(goal => ({
-        lastName: goal.player?.name.trim().split(" ").pop(),
-        minute: goal.minute,
-        team: goal.team?.name
-    }))
+    const homeAcronym = getTeamAcronym(homeTeamName);
+    const awayAcronym = getTeamAcronym(awayTeamName);
 
-    // console.log(goalScorers)
-
-    // detect if using mobile
-    const [isMobile, setIsMobile] = useState(false)
-
-    useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth <= 768);
-        };
-
-        checkMobile();
-        window.addEventListener('resize', checkMobile)
-
-        return () => window.removeEventListener('resize', checkMobile)
-    }, [])
-
-    // use acronym on mobile
-    const displayHomeTeam = isMobile ? getTeamAcronym(homeTeamName) : homeTeamName
-    const displayAwayTeam = isMobile ? getTeamAcronym(awayTeamName) : awayTeamName
-
-    return(
+    return (
         <div className={styles.matchHeader}>
-            <motion.div 
-            // className={styles.matchHeader}
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-        >
-            <div className={styles.headerContent}>
-                <div className={styles.scorebug}>
-                    <div className={styles.teamSection}>
-                        <span className={styles.teamName}>{displayHomeTeam}</span>
-                        <span className={styles.score}>{homeTeamScore}</span>
-                    </div>
-    
-                    <div className={styles.divider}>
-                        <span className={styles.vs}>:</span>
-                    </div>
-    
-                    <div className={styles.teamSection}>
-                        <span className={styles.score}>{awayTeamScore}</span>
-                        <span className={styles.teamName}>{displayAwayTeam}</span>
-                    </div>
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+            >
+                <div className={styles.metaRow}>
+                    <span className={styles.metaLeft}>
+                        {stadium}
+                        {matchWeek != null && ` • GW ${matchWeek}`}
+                    </span>
+                    <span className={styles.metaRight}>{matchDate}</span>
                 </div>
-                <div className={styles.stadium}>
-                    <span className={styles.stadiumName}>{stadium}</span>
+                <div className={styles.separator} />
+                <div className={styles.scoreRow}>
+                    <span className={styles.teamAbbr}>{homeAcronym}</span>
+                    <div className={styles.scoreBox}>
+                        <span className={styles.score}>
+                            {homeTeamScore} : {awayTeamScore}
+                        </span>
+                    </div>
+                    <span className={styles.teamAbbr}>{awayAcronym}</span>
                 </div>
-            </div>
-        </motion.div>
+            </motion.div>
         </div>
-    )
+    );
 }

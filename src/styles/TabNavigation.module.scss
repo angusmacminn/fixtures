@@ -1,33 +1,38 @@
 .tabNavigation {
     display: flex;
+    align-items: center;
     margin-bottom: 1rem;
-    background-color: #3a3a3a;
-
-
+    padding: 0.35rem;
+    background-color: #E7EAED;
+    border-radius: 9999px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin: 0 1rem;
+    
     button {
         flex: 1;
-        padding: 0.75rem 1rem;
+        padding: 0.6rem 1rem;
         border: none;
-        background-color: #3a3a3a;
-        color: #ffffff;
+        background: none;
+        color: #666;
         font-family: inherit;
         font-weight: 500;
-        font-size: 14px;
+        font-size: 13px;
         text-transform: uppercase;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.04em;
         cursor: pointer;
-        transition: background-color 0.2s ease, color 0.2s ease;
+        transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 9999px;
 
         &:hover {
-            color: #e8e8e8;
+            color: #444;
         }
 
         &.active {
-            background-color: #f0ffed;
             color: #171717;
-            font-weight: 500;
+            font-weight: 700;
+            background-color: #f0fff0;
             border: 2px solid #80ff00;
-            // border-bottom-color: #3a3a3a; // blend with bar so no green on bottom
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
         }
     }
 }

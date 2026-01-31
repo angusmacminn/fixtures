@@ -1,89 +1,69 @@
 .matchHeader {
     width: 100%;
-    padding: 2rem 1rem;
-    // background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    // border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    // margin-bottom: 2rem;
+    padding: 1.5rem 1rem;
 }
 
-.scorebug {
+.metaRow {
     display: flex;
     align-items: center;
-    // justify-content: space-between;
-    max-width: 800px;
-    margin: 0 auto;
-    gap: 0.5rem;
-    
+    justify-content: space-between;
+    padding-bottom: 0.75rem;
 }
 
-.headerContent {
-    display: flex;
-    gap: 1rem;
-    flex-direction: column;
+.metaLeft,
+.metaRight {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 400;
 }
 
-.teamSection {
+.metaRight {
+    color: #666;
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background: #7b7b7b;
+    margin-bottom: 1rem;
+}
+
+.scoreRow {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    flex: 1;
-
-    &:first-child {
-        justify-content: flex-end;
-    }
-
-    &:last-child {
-        justify-content: flex-start;
-    }
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
-.teamName {
+.teamAbbr {
     font-size: 3rem;
-    font-weight: 500;
+    font-weight: 700;
     color: #171717;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    
-    @media (max-width: 768px) {
-        font-size: 3rem;
+    letter-spacing: 0.02em;
+    min-width: 4rem;
+    text-align: center;
+
+    @media (max-width: 600px) {
+        font-size: 2.25rem;
+        min-width: 3rem;
     }
+}
+
+.scoreBox {
+    background-color: #e8ffe0;
+    border: 2px solid #80ff00;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
 }
 
 .score {
     font-size: 3rem;
-    font-weight: 500;
+    font-weight: 700;
     color: #171717;
-    // min-width: 60px;
-    text-align: center;
-    background-color: var(--light-green);
-    border: 2px solid var(--primary-green);
-    padding: 0.5rem 1rem;
-    @media (max-width: 768px) {
-        // font-size: 2rem;
-        min-width: 40px;
+    letter-spacing: 0.02em;
+
+    @media (max-width: 600px) {
+        font-size: 2.25rem;
     }
-}
-
-.divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    // padding: 0 0.25rem;
-}
-
-.vs {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #888;
-    letter-spacing: 2px;
-    
-    @media (max-width: 768px) {
-        font-size: 0.9rem;
-    }
-}
-
-.stadiumName {
-    color: #414040;
-    font-size: 0.9rem;
 }
