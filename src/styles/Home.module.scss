@@ -67,51 +67,14 @@ $spacing-unit: 1rem;
   }
 }
 
-.player {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00ff87, #60efff);
-  box-shadow: 0 0 12px rgba(0, 255, 135, 0.6);
-  cursor: pointer;
-  transition: box-shadow 0.3s ease;
-  &:hover {
-    box-shadow: 0 0 18px rgba(0, 255, 135, 0.9);
-  }
-}
 
-.playerExpanded {
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #004cff, #74a9f8);
-  box-shadow: 0 0 12px rgba(0, 76, 255, 0.6);
-  cursor: pointer;
-  transition: box-shadow 0.3s ease;
-  &:hover {
-    box-shadow: 0 0 18px rgba(0, 76, 255, 0.9);
-  }
-}
-
-.playerName {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #171717;
-}
-
-.playerPosition {
-  font-size: 1rem;
-  color: #171717;
-}
-
-.stats {
+.heatmapsContainer {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  margin: 1rem;
+  padding-bottom: 3rem;
+  max-width: $container-max-width;
+  background-color: var(--light-blue);
+  border-radius: 30px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
-
-.stat {
-  font-size: 1rem;
-  color: #171717;
-}
-

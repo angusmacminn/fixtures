@@ -72,7 +72,7 @@ export default function Game() {
             )}
             
             {activeTab === 'heatmaps' && (
-                <>
+                <div className={styles.heatmapsContainer}>
                     <HeatMapControls 
                         teams={[homeTeam, awayTeam]}
                         selectedTeam={teamFilter}
@@ -88,7 +88,7 @@ export default function Game() {
                         minute={heatMapMinute}
                     />
                     <TimeSlider minute={heatMapMinute} onChange={setHeatMapMinute} />
-                </>
+                </div>
             )}
             
             {activeTab === 'lineup' && (

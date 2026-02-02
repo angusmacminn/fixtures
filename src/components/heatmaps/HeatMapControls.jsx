@@ -23,7 +23,7 @@ export default function HeatMapControls({
                         key={team}
                         onClick={() => onTeamChange(team)}
                         className={selectedTeam === team ? styles.active : ""}
-                        style={selectedTeam === team ? { background: getTeamColor(team) } : {}}
+                        
                     >
                         {team}
                     </button>

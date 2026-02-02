@@ -6,6 +6,7 @@ $foreground-dark: #ededed;
 $accent-color: #565556;
 $primary-green: #70E000;
 $light-green: #F0FCE5;
+$light-blue: #E7EAED;
 
 // CSS Custom Properties (for dynamic theming)
 :root {
@@ -14,6 +15,7 @@ $light-green: #F0FCE5;
   --accent-color: #{$accent-color};
   --primary-green: #{$primary-green};
   --light-green: #{$light-green};
+  --light-blue: #{$light-blue};
   @media (prefers-color-scheme: dark) {
     --background: #{$background-dark};
     --foreground: #{$foreground-dark};
@@ -80,3 +82,4 @@ a[href*="nextjs.org"][target="_blank"]:has(img) {
   display: none !important;
   visibility: hidden !important;
 }
+
