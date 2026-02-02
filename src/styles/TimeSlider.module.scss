@@ -18,10 +18,26 @@
     padding-bottom: 24px; // Space for labels below
 }
 
-.line {
+// Larger touch target without changing layout (negative margin reclaims space)
+.lineHitArea {
     flex: 1;
-    background-color: #666;
     min-width: 1px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 24px 4px;
+    margin: -24px -4px;
+
+    @media (min-width: 769px) {
+        padding: 12px 2px;
+        margin: -12px -2px;
+    }
+}
+
+.line {
+    width: 100%;
+    min-height: 1px;
+    background-color: #666;
     cursor: pointer;
     transition: background-color 0.2s ease;
     

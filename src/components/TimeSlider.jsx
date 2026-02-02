@@ -66,15 +66,30 @@ export default function TimeSlider({ minute, onChange }) {
                     rafRef.current = null;
                     setIsDragging(false);
                 }}
+                onTouchStart={(e) => {
+                    setIsDragging(true);
+                    const touch = e.touches[0];
+                    if (touch) handleMouseMove({ clientX: touch.clientX, currentTarget: e.currentTarget });
+                }}
+                onTouchMove={(e) => {
+                    const touch = e.touches[0];
+                    if (touch) handleMouseMove({ clientX: touch.clientX, currentTarget: e.currentTarget });
+                }}
+                onTouchEnd={() => {
+                    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+                    rafRef.current = null;
+                    setIsDragging(false);
+                }}
             >
                 {Array.from({ length: 90 }, (_, i) => (
-                    <motion.div 
-                        className={styles.line} 
-                        key={i}
-                        onClick={() => handleClick(i)}
-                        animate={{ height: `${height(i)}px` }}
-                        transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                    />
+                    <div key={i} className={styles.lineHitArea}>
+                        <motion.div 
+                            className={styles.line} 
+                            onClick={() => handleClick(i)}
+                            animate={{ height: `${height(i)}px` }}
+                            transition={{ type: "spring", stiffness: 500, damping: 20 }}
+                        />
+                    </div>
                 ))}
                 
                 {/* Labels positioned at 0, 45, and 90 minutes */}
