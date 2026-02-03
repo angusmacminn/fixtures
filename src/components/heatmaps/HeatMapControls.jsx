@@ -6,7 +6,10 @@ export default function HeatMapControls({
     selectedTeam, 
     onTeamChange,
     selectedEventType,
-    onEventTypeChange 
+    onEventTypeChange,
+    threeDeeView,   
+    onThreeDeeViewChange
+
 }) {
     const eventTypes = [
         { value: "Pass", label: "Passes" },
@@ -14,6 +17,7 @@ export default function HeatMapControls({
         { value: "Pressure", label: "Pressure" },
         { value: "Duel", label: "Duels" }
     ];
+
     
     return (
         <div className={styles.controls}>
@@ -40,6 +44,21 @@ export default function HeatMapControls({
                         {event.label}
                     </button>
                 ))}
+            </div>
+
+            <div className={styles.ThreeDeeSelector}>
+                <button
+                    className={!threeDeeView ? styles.active : ""}
+                    onClick={() => onThreeDeeViewChange(false)}
+                >
+                    2D
+                </button>
+                <button
+                    className={threeDeeView ? styles.active : ""}
+                    onClick={() => onThreeDeeViewChange(true)}
+                >
+                    3D
+                </button>
             </div>
         </div>
     );

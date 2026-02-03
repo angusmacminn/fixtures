@@ -71,3 +71,32 @@
     }
   }
 }
+
+.ThreeDeeSelector {
+  display: flex;
+  gap: 6px;
+
+  button {
+    padding: 8px 16px;
+    border: 1px solid #666;
+    border-radius: 8px;
+    background: transparent;
+    color: #666;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #E7EAED;
+      color: #333;
+    }
+
+    &.active {
+      background: var(--primary-green);
+      border-color: transparent;
+      color: #171717;
+      font-weight: 600;
+    }
+  }
+}
