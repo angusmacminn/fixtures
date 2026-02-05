@@ -1,5 +1,6 @@
 import styles from "@/styles/HeatMapControls.module.scss";
 import { getTeamColor } from "@/data/teamColours";
+import { motion } from "motion/react";
 
 export default function HeatMapControls({ 
     teams, 
@@ -26,10 +27,16 @@ export default function HeatMapControls({
                     <button 
                         key={team}
                         onClick={() => onTeamChange(team)}
-                        className={selectedTeam === team ? styles.active : ""}
-                        
+                        className={`${styles.teamTab} ${selectedTeam === team ? styles.active : ""}`}
                     >
-                        {team}
+                        {selectedTeam === team && (
+                            <motion.span 
+                                layoutId="teamPill"
+                                className={styles.teamPill}
+                                transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                            />
+                        )}
+                        <span className={styles.label}>{team}</span>
                     </button>
                 ))}
             </div>
@@ -39,25 +46,46 @@ export default function HeatMapControls({
                     <button 
                         key={event.value}
                         onClick={() => onEventTypeChange(event.value)}
-                        className={selectedEventType === event.value ? styles.active : ""}
+                        className={`${styles.eventTab} ${selectedEventType === event.value ? styles.active : ""}`}
                     >
-                        {event.label}
+                        {selectedEventType === event.value && (
+                            <motion.span 
+                                layoutId="eventPill"
+                                className={styles.pill}
+                                transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                            />
+                        )}
+                        <span className={styles.label}>{event.label}</span>
                     </button>
                 ))}
             </div>
 
             <div className={styles.ThreeDeeSelector}>
                 <button
-                    className={!threeDeeView ? styles.active : ""}
+                    className={`${styles.viewTab} ${!threeDeeView ? styles.active : ""}`}
                     onClick={() => onThreeDeeViewChange(false)}
                 >
-                    2D
+                    {!threeDeeView && (
+                        <motion.span 
+                            layoutId="viewPill"
+                            className={styles.viewPill}
+                            transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                        />
+                    )}
+                    <span className={styles.label}>2D</span>
                 </button>
                 <button
-                    className={threeDeeView ? styles.active : ""}
+                    className={`${styles.viewTab} ${threeDeeView ? styles.active : ""}`}
                     onClick={() => onThreeDeeViewChange(true)}
                 >
-                    3D
+                    {threeDeeView && (
+                        <motion.span 
+                            layoutId="viewPill"
+                            className={styles.viewPill}
+                            transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                        />
+                    )}
+                    <span className={styles.label}>3D</span>
                 </button>
             </div>
         </div>

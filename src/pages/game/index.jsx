@@ -54,6 +54,10 @@ export default function Game() {
                     : selectedTeam === "away" ? colors.away 
                     : null;
 
+    // normalize attacking direction for heatmaps.
+    // When the selected team is the away team, mirror the X coordinate so the
+    // selected team always attacks in the same direction.
+    const flipHeatmapX = teamFilter != null && teamFilter === awayTeam;
 
     
     const progress = useMotionValue(threeDeeView ? 1 : 0);
@@ -120,6 +124,16 @@ export default function Game() {
                         overflow: 'hidden',
                     }}
                 >
+                    {teamFilter && (
+                        <div className={styles.attackIndicator}>
+                            <span
+                                className={styles.attackSwatch}
+                                style={{ background: teamColor || "#ffffff" }}
+                            />
+                            <span>Attacking</span>
+                            <span className={styles.attackArrow}>→</span>
+                        </div>
+                    )}
                     <motion.div
                         style={{
                             position: 'absolute',
@@ -137,6 +151,7 @@ export default function Game() {
                             color={teamColor}
                             eventType={selectedEventType}
                             minute={heatMapMinute}
+                            flipX={flipHeatmapX}
                         />
                     </motion.div>
                     <motion.div
@@ -156,6 +171,7 @@ export default function Game() {
                             color={teamColor}
                             eventType={selectedEventType}
                             minute={heatMapMinute}
+                            flipX={flipHeatmapX}
                         />
                     </motion.div>
                 </div>

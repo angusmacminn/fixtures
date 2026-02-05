@@ -78,3 +78,38 @@ $spacing-unit: 1rem;
   border-radius: 30px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
+
+.attackIndicator {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.325);
+  color: #ffffff;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  user-select: none;
+  pointer-events: none;
+  backdrop-filter: blur(6px);
+}
+
+.attackSwatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55);
+  flex: 0 0 auto;
+}
+
+.attackArrow {
+  opacity: 0.9;
+  font-weight: 600;
+  font-size: 0.8rem;
+}

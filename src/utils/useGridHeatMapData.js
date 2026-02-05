@@ -1,5 +1,5 @@
 // useGridHeatmapData.js
-export default function useGridHeatmapData(gameData, { team, eventType, minute = 90 }) {
+export default function useGridHeatmapData(gameData, { team, eventType, minute = 90, flipX = false }) {
     const gridSize = 5;
     const cols = Math.ceil(120 / gridSize);
     const rows = Math.ceil(80 / gridSize);
@@ -15,7 +15,10 @@ export default function useGridHeatmapData(gameData, { team, eventType, minute =
       if (team && event.team?.name !== team) return;
       if (event.type && event.type?.name !== eventType) return;
   
-      const [x, y] = event.location;
+      let [x, y] = event.location;
+      // Normalize attacking direction (e.g. flip away team) so the selected team
+      // always attacks the same way in the visualization.
+      if (flipX) x = 120 - x;
       const col = Math.floor(x / gridSize);
       const row = Math.floor(y / gridSize);
   

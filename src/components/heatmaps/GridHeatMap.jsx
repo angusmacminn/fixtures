@@ -3,11 +3,12 @@ import { motion } from "motion/react";
 import { hexToRgb } from '@/data/teamColours';
 import useGridHeatmapData from '@/utils/useGridHeatMapData';
 
-export default function GridHeatMap({ gameData, team, color, eventType, minute = 90 }){
+export default function GridHeatMap({ gameData, team, color, eventType, minute = 90, flipX = false }){
     const { gridCounts, gridSize, maxCount } = useGridHeatmapData(gameData, {
         team,
         eventType,
-        minute
+        minute,
+        flipX
     });
     
     return (

@@ -1,11 +1,12 @@
 import styles from "@/styles/TabNavigation.module.scss";
+import { motion } from "motion/react";
 
-
-export default function TabNavigation( {activeTab, onTabChange}) {
-
-    const tabs = [{ id: 'match', label: 'Match' }, 
-                  { id: 'heatmaps', label: 'Heatmaps' }, 
-                  { id: 'lineup', label: 'Lineup' }];
+export default function TabNavigation({ activeTab, onTabChange }) {
+    const tabs = [
+        { id: 'match', label: 'Match' }, 
+        { id: 'heatmaps', label: 'Heatmaps' }, 
+        { id: 'lineup', label: 'Lineup' }
+    ];
         
     return (
         <div className={styles.tabNavigation}>
@@ -14,11 +15,18 @@ export default function TabNavigation( {activeTab, onTabChange}) {
                     key={tab.id}
                     type="button"
                     onClick={() => onTabChange(tab.id)}
-                    className={activeTab === tab.id ? styles.active : ""}
+                    className={`${styles.tab} ${activeTab === tab.id ? styles.active : ""}`}
                 >
-                    {tab.label}
+                    {activeTab === tab.id && (
+                        <motion.span 
+                            layoutId="navPill"
+                            className={styles.pill}
+                            transition={{ type: "spring", stiffness: 500, damping: 40 }}
+                        />
+                    )}
+                    <span className={styles.label}>{tab.label}</span>
                 </button>
             ))}
         </div>
-    )
+    );
 }
