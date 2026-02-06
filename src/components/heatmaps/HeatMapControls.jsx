@@ -1,11 +1,7 @@
 import styles from "@/styles/HeatMapControls.module.scss";
-import { getTeamColor } from "@/data/teamColours";
 import { motion } from "motion/react";
 
 export default function HeatMapControls({ 
-    teams, 
-    selectedTeam, 
-    onTeamChange,
     selectedEventType,
     onEventTypeChange,
     threeDeeView,   
@@ -22,25 +18,6 @@ export default function HeatMapControls({
     
     return (
         <div className={styles.controls}>
-            <div className={styles.teamSelector}>
-                {teams.map((team) => (
-                    <button 
-                        key={team}
-                        onClick={() => onTeamChange(team)}
-                        className={`${styles.teamTab} ${selectedTeam === team ? styles.active : ""}`}
-                    >
-                        {selectedTeam === team && (
-                            <motion.span 
-                                layoutId="teamPill"
-                                className={styles.teamPill}
-                                transition={{ type: "spring", stiffness: 500, damping: 40 }}
-                            />
-                        )}
-                        <span className={styles.label}>{team}</span>
-                    </button>
-                ))}
-            </div>
-            
             <div className={styles.eventTabs}>
                 {eventTypes.map((event) => (
                     <button 

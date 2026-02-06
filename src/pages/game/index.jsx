@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import HeatMapControls from '@/components/heatmaps/HeatMapControls';
 import TimeSlider from '@/components/TimeSlider';
 import TabNavigation from '@/components/TabNavigation';
+import TeamSelector from '@/components/TeamSelector';
 
 
 export default function Game() {
@@ -54,6 +55,14 @@ export default function Game() {
                     : selectedTeam === "away" ? colors.away 
                     : null;
 
+    // Heatmaps don’t support "both" selection; if you come from the match tab
+    // with "both" selected, snap back to home.
+    useEffect(() => {
+        if (activeTab === "heatmaps" && selectedTeam === "both") {
+            setSelectedTeam("home");
+        }
+    }, [activeTab, selectedTeam]);
+
     // normalize attacking direction for heatmaps.
     // When the selected team is the away team, mirror the X coordinate so the
     // selected team always attacks in the same direction.
@@ -89,6 +98,13 @@ export default function Game() {
             {activeTab === 'match' && (
                 <>
                     <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
+                    <TeamSelector
+                        homeTeam={homeTeam}
+                        awayTeam={awayTeam}
+                        value={selectedTeam}
+                        onChange={setSelectedTeam}
+                        layoutId="shotTeamPill"
+                    />
                     <ShotMap 
                         gameData={data} 
                         team={teamFilter} 
@@ -102,10 +118,15 @@ export default function Game() {
             
             {activeTab === 'heatmaps' && (
                 <div className={styles.heatmapsContainer}>
+                    <TeamSelector
+                        homeTeam={homeTeam}
+                        awayTeam={awayTeam}
+                        value={selectedTeam}
+                        onChange={setSelectedTeam}
+                        layoutId="heatmapTeamPill"
+                        showBoth={false}
+                    />
                     <HeatMapControls 
-                        teams={[homeTeam, awayTeam]}
-                        selectedTeam={teamFilter}
-                        onTeamChange={(team) => setSelectedTeam(team === homeTeam ? "home" : "away")}
                         selectedEventType={selectedEventType}
                         onEventTypeChange={setSelectedEventType}
                         threeDeeView={threeDeeView}
