@@ -29,11 +29,25 @@
 }
 
 .scoreRow {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto auto;
     align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+    justify-items: center;
+    column-gap: 1.5rem;
+    row-gap: 0.75rem;
+}
+
+.teamAbbrWrapLeft {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+}
+
+.teamAbbrWrapRight {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: center;
 }
 
 .teamAbbr {
@@ -50,7 +64,66 @@
     }
 }
 
+.scorersLeft,
+.scorersRight {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.scorersLeft {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+}
+
+.scorersRight {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: center;
+
+    .scorerRow {
+        justify-content: flex-end;
+    }
+}
+
+.scorerRow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #414040;
+    line-height: 1.05;
+    white-space: nowrap;
+}
+
+.scorerDot {
+    width: 10px;
+    height: 10px;
+    background: var(--primary-green);
+    // border-radius: 2px; // cube look
+    // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    flex: 0 0 auto;
+}
+
+.scorerName {
+    opacity: 0.95;
+    ;
+
+}
+
+.scorerMinute {
+    opacity: 0.85;
+    min-width: 2.2rem;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
 .scoreBox {
+    grid-column: 2;
+    grid-row: 1;
     background-color: #e8ffe0;
     border: 2px solid var(--primary-green);
     border-radius: 6px;
