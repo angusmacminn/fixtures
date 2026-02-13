@@ -5,18 +5,16 @@
 :root {
   // ── Backgrounds ──
   --color-bg-primary:   #0F1115;   // base page background
-  --color-bg-elevated:  #1A1D23;   // cards, containers, raised surfaces
+  --color-bg-elevated:  #1a1d2390;   // cards, containers, raised surfaces
   --color-bg-surface:   #23272F;   // interactive surface (hover states, inputs)
 
   // ── Text ──
-  --color-text-primary:   #D5D5D5; // headings, active text
-  --color-text-secondary: #595959; // muted, inactive, labels
-  --color-text-tertiary:  #3E3E3E; // very subtle hints
-
+  --color-text-primary:   #E5E7EB;  // brighter
+--color-text-secondary: #9CA3AF;  // readable muted
+--color-text-tertiary:  #6B7280;  // subtle but usable
   // ── Borders ──
   --color-border:        #2A2E36;  // default dividers / borders
-  --color-border-subtle: #1F2229;  // very faint separators
-
+  --color-border-subtle: #1B1F26;
   // ── Accent ──
   --color-accent:        #70E000;  // primary green highlight
   --color-accent-muted:  rgba(112, 224, 0, 0.12); // subtle green tint for backgrounds

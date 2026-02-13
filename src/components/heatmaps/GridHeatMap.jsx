@@ -28,14 +28,13 @@ export default function GridHeatMap({ gameData, team, color, eventType, minute =
                             y={rowIndex * gridSize}
                             width={gridSize}
                             height={gridSize}
-                            stroke="#418902"
-                            strokeWidth="0.5"
+
                             initial={false}
                             animate={{ 
                                 opacity: 1,
-                                fill: count > 0 
-                                    ? `rgba(${hexToRgb(color)}, ${maxCount > 0 ? count / maxCount : 0})`
-                                    : "#55B500"
+                                fill: count > 0
+  ? `rgba(${hexToRgb(color)}, ${count / maxCount})`
+  : "transparent"
                             }}
                             whileHover={{ fill: "#d1ff92" }}
                             transition={{ duration: 0.35, ease: "easeOut" }}
