@@ -26,14 +26,14 @@ export default function TeamSelector({
             onClick={() => onChange(opt.id)}
             className={`${styles.teamTab} ${value === opt.id ? styles.active : ""}`}
           >
+            {opt.label}
             {value === opt.id && (
               <motion.span
                 layoutId={layoutId}
-                className={styles.teamPill}
+                className={styles.underline}
                 transition={{ type: "spring", stiffness: 500, damping: 40 }}
               />
             )}
-            <span className={styles.label}>{opt.label}</span>
           </button>
         ))}
       </div>

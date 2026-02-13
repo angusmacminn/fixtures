@@ -17,14 +17,14 @@ export default function TabNavigation({ activeTab, onTabChange }) {
                     onClick={() => onTabChange(tab.id)}
                     className={`${styles.tab} ${activeTab === tab.id ? styles.active : ""}`}
                 >
+                    {tab.label}
                     {activeTab === tab.id && (
                         <motion.span 
-                            layoutId="navPill"
-                            className={styles.pill}
+                            layoutId="navUnderline"
+                            className={styles.underline}
                             transition={{ type: "spring", stiffness: 500, damping: 40 }}
                         />
                     )}
-                    <span className={styles.label}>{tab.label}</span>
                 </button>
             ))}
         </div>

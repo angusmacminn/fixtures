@@ -13,18 +13,14 @@
 .metaLeft,
 .metaRight {
     font-size: 0.9rem;
-    color: #666;
+    color: var(--color-text-secondary);
     font-weight: 400;
-}
-
-.metaRight {
-    color: #666;
 }
 
 .separator {
     width: 100%;
     height: 1px;
-    background: #7b7b7b;
+    background: var(--color-accent);
     margin-bottom: 1rem;
 }
 
@@ -52,14 +48,14 @@
 
 .teamAbbr {
     font-size: 3rem;
-    font-weight: 700;
-    color: #171717;
+    // font-weight: 700;
+    color: var(--color-text-primary);
     letter-spacing: 0.02em;
     min-width: 4rem;
     text-align: center;
 
     @media (max-width: 600px) {
-        font-size: 2.25rem;
+        font-size: 3rem;
         min-width: 3rem;
     }
 }
@@ -94,7 +90,7 @@
     justify-content: space-between;
     gap: 0.5rem;
     font-size: 0.9rem;
-    color: #414040;
+    color: var(--color-text-secondary);
     line-height: 1.05;
     white-space: nowrap;
 }
@@ -102,16 +98,12 @@
 .scorerDot {
     width: 10px;
     height: 10px;
-    background: var(--primary-green);
-    // border-radius: 2px; // cube look
-    // box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    background: var(--color-accent);
     flex: 0 0 auto;
 }
 
 .scorerName {
     opacity: 0.95;
-    ;
-
 }
 
 .scorerMinute {
@@ -124,8 +116,8 @@
 .scoreBox {
     grid-column: 2;
     grid-row: 1;
-    background-color: #e8ffe0;
-    border: 2px solid var(--primary-green);
+    // background-color: var(--color-accent-muted);
+    // border: 2px solid var(--color-accent);
     border-radius: 6px;
     padding: 0.5rem 1rem;
 }
@@ -133,7 +125,7 @@
 .score {
     font-size: 3rem;
     font-weight: 700;
-    color: #171717;
+    color: var(--color-text-primary);
     letter-spacing: 0.02em;
 
     @media (max-width: 600px) {

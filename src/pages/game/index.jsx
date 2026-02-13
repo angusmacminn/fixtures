@@ -32,7 +32,7 @@ export default function Game() {
     // state for 3D heat map selection
     const [threeDeeView, setThreeDeeView] = useState(false);
 
-    const viewMode = threeDeeView ? "3D" : "2D";
+    
 
     
     // filter match and team data to send to header
@@ -202,7 +202,7 @@ export default function Game() {
             )}
             
             {activeTab === 'lineup' && (
-                <div style={{ padding: '2rem', color: '#666' }}>Lineup coming soon</div>
+                <div style={{ padding: '2rem', color: 'var(--color-text-secondary)' }}>Lineup coming soon</div>
             )}
             
             

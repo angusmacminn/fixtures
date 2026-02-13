@@ -1,32 +1,43 @@
-// SCSS Variables
-$background-light: #eceaea;
-$foreground-light: #171717;
-$background-dark: #0a0a0a;
-$foreground-dark: #ededed;
-$accent-color: #565556;
-$primary-green: #70E000;
-$light-green: #F0FCE5;
-$light-blue: #E7EAED;
+// ──────────────────────────────────────────────
+// Design System Tokens
+// ──────────────────────────────────────────────
 
-// CSS Custom Properties (for dynamic theming)
 :root {
-  --background: #{$background-light};
-  --foreground: #{$foreground-light};
-  --accent-color: #{$accent-color};
-  --primary-green: #{$primary-green};
-  --light-green: #{$light-green};
-  --light-blue: #{$light-blue};
-  @media (prefers-color-scheme: dark) {
-    --background: #{$background-dark};
-    --foreground: #{$foreground-dark};
-  }
+  // ── Backgrounds ──
+  --color-bg-primary:   #0F1115;   // base page background
+  --color-bg-elevated:  #1A1D23;   // cards, containers, raised surfaces
+  --color-bg-surface:   #23272F;   // interactive surface (hover states, inputs)
+
+  // ── Text ──
+  --color-text-primary:   #D5D5D5; // headings, active text
+  --color-text-secondary: #595959; // muted, inactive, labels
+  --color-text-tertiary:  #3E3E3E; // very subtle hints
+
+  // ── Borders ──
+  --color-border:        #2A2E36;  // default dividers / borders
+  --color-border-subtle: #1F2229;  // very faint separators
+
+  // ── Accent ──
+  --color-accent:        #70E000;  // primary green highlight
+  --color-accent-muted:  rgba(112, 224, 0, 0.12); // subtle green tint for backgrounds
+}
+
+// ──────────────────────────────────────────────
+// Base Reset & Global Styles
+// ──────────────────────────────────────────────
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
   max-width: 100vw;
   overflow-x: hidden;
-  overflow-y: hidden; /* Prevent double vertical scrollbar – only body scrolls */
+  overflow-y: hidden;
   height: 100%;
+  color-scheme: dark;
 }
 
 body {
@@ -34,24 +45,11 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
-}
-
-body {
-  color: var(--foreground);
-  background: $background-light;
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-// .h1, h2, h3, h4 {
-//   color: var(--background);
-// }
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 a {
@@ -60,12 +58,6 @@ a {
 
   &:hover {
     opacity: 0.8;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
   }
 }
 
@@ -82,4 +74,3 @@ a[href*="nextjs.org"][target="_blank"]:has(img) {
   display: none !important;
   visibility: hidden !important;
 }
-

@@ -14,11 +14,11 @@
     height: 40px;
     cursor: pointer;
     position: relative;
-    padding-top: 24px; // Space for selected label above
-    padding-bottom: 24px; // Space for labels below
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 
-// Larger touch target without changing layout (negative margin reclaims space)
+// Larger touch target without changing layout
 .lineHitArea {
     flex: 1;
     min-width: 1px;
@@ -37,12 +37,12 @@
 .line {
     width: 100%;
     min-height: 1px;
-    background-color: #666;
+    background-color: var(--color-text-secondary);
     cursor: pointer;
     transition: background-color 0.2s ease;
-    
+
     &:hover {
-        background-color: #999;
+        background-color: var(--color-text-primary);
     }
 }
 
@@ -51,8 +51,8 @@
     bottom: -18px;
     font-size: 12px;
     font-weight: 500;
-    color: #666;
-    pointer-events: none; // Don't interfere with slider interaction
+    color: var(--color-text-secondary);
+    pointer-events: none;
     white-space: nowrap;
 }
 
@@ -61,7 +61,7 @@
     bottom: -18px;
     font-size: 14px;
     font-weight: 600;
-    color: #171717;
+    color: var(--color-text-primary);
     pointer-events: none;
     white-space: nowrap;
     transition: left 0.15s ease-out;

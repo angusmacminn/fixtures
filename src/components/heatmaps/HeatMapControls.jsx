@@ -25,14 +25,14 @@ export default function HeatMapControls({
                         onClick={() => onEventTypeChange(event.value)}
                         className={`${styles.eventTab} ${selectedEventType === event.value ? styles.active : ""}`}
                     >
+                        {event.label}
                         {selectedEventType === event.value && (
                             <motion.span 
-                                layoutId="eventPill"
-                                className={styles.pill}
+                                layoutId="eventUnderline"
+                                className={styles.underline}
                                 transition={{ type: "spring", stiffness: 500, damping: 40 }}
                             />
                         )}
-                        <span className={styles.label}>{event.label}</span>
                     </button>
                 ))}
             </div>
@@ -42,27 +42,27 @@ export default function HeatMapControls({
                     className={`${styles.viewTab} ${!threeDeeView ? styles.active : ""}`}
                     onClick={() => onThreeDeeViewChange(false)}
                 >
+                    2D
                     {!threeDeeView && (
                         <motion.span 
-                            layoutId="viewPill"
-                            className={styles.viewPill}
+                            layoutId="viewUnderline"
+                            className={styles.viewUnderline}
                             transition={{ type: "spring", stiffness: 500, damping: 40 }}
                         />
                     )}
-                    <span className={styles.label}>2D</span>
                 </button>
                 <button
                     className={`${styles.viewTab} ${threeDeeView ? styles.active : ""}`}
                     onClick={() => onThreeDeeViewChange(true)}
                 >
+                    3D
                     {threeDeeView && (
                         <motion.span 
-                            layoutId="viewPill"
-                            className={styles.viewPill}
+                            layoutId="viewUnderline"
+                            className={styles.viewUnderline}
                             transition={{ type: "spring", stiffness: 500, damping: 40 }}
                         />
                     )}
-                    <span className={styles.label}>3D</span>
                 </button>
             </div>
         </div>

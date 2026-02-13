@@ -12,7 +12,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid var(--color-border);
 
     &:last-child {
         border-bottom: none;
@@ -22,19 +22,16 @@
 .value {
     font-size: 1rem;
     font-weight: 600;
-    color: #171717;
+    color: var(--color-text-primary);
     min-width: 2.5rem;
     text-align: center;
-    // background-color: var(--light-green);
-    // border: 2px solid var(--primary-green);
     border-radius: 10px;
     padding: 0.5rem;
-    // box-shadow: 0 0 10px 0 rgba(112, 224, 0, 0.5);
 }
 
 .label {
     font-size: 0.8rem;
-    color: #666;
+    color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
