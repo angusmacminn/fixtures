@@ -12,7 +12,7 @@ export default function Stats({ gameData, homeTeam, awayTeam }) {
         const inPlayEvents = gameData.filter(
             (e) => !skipTypes.includes(e.type?.name)
         );
-
+        // calculate possession
         inPlayEvents.forEach((event) => {
             const team = event.possession_team?.name;
             if (!team || (team !== homeTeam && team !== awayTeam)) return;
@@ -21,6 +21,7 @@ export default function Stats({ gameData, homeTeam, awayTeam }) {
             else possessionEvents.away++;
         });
 
+        // calculate shots
         const shotEvents = gameData.filter((e) => e.type?.name === "Shot");
         shotEvents.forEach((event) => {
             const team = event.team?.name;
@@ -40,17 +41,29 @@ export default function Stats({ gameData, homeTeam, awayTeam }) {
             }
         });
 
+        // calculate possession
         const totalPoss = possessionEvents.home + possessionEvents.away;
         const possession = {
             home: totalPoss > 0 ? Math.round((possessionEvents.home / totalPoss) * 100) : 50,
             away: totalPoss > 0 ? Math.round((possessionEvents.away / totalPoss) * 100) : 50,
         };
 
-        return { shots, xg, goals, possession };
+        // calculate fouls
+        const fouls = { home: 0, away: 0 };
+        const foulEvents = gameData.filter((e) => e.type?.name === "Foul Committed");
+        foulEvents.forEach((event) => {
+            const team = event.team?.name;
+            if (!team || (team !== homeTeam && team !== awayTeam)) return;
+        
+            if (team === homeTeam) fouls.home++;
+            else fouls.away++;
+        });
+
+        return { shots, xg, goals, possession, fouls };
     }, [gameData, homeTeam, awayTeam]);
 
-    const formatXg = (val) => val.toFixed(2);
 
+    const formatXg = (val) => val.toFixed(2);
     return (
         <div className={styles.stats}>
             <div className={styles.row}>
@@ -64,9 +77,9 @@ export default function Stats({ gameData, homeTeam, awayTeam }) {
                 <span className={styles.value}>{formatXg(stats.xg.away)}</span>
             </div>
             <div className={styles.row}>
-                <span className={styles.value}>{stats.goals.home}</span>
-                <span className={styles.label}>Goals</span>
-                <span className={styles.value}>{stats.goals.away}</span>
+                <span className={styles.value}>{stats.fouls.home}</span>
+                <span className={styles.label}>Fouls Committed</span>
+                <span className={styles.value}>{stats.fouls.away}</span>
             </div>
             <div className={styles.row}>
                 <span className={styles.value}>{stats.possession.home}%</span>
