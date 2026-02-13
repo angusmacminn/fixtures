@@ -1,8 +1,48 @@
+.shotMapSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    // width: 100%;
+    margin: 1rem;
+    padding: 1rem;
+    // background: var(--color-bg-elevated);
+    border-radius: 26px;
+    // border: 1px solid var(--color-border);
+}
+
 .shotMapHeader {
     width: 100%;
     text-align: left;
-    padding: 16px;
     color: var(--color-text-primary);
+}
+
+.shotMapLegend {
+    display: flex;
+    gap: 1rem;
+    color: var(--color-text-secondary);
+    padding: 1rem 0;
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legendColorGoal {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+}
+
+.legendColorShot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: red;
 }
 
 .shotMapContainer {
@@ -10,9 +50,10 @@
     max-width: 1000px;
     aspect-ratio: 3 / 2;
     position: relative;
-    padding: 0 1rem;
+    // padding: 0 1rem;
     margin-top: -1rem;
-    // border-radius: 30px;
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
     overflow: hidden;
     background: radial-gradient(
     ellipse at center,

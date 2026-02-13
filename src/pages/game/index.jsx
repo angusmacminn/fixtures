@@ -98,13 +98,7 @@ export default function Game() {
             {activeTab === 'match' && (
                 <>
                     <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
-                    <TeamSelector
-                        homeTeam={homeTeam}
-                        awayTeam={awayTeam}
-                        value={selectedTeam}
-                        onChange={setSelectedTeam}
-                        layoutId="shotTeamPill"
-                    />
+                    
                     <ShotMap 
                         gameData={data} 
                         team={teamFilter} 
@@ -113,6 +107,13 @@ export default function Game() {
                         awayTeam={awayTeam}
                     />
                     <TimeSlider minute={selectedMinute} onChange={setSelectedMinute}/> 
+                    <TeamSelector
+                        homeTeam={homeTeam}
+                        awayTeam={awayTeam}
+                        value={selectedTeam}
+                        onChange={setSelectedTeam}
+                        layoutId="shotTeamPill"
+                    />
                 </>
             )}
             
