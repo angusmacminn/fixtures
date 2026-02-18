@@ -136,7 +136,7 @@ function PitchLines() {
 
   return (
     <lineSegments geometry={geometry}>
-      <lineBasicMaterial color="#ffffff" transparent opacity={0.15} />
+      <lineBasicMaterial color="#8866cc" transparent opacity={0.25} />
     </lineSegments>
   );
 }
@@ -150,14 +150,42 @@ function TerrainMesh({ gridCounts, gridSize, maxCount }) {
   const segZ = rows * 3;
 
   const geo = useMemo(() => {
-    const g = new THREE.PlaneGeometry(PITCH_WIDTH, PITCH_HEIGHT, segX, segZ);
-    g.rotateX(-Math.PI / 2);
-    g.translate(PITCH_WIDTH / 2, 0, -PITCH_HEIGHT / 2);
-    const count = g.attributes.position.count;
-    g.setAttribute(
-      "color",
-      new THREE.Float32BufferAttribute(new Float32Array(count * 3), 3),
-    );
+    const vertsX = segX + 1;
+    const vertsZ = segZ + 1;
+    const vertexCount = vertsX * vertsZ;
+
+    const positions = new Float32Array(vertexCount * 3);
+    const colors = new Float32Array(vertexCount * 3);
+    const indices = [];
+
+    // Build explicit world-space coordinates so X/Z mapping matches SVG 1:1:
+    // x: [0..120], z: [0..-80]
+    let ptr = 0;
+    for (let vz = 0; vz < vertsZ; vz++) {
+      const z = -(vz / segZ) * PITCH_HEIGHT;
+      for (let vx = 0; vx < vertsX; vx++) {
+        const x = (vx / segX) * PITCH_WIDTH;
+        positions[ptr++] = x;
+        positions[ptr++] = 0;
+        positions[ptr++] = z;
+      }
+    }
+
+    for (let z = 0; z < segZ; z++) {
+      for (let x = 0; x < segX; x++) {
+        const a = z * vertsX + x;
+        const b = a + 1;
+        const c = a + vertsX;
+        const d = c + 1;
+        indices.push(a, c, b, b, c, d);
+      }
+    }
+
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+    g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    g.setIndex(indices);
+    g.computeVertexNormals();
     return g;
   }, [segX, segZ]);
 
@@ -170,7 +198,7 @@ function TerrainMesh({ gridCounts, gridSize, maxCount }) {
     for (let i = 0; i < count; i++) {
       const x = pos.getX(i);
       const z = pos.getZ(i);
-      const gc = x / gridSize - 0.5;
+      const gc = (PITCH_WIDTH - x) / gridSize - 0.5;
       const gr = -z / gridSize - 0.5;
 
       const raw = bilinearSample(gridCounts, gr, gc);
@@ -180,11 +208,13 @@ function TerrainMesh({ gridCounts, gridSize, maxCount }) {
       heights[i] = Math.pow(intensity, 0.75) * MAX_TERRAIN_HEIGHT;
 
       const c = interpolateHeatRGB(intensity);
-      const alpha = 0.15 + intensity * 0.85;
+      const alpha = 0.25 + intensity * 0.75;
       const base = { r: 0.07, g: 0.08, b: 0.12 };
-      colors[i * 3] = base.r + (c.r - base.r) * alpha;
-      colors[i * 3 + 1] = base.g + (c.g - base.g) * alpha;
-      colors[i * 3 + 2] = base.b + (c.b - base.b) * alpha;
+      const fade = 0.5 + (heights[i] / MAX_TERRAIN_HEIGHT) * 0.5;
+
+      colors[i * 3]     = (base.r + (c.r - base.r) * alpha) * fade;
+      colors[i * 3 + 1] = (base.g + (c.g - base.g) * alpha) * fade;
+      colors[i * 3 + 2] = (base.b + (c.b - base.b) * alpha) * fade;
     }
 
     return { heights, colors };
@@ -225,20 +255,33 @@ function TerrainMesh({ gridCounts, gridSize, maxCount }) {
   return (
     <group>
       <mesh ref={meshRef} geometry={geo}>
-        <meshStandardMaterial
+        <meshBasicMaterial
           vertexColors
+          transparent
+          opacity={0.7}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
           side={THREE.DoubleSide}
-          roughness={0.45}
-          metalness={0.08}
+        />
+      </mesh>
+      <mesh geometry={geo} position={[0, 0.15, 0]}>
+        <meshBasicMaterial
+          vertexColors
+          transparent
+          opacity={0.15}
+          blending={THREE.AdditiveBlending}
+          depthWrite={false}
+          side={THREE.DoubleSide}
         />
       </mesh>
       <mesh geometry={geo}>
         <meshBasicMaterial
-          color="#ffffff"
+          color="#6644aa"
           wireframe
           transparent
-          opacity={0.04}
+          opacity={0.08}
           depthWrite={false}
+          blending={THREE.AdditiveBlending}
         />
       </mesh>
     </group>
@@ -251,7 +294,7 @@ export default function ThreeDGridHeatMap({
   color,
   eventType,
   minute = 90,
-  flipX = false,
+  flipX = true,
 }) {
   const { gridCounts, gridSize, maxCount } = useGridHeatmapData(gameData, {
     team,
@@ -267,23 +310,23 @@ export default function ThreeDGridHeatMap({
         gl={{ antialias: true }}
         fog={new THREE.Fog(0x0e1118, 40, 220)}
       >
-        <ambientLight intensity={0.35} />
-        <directionalLight position={[40, 80, 20]} intensity={1.4} castShadow />
-        <directionalLight position={[100, 40, -60]} intensity={0.4} />
+        <ambientLight intensity={0.15} />
         <OrbitControls
           target={[60, 0, -40]}
           minDistance={70}
           maxDistance={150}
           maxPolarAngle={Math.PI / 2.2}
           minPolarAngle={Math.PI / 3}
+          minAzimuthAngle={-Math.PI / 6}
+          maxAzimuthAngle={Math.PI / 6}
         />
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[60, PITCH_OFFSET, -40]}>
           <planeGeometry args={[PITCH_WIDTH, PITCH_HEIGHT]} />
           <meshBasicMaterial
-            vertexColors
+            color="#1a0e2e"
             transparent
-            opacity={0.25}
-            blending={THREE.AdditiveBlending}
+            opacity={0.2}
+            side={THREE.DoubleSide}
             depthWrite={false}
           />
         </mesh>
