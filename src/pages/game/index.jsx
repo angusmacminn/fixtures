@@ -160,11 +160,9 @@ export default function Game() {
                         <GridHeatMap 
                             gameData={data}
                             team={teamFilter}
-                            color={teamColor}
                             eventType={selectedEventType}
                             minute={heatMapMinute}
                             flipX={flipHeatmapX}
-
                         />
                     </motion.div>
                     <motion.div
