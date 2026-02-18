@@ -136,16 +136,6 @@ export default function Game() {
                         perspective: 800,
                     }}
                 >
-                    {teamFilter && (
-                        <div className={styles.attackIndicator}>
-                            <span
-                                className={styles.attackSwatch}
-                                style={{ background: teamColor || "#ffffff" }}
-                            />
-                            <span>Attacking</span>
-                            <span className={styles.attackArrow}>→</span>
-                        </div>
-                    )}
                     <motion.div
                         style={{
                             position: 'absolute',
@@ -160,6 +150,7 @@ export default function Game() {
                         <GridHeatMap 
                             gameData={data}
                             team={teamFilter}
+                            color={teamColor}
                             eventType={selectedEventType}
                             minute={heatMapMinute}
                             flipX={flipHeatmapX}

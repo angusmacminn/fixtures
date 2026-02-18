@@ -64,6 +64,12 @@ export default function HeatMapControls({
                         />
                     )}
                 </button>
+                <div className={styles.heatmapLegend}>
+                    <span className={styles.legendLabel}>Less</span>
+                    <div className={styles.legendBar} />
+                    <span className={styles.legendLabel}>More</span>
+
+                </div>
             </div>
         </div>
     );

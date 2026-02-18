@@ -4,15 +4,12 @@ import { motion } from "motion/react";
 import useGridHeatmapData from '@/utils/useGridHeatMapData';
 
 const HEAT_SCALE = [
-    { stop: 0.0,  h: 260, s: 80, l: 5  },
-    { stop: 0.15, h: 275, s: 75, l: 18 },
-    { stop: 0.30, h: 300, s: 65, l: 28 },
-    { stop: 0.45, h: 330, s: 70, l: 35 },
-    { stop: 0.60, h: 10,  s: 80, l: 42 },
-    { stop: 0.75, h: 30,  s: 90, l: 52 },
-    { stop: 0.90, h: 45,  s: 95, l: 65 },
-    { stop: 1.0,  h: 60,  s: 100, l: 85 },
-];
+    { stop: 0.0,  h: 265, s: 75, l: 8  },   // deep indigo
+    { stop: 0.25, h: 285, s: 70, l: 25 },   // purple
+    { stop: 0.50, h: 330, s: 75, l: 38 },   // magenta/red
+    { stop: 0.75, h: 25,  s: 90, l: 55 },   // orange
+    { stop: 1.0,  h: 50,  s: 95, l: 75 },   // warm yellow
+  ];
 
 function lerpHue(h1, h2, t) {
     let diff = h2 - h1;
@@ -38,7 +35,7 @@ function interpolateColor(scale, t) {
     return `hsl(${last.h}, ${last.s}%, ${last.l}%)`;
 }
 
-export default function GridHeatMap({ gameData, team, eventType, minute = 90, flipX = false }){
+export default function GridHeatMap({ gameData, team, color, eventType, minute = 90, flipX = false }){
     const uid = useId();
     const { gridCounts, gridSize, maxCount } = useGridHeatmapData(gameData, {
         team,
@@ -52,6 +49,16 @@ export default function GridHeatMap({ gameData, team, eventType, minute = 90, fl
     
     return (
         <div className={styles.shotMapContainer}>
+            {team && (
+                <div className={styles.attackIndicator}>
+                    <span
+                        className={styles.attackSwatch}
+                        style={{ background:  "#ffffff" }}
+                    />
+                    <span>Attacking</span>
+                    <span className={styles.attackArrow}>→</span>
+                </div>
+            )}
             <svg 
                 viewBox="0 0 120 80"
                 className={styles.pitchSvg}
@@ -68,7 +75,7 @@ export default function GridHeatMap({ gameData, team, eventType, minute = 90, fl
                         />
                     </pattern>
                     <filter id={filterId}>
-                        <feGaussianBlur stdDeviation="0.9" />
+                        <feGaussianBlur stdDeviation="1.9" />
                     </filter>
                 </defs>
 
@@ -84,14 +91,14 @@ export default function GridHeatMap({ gameData, team, eventType, minute = 90, fl
                             return (
                                 <motion.rect
                                     key={`${rowIndex}-${colIndex}`}
-                                    x={colIndex * gridSize - 0.5}
-                                    y={rowIndex * gridSize - 0.5}
+                                    x={colIndex * gridSize }
+                                    y={rowIndex * gridSize }
                                     width={gridSize}
                                     height={gridSize}
                                     initial={false}
                                     animate={{ 
                                             fill: interpolateColor(HEAT_SCALE, intensity),
-                                        opacity: count > 0 ? 0.35 + intensity * 0.65 : 0,
+                                        opacity: count > 0 ? 0.15 + intensity * 0.7 : 0,
                                     }}
                                     transition={{ duration: 0.35, ease: "easeOut" }}
                                 />

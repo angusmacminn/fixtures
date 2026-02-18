@@ -79,3 +79,34 @@
   background: var(--color-accent);
   border-radius: 1px;
 }
+
+.heatmapLegend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 4px 0;
+}
+
+.legendBar {
+  width: 100px;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    hsl(260, 80%, 5%) 0%,
+    hsl(275, 75%, 18%) 15%,
+    hsl(300, 65%, 28%) 30%,
+    hsl(330, 70%, 35%) 45%,
+    hsl(10, 80%, 42%) 60%,
+    hsl(30, 90%, 52%) 75%,
+    hsl(45, 95%, 65%) 90%,
+    hsl(60, 100%, 85%) 100%
+  );
+}
+
+.legendLabel {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  user-select: none;
+}
