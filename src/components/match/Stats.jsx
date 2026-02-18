@@ -4,6 +4,7 @@ import styles from "@/styles/Stats.module.scss";
 export default function Stats({ gameData, homeTeam, awayTeam }) {
     const stats = useMemo(() => {
         const shots = { home: 0, away: 0 };
+        const shotsOnTarget = { home: 0, away: 0 };
         const xg = { home: 0, away: 0 };
         const goals = { home: 0, away: 0 };
         const possessionEvents = { home: 0, away: 0 };
@@ -28,16 +29,20 @@ export default function Stats({ gameData, homeTeam, awayTeam }) {
             if (!team || (team !== homeTeam && team !== awayTeam)) return;
 
             const xgVal = event.shot?.statsbomb_xg ?? 0;
-            const isGoal = event.shot?.outcome?.name === "Goal";
+            const outcome = event.shot?.outcome?.name;
+            const isGoal = outcome === "Goal";
+            const isOnTarget = isGoal || outcome === "Saved";
 
             if (team === homeTeam) {
                 shots.home++;
                 xg.home += xgVal;
                 if (isGoal) goals.home++;
+                if (isOnTarget) shotsOnTarget.home++;
             } else {
                 shots.away++;
                 xg.away += xgVal;
                 if (isGoal) goals.away++;
+                if (isOnTarget) shotsOnTarget.away++;
             }
         });
 
@@ -59,33 +64,63 @@ export default function Stats({ gameData, homeTeam, awayTeam }) {
             else fouls.away++;
         });
 
-        return { shots, xg, goals, possession, fouls };
+        const passes = { home: 0, away: 0 };
+        const passesComplete = { home: 0, away: 0 };
+
+        const passEvents = gameData.filter((e) => e.type?.name === "Pass");
+        passEvents.forEach((event) => {
+        const team = event.team?.name;
+        if (!team || (team !== homeTeam && team !== awayTeam)) return;
+    
+        const isComplete = !event.pass?.outcome; // no outcome = successful pass
+    
+        if (team === homeTeam) {
+            passes.home++;
+            if (isComplete) passesComplete.home++;
+        } else {
+            passes.away++;
+            if (isComplete) passesComplete.away++;
+        }
+        });
+        
+        const passCompletion = {
+            home: passes.home > 0 ? Math.round((passesComplete.home / passes.home) * 100) : 0,
+            away: passes.away > 0 ? Math.round((passesComplete.away / passes.away) * 100) : 0,
+        };
+
+        return { shots, shotsOnTarget, xg, goals, possession, fouls, passes, passCompletion };
     }, [gameData, homeTeam, awayTeam]);
+
+    const StatRow = ({ home, away, label, format = (v) => v }) => {
+        const homeClass = `${styles.value} ${home > away ? styles.winning : ""}`;
+        const awayClass = `${styles.value} ${away > home ? styles.winning : ""}`;
+    
+        return (
+            <div className={styles.row}>
+                <span className={homeClass}>{format(home)}</span>
+                <span className={styles.label}>{label}</span>
+                <span className={awayClass}>{format(away)}</span>
+            </div>
+        );
+    };
 
 
     const formatXg = (val) => val.toFixed(2);
     return (
         <div className={styles.stats}>
-            <div className={styles.row}>
-                <span className={styles.value}>{stats.shots.home}</span>
-                <span className={styles.label}>Shots</span>
-                <span className={styles.value}>{stats.shots.away}</span>
+            <div className={styles.statsHeader}>
+                <h2>
+                    Stats
+                </h2>
             </div>
-            <div className={styles.row}>
-                <span className={styles.value}>{formatXg(stats.xg.home)}</span>
-                <span className={styles.label}>xG</span>
-                <span className={styles.value}>{formatXg(stats.xg.away)}</span>
-            </div>
-            <div className={styles.row}>
-                <span className={styles.value}>{stats.fouls.home}</span>
-                <span className={styles.label}>Fouls Committed</span>
-                <span className={styles.value}>{stats.fouls.away}</span>
-            </div>
-            <div className={styles.row}>
-                <span className={styles.value}>{stats.possession.home}%</span>
-                <span className={styles.label}>Possession</span>
-                <span className={styles.value}>{stats.possession.away}%</span>
-            </div>
-        </div>
+        <StatRow home={stats.shots.home} away={stats.shots.away} label="Shots" />
+        <StatRow home={stats.shotsOnTarget.home} away={stats.shotsOnTarget.away} label="Shots on Target" />
+        <StatRow home={stats.xg.home} away={stats.xg.away} label="xG" format={formatXg} />
+        <StatRow home={stats.possession.home} away={stats.possession.away} label="Possession" format={(v) => `${v}%`} />
+        <StatRow home={stats.passes.home} away={stats.passes.away} label="Passes" />
+        <StatRow home={stats.passCompletion.home} away={stats.passCompletion.away} label="Pass Completion" format={(v) => `${v}%`} />
+        <StatRow home={stats.fouls.home} away={stats.fouls.away} label="Fouls Committed" />
+
+    </div>
     );
 }

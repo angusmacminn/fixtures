@@ -55,7 +55,7 @@
     text-align: center;
 
     @media (max-width: 600px) {
-        font-size: 3rem;
+        font-size: 2.5rem;
         min-width: 3rem;
     }
 }
@@ -71,21 +71,19 @@
 .scorersLeft {
     grid-column: 1;
     grid-row: 2;
-    justify-self: center;
+    justify-self: stretch;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .scorersRight {
     grid-column: 3;
     grid-row: 2;
-    justify-self: center;
-
-    .scorerRow {
-        justify-content: flex-end;
-    }
+    justify-self: stretch;
 }
 
 .scorerRow {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
@@ -104,6 +102,7 @@
 
 .scorerName {
     opacity: 0.95;
+    flex: 1;
 }
 
 .scorerMinute {
@@ -124,7 +123,7 @@
 
 .score {
     font-size: 3rem;
-    font-weight: 700;
+    font-weight: 500;
     color: var(--color-text-primary);
     letter-spacing: 0.02em;
 

@@ -3,8 +3,15 @@
     flex-direction: column;
     gap: 0.75rem;
     padding: 1rem;
-    max-width: 400px;
-    margin: 0 auto 1rem;
+    // max-width: 400px;
+    // margin: 0 auto 1rem;
+}
+
+.statsHeader {
+    display: flex;
+    align-items: left;
+    justify-content: flex-start;
+    padding: 0.5rem 0;
 }
 
 .row {
@@ -25,7 +32,7 @@
     color: var(--color-text-primary);
     min-width: 2.5rem;
     text-align: center;
-    border-radius: 10px;
+    
     padding: 0.5rem;
 }
 
@@ -34,4 +41,8 @@
     color: var(--color-text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+}
+
+.winning {
+    border-bottom: 2px solid var(--color-accent);
 }

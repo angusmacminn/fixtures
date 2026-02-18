@@ -119,14 +119,7 @@ export default function Game() {
             
             {activeTab === 'heatmaps' && (
                 <div className={styles.heatmapsContainer}>
-                    <TeamSelector
-                        homeTeam={homeTeam}
-                        awayTeam={awayTeam}
-                        value={selectedTeam}
-                        onChange={setSelectedTeam}
-                        layoutId="heatmapTeamPill"
-                        showBoth={false}
-                    />
+                    
                     <HeatMapControls 
                         selectedEventType={selectedEventType}
                         onEventTypeChange={setSelectedEventType}
@@ -197,8 +190,15 @@ export default function Game() {
                         />
                     </motion.div>
                 </div>
-
                     <TimeSlider minute={heatMapMinute} onChange={setHeatMapMinute} />
+                    <TeamSelector
+                        homeTeam={homeTeam}
+                        awayTeam={awayTeam}
+                        value={selectedTeam}
+                        onChange={setSelectedTeam}
+                        layoutId="heatmapTeamPill"
+                        showBoth={false}
+                    />
                 </div>
             )}
             
