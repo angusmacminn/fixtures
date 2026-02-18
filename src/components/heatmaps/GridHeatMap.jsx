@@ -70,7 +70,7 @@ export default function GridHeatMap({ gameData, team, color, eventType, minute =
                             width={gridSize + 1}
                             height={gridSize + 1}
                             fill="none"
-                            stroke="rgba(255,255,255,0.06)"
+                            stroke="rgba(255,255,255,0.03)"
                             strokeWidth="0.15"
                         />
                     </pattern>
@@ -93,12 +93,12 @@ export default function GridHeatMap({ gameData, team, color, eventType, minute =
                                     key={`${rowIndex}-${colIndex}`}
                                     x={colIndex * gridSize }
                                     y={rowIndex * gridSize }
-                                    width={gridSize}
-                                    height={gridSize}
+                                    width={gridSize + 1}
+                                    height={gridSize + 1}
                                     initial={false}
                                     animate={{ 
                                             fill: interpolateColor(HEAT_SCALE, intensity),
-                                        opacity: count > 0 ? 0.15 + intensity * 0.7 : 0,
+                                        opacity: count > 0 ? 0.4 + intensity * 0.7 : 0,
                                     }}
                                     transition={{ duration: 0.35, ease: "easeOut" }}
                                 />

@@ -75,17 +75,16 @@ export default function Game() {
     useEffect(() => {
         const controls = animate(progress, threeDeeView ? 1 : 0, {
             duration: 0.6,
-            ease: "easeInOut"
+            ease: [0.65, 0, 0.35, 1]
         });
         return () => controls.stop();
     }, [threeDeeView, animate, progress]);
 
+    const rotateXContainer = useTransform(progress, [0, 1], [0, 25]);
+    const scaleContainer = useTransform(progress, [0, 1], [1, 0.98]);
+    const translateY = useTransform(progress, [0, 1], [0, -10]);
     const opacity2D = useTransform(progress, [0, 1], [1, 0]);
     const opacity3D = useTransform(progress, [0, 1], [0, 1]);
-    const scale2D = useTransform(progress, [0, 1], [1, 0.95]);
-    const rotateX2D = useTransform(progress, [0, 1], [0, 15]);
-    const scale3D = useTransform(progress, [0, 1], [0.95, 1]);
-    const rotateX3D = useTransform(progress, [0, 1], [-15, 0]);
     const pointerEvents2D = useTransform(progress, [0, 0.3], ['auto', 'none']);
     const pointerEvents3D = useTransform(progress, [0.3, 1], ['none', 'auto']);
 
@@ -126,7 +125,7 @@ export default function Game() {
                         threeDeeView={threeDeeView}
                         onThreeDeeViewChange={setThreeDeeView}
                     />
-                <div
+                <motion.div
                     ref={scope}
                     style={{
                         position: 'relative',
@@ -134,6 +133,10 @@ export default function Game() {
                         maxWidth: '1000px',
                         aspectRatio: '3 / 2',
                         perspective: 800,
+                        rotateX: rotateXContainer,
+                        scale: scaleContainer,
+                        y: translateY,
+                        transformOrigin: 'center center',
                     }}
                 >
                     <motion.div
@@ -141,9 +144,6 @@ export default function Game() {
                             position: 'absolute',
                             inset: 0,
                             opacity: opacity2D,
-                            scale: scale2D,
-                            rotateX: rotateX2D,
-                            transformOrigin: 'center center',
                             pointerEvents: pointerEvents2D,
                         }}
                     >
@@ -161,9 +161,6 @@ export default function Game() {
                             position: 'absolute',
                             inset: 0,
                             opacity: opacity3D,
-                            scale: scale3D,
-                            rotateX: rotateX3D,
-                            transformOrigin: 'center center',
                             pointerEvents: pointerEvents3D,
                         }}
                     >
@@ -176,7 +173,7 @@ export default function Game() {
                             flipX={flipHeatmapX}
                         />
                     </motion.div>
-                </div>
+                </motion.div>
                     <TimeSlider minute={heatMapMinute} onChange={setHeatMapMinute} />
                     <TeamSelector
                         homeTeam={homeTeam}
