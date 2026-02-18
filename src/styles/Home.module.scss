@@ -55,8 +55,10 @@ $spacing-unit: 1rem;
 .heatmapsContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   margin: 1rem;
-  padding-bottom: 3rem;
+  padding: 1rem 1rem 2rem;
   max-width: $container-max-width;
   background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border);

@@ -133,10 +133,7 @@ export default function Game() {
                         width: '100%',
                         maxWidth: '1000px',
                         aspectRatio: '3 / 2',
-                        margin: '0 auto',
-                        padding: '0 1rem',
                         perspective: 800,
-                        overflow: 'hidden',
                     }}
                 >
                     {teamFilter && (
@@ -167,6 +164,7 @@ export default function Game() {
                             eventType={selectedEventType}
                             minute={heatMapMinute}
                             flipX={flipHeatmapX}
+
                         />
                     </motion.div>
                     <motion.div

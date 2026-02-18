@@ -1,8 +1,9 @@
 .controls {
   display: flex;
   flex-direction: column;
+  align-self: stretch;
   gap: 12px;
-  padding: 1rem;
+  padding-bottom: 1rem;
 }
 
 .eventTabs {
