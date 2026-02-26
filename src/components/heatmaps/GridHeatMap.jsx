@@ -75,29 +75,31 @@ export default function GridHeatMap({ gameData, team, color, eventType, minute =
                         />
                     </pattern>
                     <filter id={filterId}>
-                        <feGaussianBlur stdDeviation="1.9" />
+                        <feGaussianBlur stdDeviation="0" />
                     </filter>
                 </defs>
 
                 {/* Layer 1: Pitch base */}
                 <rect width="120" height="80" fill={`url(#${patternId})`} />
 
-                {/* Layer 2: Heatmap (blurred) */}
+                {/* Layer 2: Heatmap (blurred) — circles */}
                 <g filter={`url(#${filterId})`}>
                     {gridCounts.map((row, rowIndex) => (
                         row.map((count, colIndex) => {
                             const normalized = maxCount > 0 ? count / maxCount : 0;
                             const intensity = Math.pow(normalized, 0.6);
+                            const cx = (colIndex + 0.5) * gridSize;
+                            const cy = (rowIndex + 0.5) * gridSize;
+                            const r = count > 0 ? intensity * (gridSize + 5) / 2 : 0;
                             return (
-                                <motion.rect
+                                <motion.circle
                                     key={`${rowIndex}-${colIndex}`}
-                                    x={colIndex * gridSize }
-                                    y={rowIndex * gridSize }
-                                    width={gridSize + 1}
-                                    height={gridSize + 1}
+                                    cx={cx}
+                                    cy={cy}
+                                    r={r}
                                     initial={false}
-                                    animate={{ 
-                                            fill: interpolateColor(HEAT_SCALE, intensity),
+                                    animate={{
+                                        fill: interpolateColor(HEAT_SCALE, intensity),
                                         opacity: count > 0 ? 0.4 + intensity * 0.7 : 0,
                                     }}
                                     transition={{ duration: 0.35, ease: "easeOut" }}

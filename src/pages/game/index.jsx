@@ -7,6 +7,7 @@ import styles from "@/styles/Home.module.scss";
 import ShotMap from '@/components/match/ShotMap';
 import Stats from '@/components/match/Stats';
 import GridHeatMap from '@/components/heatmaps/GridHeatMap';
+import LineupPitch from '@/components/lineup/LineupPitch';
 import { getMatchColors } from '@/data/teamColours';
 import { motion, useAnimate, useMotionValue, useTransform } from "motion/react"
 import ThreeDGridHeatMap from '@/components/heatmaps/3DGridHeatMap';
@@ -187,7 +188,13 @@ export default function Game() {
             )}
             
             {activeTab === 'lineup' && (
-                <div style={{ padding: '2rem', color: 'var(--color-text-secondary)' }}>Lineup coming soon</div>
+                <div className={styles.lineupSection}>
+                    <LineupPitch
+                        gameData={data}
+                        homeTeamName={homeTeam}
+                        awayTeamName={awayTeam}
+                    />
+                </div>
             )}
             
             
