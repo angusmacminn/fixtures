@@ -1,6 +1,7 @@
-import { useId } from "react";
+import { useId, useState } from "react";
 import useLineupData from "@/utils/useLineupData";
 import { getMatchColors } from "@/data/teamColours";
+import PlayerStatsModal from "@/components/lineup/PlayerStatsModal";
 import styles from "@/styles/LineupPitch.module.scss";
 
 // Vertical pitch: width 80, height 120 (top half 0–60, bottom half 60–120)
@@ -24,11 +25,16 @@ function pitchX(normX) {
 
 export default function LineupPitch({ gameData, homeTeamName, awayTeamName }) {
     const uid = useId();
+    const [selectedPlayer, setSelectedPlayer] = useState(null);
     const { home, away } = useLineupData(gameData, homeTeamName, awayTeamName);
     const colors = getMatchColors(homeTeamName, awayTeamName);
 
     const patternId = `lineupGrid-${uid}`;
     const gridSize = 4;
+
+    const handlePlayerClick = (player, teamName) => {
+        setSelectedPlayer({ ...player, teamName });
+    };
 
     return (
         <div className={styles.container}>
@@ -109,6 +115,11 @@ export default function LineupPitch({ gameData, homeTeamName, awayTeamName }) {
                             key={`home-${i}-${player.jerseyNumber}`}
                             transform={`translate(${pitchX(player.x)}, ${homePitchY(player.y)})`}
                             className={styles.playerGroup}
+                            onClick={() => handlePlayerClick(player, homeTeamName)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => e.key === "Enter" && handlePlayerClick(player, homeTeamName)}
+                            aria-label={`${player.playerName || player.lastName}, ${player.jerseyNumber}`}
                         >
                             <circle
                                 r={4.2}
@@ -142,6 +153,11 @@ export default function LineupPitch({ gameData, homeTeamName, awayTeamName }) {
                             key={`away-${i}-${player.jerseyNumber}`}
                             transform={`translate(${pitchX(player.x)}, ${awayPitchY(player.y)})`}
                             className={styles.playerGroup}
+                            onClick={() => handlePlayerClick(player, awayTeamName)}
+                            role="button"
+                            tabIndex={0}
+                            onKeyDown={(e) => e.key === "Enter" && handlePlayerClick(player, awayTeamName)}
+                            aria-label={`${player.playerName || player.lastName}, ${player.jerseyNumber}`}
                         >
                             <circle
                                 r={4.2}
@@ -168,6 +184,15 @@ export default function LineupPitch({ gameData, homeTeamName, awayTeamName }) {
                     ))}
                 </g>
             </svg>
+
+            <PlayerStatsModal
+                open={!!selectedPlayer}
+                onClose={() => setSelectedPlayer(null)}
+                player={selectedPlayer}
+                teamName={selectedPlayer?.teamName}
+                gameData={gameData}
+                awayTeamName={awayTeamName}
+            />
 
             {home.players.length === 0 && away.players.length === 0 && (
                 <p className={styles.emptyMessage}>No lineup data for this match.</p>

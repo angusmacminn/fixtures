@@ -21,7 +21,12 @@
 }
 
 .playerGroup {
-    pointer-events: none;
+    cursor: pointer;
+    pointer-events: auto;
+
+    &:hover circle {
+        filter: brightness(1.15);
+    }
 }
 
 .jerseyNumber {
