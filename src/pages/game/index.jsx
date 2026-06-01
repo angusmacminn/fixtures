@@ -102,16 +102,32 @@ export default function Game() {
 
     return (
         <section className={`${styles.main} ${isDesktop ? styles.desktop : styles.mobile}`}>
+            <div className={styles.matchHeader}>
+                <MatchHeader 
+                    matchData={headerData} 
+                    gameData={data} 
+                    isDesktop={isDesktop}/>
+            </div>
 
-            <MatchHeader matchData={headerData} gameData={data}/>
-            <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} isDesktop={isDesktop} />   
-            
+            {/* row: nav rail | content */}
+            <div className={styles.workspace}>
+              <aside className={styles.navRail}>
+                <TabNavigation
+                  activeTab={activeTab}
+                  onTabChange={setActiveTab}
+                  isDesktop={isDesktop}
+                />
+              </aside>
+              
+            <div className={styles.matchContent}>
             {activeTab === 'match' && (
-                <>
-                    <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
-
+                <div className={styles.matchStats}>
+                    <div className={styles.matchStatsComponent}>
+                        <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
+                    </div>
                     
-                    <ShotMap 
+                    <div className={styles.shotmapComponent}>
+                        <ShotMap 
                         gameData={data} 
                         team={teamFilter} 
                         minute={selectedMinute}
@@ -119,11 +135,13 @@ export default function Game() {
                         awayTeam={awayTeam}
                         selectedTeam={selectedTeam}
                         setSelectedTeam={setSelectedTeam}
-                    />
-                    <TimeSlider minute={selectedMinute} onChange={setSelectedMinute}/> 
-                    
-                </>
+                        />
+                        <TimeSlider minute={selectedMinute} onChange={setSelectedMinute}/> 
+                    </div>
+                </div>
             )}
+            </div>
+            
             
             {activeTab === 'heatmaps' && (
                 
@@ -206,7 +224,7 @@ export default function Game() {
                     />
                 </div>
             )}
-            
+        </div>
             
         </section>
     );

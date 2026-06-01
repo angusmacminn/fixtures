@@ -19,7 +19,7 @@ function getLastName(fullName) {
     return parts[parts.length - 1] ?? "";
 }
 
-export default function MatchHeader({ matchData, gameData = [] }) {
+export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
     const homeTeamName = matchData.home_team.home_team_name;
     const homeTeamScore = matchData.home_score;
     const awayTeamName = matchData.away_team.away_team_name;
@@ -53,7 +53,7 @@ export default function MatchHeader({ matchData, gameData = [] }) {
     }, [gameData, homeTeamName, awayTeamName]);
 
     return (
-        <div className={styles.matchHeader}>
+        <div className={`${styles.matchHeader} ${isDesktop ? styles.desktop : ""}`}>
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
