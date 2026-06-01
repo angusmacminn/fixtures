@@ -18,13 +18,34 @@
     width: 100%;
     text-align: left;
     color: var(--color-text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 1rem 0;
+}
+
+.shotMapTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
 }
 
 .shotMapLegend {
     display: flex;
     gap: 1rem;
     color: var(--color-text-secondary);
-    padding: 1rem 0;
+}
+
+@media (max-width: 420px) {
+
+  .shotMapHeader {
+    gap: 1rem;
+  }
+
+  .shotMapLegend {
+    font-size: 0.8rem;
+  }
 }
 
 .legendItem {
@@ -45,6 +66,10 @@
     height: 0.5rem;
     border-radius: 50%;
     background: red;
+}
+
+.teamSelector {
+    margin-top: 0.5rem;
 }
 
 .shotMapContainer {

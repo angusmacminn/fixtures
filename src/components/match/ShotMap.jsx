@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import styles from "@/styles/ShotMap.module.scss";
 import { getTeamColorWithOpacity } from "@/data/teamColours";
+import TeamSelector from "@/components/TeamSelector";
 
 export default function ShotMap({
   gameData,
@@ -9,6 +10,8 @@ export default function ShotMap({
   minute,
   homeTeam,
   awayTeam,
+  selectedTeam,
+  setSelectedTeam,
 }) {
   const [hoveredShot, setHoveredShot] = useState(null);
 
@@ -47,16 +50,27 @@ export default function ShotMap({
     <>
       <div className={styles.shotMapSection}>
         <div className={styles.shotMapHeader}>
-          <h2>Attempts</h2>
-          <div className={styles.shotMapLegend}>
-            <div className={styles.legendItem}>
-              <div className={styles.legendColorGoal}></div>
-              <span className={styles.legendLabel}>Goal</span>
+          <div className={styles.shotMapTitle}>
+            <h2>Attempts</h2>
+            <div className={styles.shotMapLegend}>
+              <div className={styles.legendItem}>
+                <div className={styles.legendColorGoal}></div>
+                <span className={styles.legendLabel}>Goal</span>
+              </div>
+              <div className={styles.legendItem}>
+                <div className={styles.legendColorShot}></div>
+                <span className={styles.legendLabel}>Shot</span>
+              </div>
             </div>
-            <div className={styles.legendItem}>
-              <div className={styles.legendColorShot}></div>
-              <span className={styles.legendLabel}>Shot</span>
-            </div>
+          </div>
+          <div className={styles.teamSelector}>
+            <TeamSelector
+                          homeTeam={homeTeam}
+                          awayTeam={awayTeam}
+                          value={selectedTeam}
+                          onChange={setSelectedTeam}
+                          layoutId="shotTeamPill"
+            />
           </div>
         </div>
 

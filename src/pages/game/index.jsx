@@ -33,7 +33,18 @@ export default function Game() {
     // state for 3D heat map selection
     const [threeDeeView, setThreeDeeView] = useState(false);
 
-    
+    const [isDesktop, setIsDesktop] = useState(false);
+
+    useEffect(() => {
+        const media = window.matchMedia('(min-width: 800px)');
+        const onChange = (e) => setIsDesktop(e.matches);
+
+        setIsDesktop(media.matches);
+        media.addEventListener('change', onChange);
+
+        return () => media.removeEventListener('change', onChange);
+    }, []);
+
 
     
     // filter match and team data to send to header
@@ -90,14 +101,15 @@ export default function Game() {
     const pointerEvents3D = useTransform(progress, [0.3, 1], ['none', 'auto']);
 
     return (
-        <section className={styles.main}>
+        <section className={`${styles.main} ${isDesktop ? styles.desktop : styles.mobile}`}>
 
             <MatchHeader matchData={headerData} gameData={data}/>
-            <TabNavigation activeTab={activeTab} onTabChange={setActiveTab}/>   
+            <TabNavigation activeTab={activeTab} onTabChange={setActiveTab} isDesktop={isDesktop} />   
             
             {activeTab === 'match' && (
                 <>
                     <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
+
                     
                     <ShotMap 
                         gameData={data} 
@@ -105,15 +117,11 @@ export default function Game() {
                         minute={selectedMinute}
                         homeTeam={homeTeam}
                         awayTeam={awayTeam}
+                        selectedTeam={selectedTeam}
+                        setSelectedTeam={setSelectedTeam}
                     />
                     <TimeSlider minute={selectedMinute} onChange={setSelectedMinute}/> 
-                    <TeamSelector
-                        homeTeam={homeTeam}
-                        awayTeam={awayTeam}
-                        value={selectedTeam}
-                        onChange={setSelectedTeam}
-                        layoutId="shotTeamPill"
-                    />
+                    
                 </>
             )}
             

@@ -1,7 +1,7 @@
 import styles from "@/styles/TabNavigation.module.scss";
 import { motion } from "motion/react";
 
-export default function TabNavigation({ activeTab, onTabChange }) {
+export default function TabNavigation({ activeTab, onTabChange, isDesktop }) {
     const tabs = [
         { id: 'match', label: 'Match' }, 
         { id: 'heatmaps', label: 'Heatmaps' }, 
@@ -9,7 +9,7 @@ export default function TabNavigation({ activeTab, onTabChange }) {
     ];
         
     return (
-        <div className={styles.tabNavigation}>
+        <div className={`${styles.tabNavigation} ${isDesktop ? styles.desktop : styles.mobile}`}>
             {tabs.map((tab) => (
                 <button
                     key={tab.id}
