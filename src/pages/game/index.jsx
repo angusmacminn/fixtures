@@ -192,7 +192,7 @@ export default function Game() {
                         />
                     </motion.div>
                 </motion.div>
-                    <TimeSlider minute={heatMapMinute} onChange={setHeatMapMinute} />
+                    <TimeSlider minute={heatMapMinute} onChange={setHeatMapMinute} variant="heatmapVariant" />
                     
                 </div>
             )}

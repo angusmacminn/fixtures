@@ -2,8 +2,21 @@
     width: 100%;
     max-width: 1000px;
     padding: 0 1rem;
+    margin-top: -1rem;
 }
 
+.timeSliderLabel {
+    width: 100%;
+    // text-align: left;
+    color: var(--color-text-secondary);
+    font-size: 10px;
+    font-weight: 500;
+    padding-top: 1rem;
+}
+
+.heatmapVariant {
+    margin-top: -2rem;
+}
 .timeSlider {
     width: 100%;
     display: flex;

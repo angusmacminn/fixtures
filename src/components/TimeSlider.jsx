@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { useState, useRef } from "react";
 import styles from "@/styles/TimeSlider.module.scss";
 
-export default function TimeSlider({ minute, onChange }) {
+export default function TimeSlider({ minute, onChange, variant = "" }) {
     const [isDragging, setIsDragging] = useState(false);
 
     const rafRef = useRef(null);
@@ -48,7 +48,10 @@ export default function TimeSlider({ minute, onChange }) {
     };
 
     return (
-        <div className={styles.sliderWrapper}>
+        <div className={`${styles.sliderWrapper} ${styles[variant]}`}>
+            <div className={styles.timeSliderLabel}>
+                <p>Drag to adjust minute</p>
+            </div>
             <div 
                 className={styles.timeSlider}
                 onMouseDown={(e) => {
