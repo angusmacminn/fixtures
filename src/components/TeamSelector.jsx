@@ -9,6 +9,7 @@ export default function TeamSelector({
   showBoth = true,
   layoutId = "teamPill",
   className = "",
+  variant = "",
 }) {
   const options = [
     { id: "home", label: homeTeam },
@@ -17,7 +18,7 @@ export default function TeamSelector({
   ];
 
   return (
-    <div className={`${styles.wrapper} ${className}`.trim()}>
+    <div className={`${styles.wrapper} ${styles[variant] ?? ""} ${className}`.trim()}>
       <div className={styles.teamSelector}>
         {options.map((opt) => (
           <button

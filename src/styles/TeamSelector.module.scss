@@ -53,3 +53,17 @@
     gap: 1px;
   }
 }
+
+.heatmapVariant {
+  border-bottom: 1px solid var(--color-border); 
+  margin-top: 0;
+  .teamSelector {
+    justify-content: space-between;
+  }
+
+  .underline {
+    left: 0;
+    right: 0;
+  }
+
+}
