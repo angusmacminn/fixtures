@@ -109,40 +109,41 @@ export default function Game() {
                     isDesktop={isDesktop}/>
             </div>
 
-            {/* row: nav rail | content */}
             <div className={styles.workspace}>
-              <aside className={styles.navRail}>
-                <TabNavigation
-                  activeTab={activeTab}
-                  onTabChange={setActiveTab}
-                  isDesktop={isDesktop}
-                />
-              </aside>
-              
-            <div className={styles.matchContent}>
-            {activeTab === 'match' && (
-                <div className={styles.matchStats}>
+              <div
+                className={`${styles.matchContent} ${
+                  activeTab === 'match' ? styles.matchTabLayout : styles.altTabLayout
+                }`}
+              >
+                <div className={styles.tabNavWrap}>
+                  <TabNavigation
+                    activeTab={activeTab}
+                    onTabChange={setActiveTab}
+                    isDesktop={isDesktop}
+                  />
+                </div>
+
+                {activeTab === 'match' && (
+                  <div className={styles.matchStats}>
                     <div className={styles.matchStatsComponent}>
-                        <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
+                      <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
                     </div>
-                    
+
                     <div className={styles.shotmapComponent}>
-                        <ShotMap 
-                        gameData={data} 
-                        team={teamFilter} 
+                      <ShotMap
+                        gameData={data}
+                        team={teamFilter}
                         minute={selectedMinute}
                         homeTeam={homeTeam}
                         awayTeam={awayTeam}
                         selectedTeam={selectedTeam}
                         setSelectedTeam={setSelectedTeam}
-                        />
-                        <TimeSlider minute={selectedMinute} onChange={setSelectedMinute}/> 
+                      />
+                      <TimeSlider minute={selectedMinute} onChange={setSelectedMinute} />
                     </div>
-                </div>
-            )}
-            </div>
-            
-            
+                  </div>
+                )}
+
             {activeTab === 'heatmaps' && (
                 
                 <div className={styles.heatmapsContainer}>
@@ -224,8 +225,9 @@ export default function Game() {
                     />
                 </div>
             )}
-        </div>
-            
+              </div>
+            </div>
+
         </section>
     );
 }

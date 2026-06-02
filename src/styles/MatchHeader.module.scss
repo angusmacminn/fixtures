@@ -67,6 +67,8 @@
         font-size: 2.5rem;
         min-width: 3rem;
     }
+
+    
 }
 
 .scorersLeft,
@@ -142,9 +144,26 @@
 }
 
 .matchHeader.desktop {
+    .teamAbbrWrapLeft {
+        justify-self: flex-start;
+    }
+
+    .teamAbbrWrapRight {
+        justify-self: flex-end;
+    }
+
+    .scoreBox {
+        padding: 0;
+    }
+    .score {
+        // font-size: 4rem;
+        font-weight: 600;
+    }
     .scoreRow {
       max-width: none;
-      margin-left: calc(var(--rail-w) + var(--col-gap));
-      margin-right: calc(var(--right-w) + var(--col-gap));
+    //   margin-left: calc(var(--rail-w) + var(--col-gap));
+    //   margin-right: calc(var(--right-w) + var(--col-gap));
+      justify-content: flex-start;
     }
+
   }
