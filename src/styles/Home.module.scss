@@ -35,7 +35,9 @@ $spacing-unit: 1rem;
 .main.desktop {
   max-width: $container-max-width;
   margin: 0 auto;
-  
+  --rail-w: 150px;
+  --right-w: 250px;
+  --col-gap: 1.5rem;
 }
 
 .workspace {
@@ -47,20 +49,22 @@ $spacing-unit: 1rem;
 
 // desktop: rail + content side by side
 .main.desktop .workspace {
-   max-width: $container-max-width;
-   margin: 0 auto;
+  max-width: $container-max-width;
+  margin: 0 auto;
   display: grid;
-  grid-template-columns: 200px 1fr;   // rail | content
-  gap: 1.5rem;
+  grid-template-columns: var(--rail-w) 1fr;   // rail | content
+  gap: var(--col-gap);
   align-items: start;
 }
 
 .main.desktop .matchStats {
   display: grid;
-  grid-template-columns: 1fr 320px;   // shotmap | stats  (nav rail is outside this, in .workspace)
-  gap: 1.5rem;
+  grid-template-columns: 1fr var(--right-w);   // shotmap | stats  (nav rail is outside this, in .workspace)
+  gap: var(--col-gap);
   align-items: start;
 }
+
+
 
 // ShotMap = hero, center column. Stats = supporting panel, right column.
 // Explicit placement keeps the mobile DOM order (Stats first/on top) intact.

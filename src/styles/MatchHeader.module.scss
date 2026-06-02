@@ -3,6 +3,12 @@
     padding: 1.5rem 1rem;
 }
 
+@media (min-width: 600px) {
+    .matchHeader {
+        padding: 1rem 1rem;
+    }
+}
+
 .metaRow {
     display: flex;
     align-items: center;
@@ -32,7 +38,10 @@
     justify-items: center;
     column-gap: 1.5rem;
     row-gap: 0.75rem;
+    max-width: 600px;
+    margin: 0 auto;
 }
+
 
 .teamAbbrWrapLeft {
     grid-column: 1;
@@ -90,7 +99,7 @@
     font-size: 0.9rem;
     color: var(--color-text-secondary);
     line-height: 1.05;
-    white-space: nowrap;
+    white-space: nowrap;    
 }
 
 .scorerDot {
@@ -133,6 +142,9 @@
 }
 
 .matchHeader.desktop {
-    // max-width: 500px;
-    // margin: 0 auto;
-}
+    .scoreRow {
+      max-width: none;
+      margin-left: calc(var(--rail-w) + var(--col-gap));
+      margin-right: calc(var(--right-w) + var(--col-gap));
+    }
+  }

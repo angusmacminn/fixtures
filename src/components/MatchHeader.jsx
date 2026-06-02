@@ -69,7 +69,7 @@ export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
                 <div className={styles.separator} />
                 <div className={styles.scoreRow}>
                     <div className={styles.teamAbbrWrapLeft}>
-                        <span className={styles.teamAbbr}>{homeAcronym}</span>
+                        <span className={styles.teamAbbr}>{ isDesktop ? homeTeamName : homeAcronym}</span>
                     </div>
                     <div className={styles.scoreBox}>
                         <span className={styles.score}>
@@ -77,7 +77,7 @@ export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
                         </span>
                     </div>
                     <div className={styles.teamAbbrWrapRight}>
-                        <span className={styles.teamAbbr}>{awayAcronym}</span>
+                        <span className={styles.teamAbbr}>{ isDesktop ? awayTeamName : awayAcronym}</span>
                     </div>
 
                     {homeScorers.length > 0 && (
