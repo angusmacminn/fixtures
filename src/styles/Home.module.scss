@@ -58,6 +58,11 @@ $spacing-unit: 1rem;
   margin: 0 1rem 0.5rem;
 }
 
+.main.desktop .tabNavWrap {
+  max-width: $container-max-width;
+  margin: 0 8rem 0.25rem 8rem;
+}
+
 .main.mobile .matchHeader {
   position: sticky;
   top: 0;
@@ -65,8 +70,8 @@ $spacing-unit: 1rem;
   background: var(--color-bg-primary);
 }
 
-// Match tab: tabs sit above the shot map column; stats stay in the right column
-.main.desktop .matchTabLayout {
+// Match tab: shot map left, stats right (desktop only)
+.main.desktop .matchStatsLayout {
   display: grid;
   grid-template-columns: 1fr var(--right-w);
   gap: var(--col-gap);
@@ -74,40 +79,13 @@ $spacing-unit: 1rem;
   padding: 0 1rem;
 }
 
-.main.desktop .matchTabLayout .tabNavWrap {
+.main.desktop .matchStatsLayout .shotmapComponent {
   grid-column: 1;
-  margin: 0 8rem 0.25rem 8rem;
 }
 
-.main.desktop .matchTabLayout .matchStats {
-  display: contents;
-}
-
-.main.desktop .matchStats {
-  display: grid;
-  grid-template-columns: 1fr var(--right-w);
-  gap: var(--col-gap);
-  align-items: start;
-}
-
-
-
-// ShotMap = hero, center column. Stats = supporting panel, right column.
-// Explicit placement keeps the mobile DOM order (Stats first/on top) intact.
-.main.desktop .matchTabLayout .shotmapComponent {
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.main.desktop .matchTabLayout .matchStatsComponent {
+.main.desktop .matchStatsLayout .matchStatsComponent {
   grid-column: 2;
-  grid-row: 2 / span 3;
   align-self: start;
-}
-
-.main.desktop .altTabLayout .tabNavWrap {
-  max-width: $container-max-width;
-  margin: 0 8rem 0.25rem 8rem;
 }
 
 .heatmapControlsContainer {
@@ -142,25 +120,32 @@ $spacing-unit: 1rem;
   }
 }
 
-.heatmapsContainer {
+%tab-panel-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   margin: 1rem;
-  padding: 1rem 1rem 2rem;
+  padding: 1rem 0 1rem;
   max-width: $container-max-width;
   background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: 10px;
 }
 
+.heatmapsContainer {
+  @extend %tab-panel-container;
+}
+
 .lineupSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 1rem;
-  padding-bottom: 2rem;
+  @extend %tab-panel-container;
+}
+
+.lineupPitchArea {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 3 / 2;
 }
 
 .homeMain {

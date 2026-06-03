@@ -113,11 +113,7 @@ export default function Game() {
             
 
             <div className={styles.workspace}>
-              <div
-                className={`${styles.matchContent} ${
-                  activeTab === 'match' ? styles.matchTabLayout : styles.altTabLayout
-                }`}
-              >
+              <div className={styles.matchContent}>
                 <div className={styles.tabNavWrap}>
                   <TabNavigation
                     activeTab={activeTab}
@@ -127,7 +123,11 @@ export default function Game() {
                 </div>
 
                 {activeTab === 'match' && (
-                  <div className={styles.matchStats}>
+                  <div
+                    className={`${styles.matchStats} ${
+                      isDesktop ? styles.matchStatsLayout : ''
+                    }`}
+                  >
                     <div className={styles.shotmapComponent}>
                       <ShotMap
                         gameData={data}
@@ -224,11 +224,13 @@ export default function Game() {
             
             {activeTab === 'lineup' && (
                 <div className={styles.lineupSection}>
-                    <LineupPitch
-                        gameData={data}
-                        homeTeamName={homeTeam}
-                        awayTeamName={awayTeam}
-                    />
+                    <div className={styles.lineupPitchArea}>
+                        <LineupPitch
+                            gameData={data}
+                            homeTeamName={homeTeam}
+                            awayTeamName={awayTeam}
+                        />
+                    </div>
                 </div>
             )}
               </div>
