@@ -102,12 +102,15 @@ export default function Game() {
 
     return (
         <section className={`${styles.main} ${isDesktop ? styles.desktop : styles.mobile}`}>
-            <div className={styles.matchHeader}>
-                <MatchHeader 
-                    matchData={headerData} 
-                    gameData={data} 
-                    isDesktop={isDesktop}/>
+            <div className={styles.stickyHeader}>
+                <div className={styles.matchHeader}>
+                    <MatchHeader 
+                        matchData={headerData} 
+                        gameData={data} 
+                        isDesktop={isDesktop}/>
+                </div>
             </div>
+            
 
             <div className={styles.workspace}>
               <div

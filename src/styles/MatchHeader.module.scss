@@ -1,6 +1,12 @@
 .matchHeader {
     width: 100%;
     padding: 1.5rem 1rem;
+    background: var(--color-bg-primary);
+
+    // Vertical padding driven by Motion on mobile scroll collapse
+    &:not(.desktop) {
+        padding-block: 0;
+    }
 }
 
 @media (min-width: 600px) {
