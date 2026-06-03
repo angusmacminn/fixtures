@@ -125,10 +125,6 @@ export default function Game() {
 
                 {activeTab === 'match' && (
                   <div className={styles.matchStats}>
-                    <div className={styles.matchStatsComponent}>
-                      <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
-                    </div>
-
                     <div className={styles.shotmapComponent}>
                       <ShotMap
                         gameData={data}
@@ -141,6 +137,11 @@ export default function Game() {
                       />
                       <TimeSlider minute={selectedMinute} onChange={setSelectedMinute} />
                     </div>
+                    <div className={styles.matchStatsComponent}>
+                      <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
+                    </div>
+
+                    
                   </div>
                 )}
 
