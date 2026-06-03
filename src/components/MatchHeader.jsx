@@ -1,22 +1,7 @@
 import styles from "@/styles/MatchHeader.module.scss";
-import {
-    motion,
-    useMotionValue,
-    useTransform,
-} from "motion/react";
+import { motion } from "motion/react";
 import { getTeamAcronym } from "@/data/teamAcronyms";
-import { useEffect, useMemo } from "react";
-
-const COLLAPSE_SCROLL_PX = 80;
-
-/** Page scroll lives on body (see globals.scss), not window — useScroll() alone stays at 0. */
-function getPageScrollTop() {
-    return Math.max(
-        window.scrollY,
-        document.documentElement.scrollTop,
-        document.body.scrollTop
-    );
-}
+import { useMemo } from "react";
 
 function formatMatchDate(dateStr) {
     if (!dateStr) return "";
@@ -67,134 +52,36 @@ export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
         };
     }, [gameData, homeTeamName, awayTeamName]);
 
-    const collapse = useMotionValue(0);
-
-    useEffect(() => {
-        const update = () => {
-            if (isDesktop) {
-                collapse.set(0);
-                return;
-            }
-            const y = getPageScrollTop();
-            collapse.set(Math.min(1, Math.max(0, y / COLLAPSE_SCROLL_PX)));
-        };
-
-        update();
-        window.addEventListener("scroll", update, { passive: true });
-        document.body.addEventListener("scroll", update, { passive: true });
-
-        return () => {
-            window.removeEventListener("scroll", update);
-            document.body.removeEventListener("scroll", update);
-        };
-    }, [isDesktop, collapse]);
-
-    const paddingY = useTransform(collapse, [0, 1], ["24px", "8px"]);
-    const metaOpacity = useTransform(collapse, [0, 0.55], [1, 0]);
-    const metaMaxHeight = useTransform(collapse, [0, 1], [48, 0]);
-    const metaMarginBottom = useTransform(collapse, [0, 1], [12, 0]);
-    const separatorOpacity = useTransform(collapse, [0, 0.45], [1, 0]);
-    const separatorHeight = useTransform(collapse, [0, 1], [1, 0]);
-    const separatorMarginBottom = useTransform(collapse, [0, 1], [16, 0]);
-    const scorersOpacity = useTransform(collapse, [0, 0.35], [1, 0]);
-    const scorersMaxHeight = useTransform(collapse, [0, 1], [120, 0]);
-    const scoreRowGap = useTransform(collapse, [0, 1], ["12px", "0px"]);
-    const teamFontSize = useTransform(collapse, [0, 1], ["2.5rem", "1.625rem"]);
-    const scoreFontSize = useTransform(collapse, [0, 1], ["2.25rem", "1.5rem"]);
-    const scorePaddingY = useTransform(collapse, [0, 1], ["8px", "2px"]);
-
-    const mobileMotion = !isDesktop;
-
     return (
-        <motion.div
-            className={`${styles.matchHeader} ${isDesktop ? styles.desktop : ""}`}
-            style={mobileMotion ? { paddingTop: paddingY, paddingBottom: paddingY } : undefined}
-        >
+        <div className={`${styles.matchHeader} ${isDesktop ? styles.desktop : ""}`}>
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
             >
-                <motion.div
-                    className={styles.metaRow}
-                    style={
-                        mobileMotion
-                            ? {
-                                  opacity: metaOpacity,
-                                  maxHeight: metaMaxHeight,
-                                  marginBottom: metaMarginBottom,
-                                  overflow: "hidden",
-                              }
-                            : undefined
-                    }
-                >
+                <div className={styles.metaRow}>
                     <span className={styles.metaLeft}>
                         {stadium}
                         {matchWeek != null && ` • GW ${matchWeek}`}
                     </span>
                     <span className={styles.metaRight}>{matchDate}</span>
-                </motion.div>
-                <motion.div
-                    className={styles.separator}
-                    style={
-                        mobileMotion
-                            ? {
-                                  opacity: separatorOpacity,
-                                  height: separatorHeight,
-                                  marginBottom: separatorMarginBottom,
-                              }
-                            : undefined
-                    }
-                />
-                <motion.div
-                    className={styles.scoreRow}
-                    style={mobileMotion ? { rowGap: scoreRowGap } : undefined}
-                >
+                </div>
+                <div className={styles.separator} />
+                <div className={styles.scoreRow}>
                     <div className={styles.teamAbbrWrapLeft}>
-                        <motion.span
-                            className={styles.teamAbbr}
-                            style={mobileMotion ? { fontSize: teamFontSize } : undefined}
-                        >
-                            {isDesktop ? homeTeamName : homeAcronym}
-                        </motion.span>
+                        <span className={styles.teamAbbr}>{ isDesktop ? homeTeamName : homeAcronym}</span>
                     </div>
-                    <motion.div
-                        className={styles.scoreBox}
-                        style={
-                            mobileMotion
-                                ? { paddingTop: scorePaddingY, paddingBottom: scorePaddingY }
-                                : undefined
-                        }
-                    >
-                        <motion.span
-                            className={styles.score}
-                            style={mobileMotion ? { fontSize: scoreFontSize } : undefined}
-                        >
+                    <div className={styles.scoreBox}>
+                        <span className={styles.score}>
                             {homeTeamScore} : {awayTeamScore}
-                        </motion.span>
-                    </motion.div>
+                        </span>
+                    </div>
                     <div className={styles.teamAbbrWrapRight}>
-                        <motion.span
-                            className={styles.teamAbbr}
-                            style={mobileMotion ? { fontSize: teamFontSize } : undefined}
-                        >
-                            {isDesktop ? awayTeamName : awayAcronym}
-                        </motion.span>
+                        <span className={styles.teamAbbr}>{ isDesktop ? awayTeamName : awayAcronym}</span>
                     </div>
 
                     {homeScorers.length > 0 && (
-                        <motion.div
-                            className={styles.scorersLeft}
-                            style={
-                                mobileMotion
-                                    ? {
-                                          opacity: scorersOpacity,
-                                          maxHeight: scorersMaxHeight,
-                                          overflow: "hidden",
-                                      }
-                                    : undefined
-                            }
-                        >
+                        <div className={styles.scorersLeft}>
                             {homeScorers.map((s) => (
                                 <div key={s.key} className={styles.scorerRow}>
                                     <span className={styles.scorerDot} />
@@ -202,22 +89,11 @@ export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
                                     <span className={styles.scorerMinute}>{s.minute}'</span>
                                 </div>
                             ))}
-                        </motion.div>
+                        </div>
                     )}
 
                     {awayScorers.length > 0 && (
-                        <motion.div
-                            className={styles.scorersRight}
-                            style={
-                                mobileMotion
-                                    ? {
-                                          opacity: scorersOpacity,
-                                          maxHeight: scorersMaxHeight,
-                                          overflow: "hidden",
-                                      }
-                                    : undefined
-                            }
-                        >
+                        <div className={styles.scorersRight}>
                             {awayScorers.map((s) => (
                                 <div key={s.key} className={styles.scorerRow}>
                                     <span className={styles.scorerDot} />
@@ -225,10 +101,10 @@ export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
                                     <span className={styles.scorerMinute}>{s.minute}'</span>
                                 </div>
                             ))}
-                        </motion.div>
+                        </div>
                     )}
-                </motion.div>
+                </div>
             </motion.div>
-        </motion.div>
+        </div>
     );
 }
