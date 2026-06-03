@@ -62,11 +62,12 @@ $spacing-unit: 1rem;
   grid-template-columns: 1fr var(--right-w);
   gap: var(--col-gap);
   align-items: start;
+  padding: 0 1rem;
 }
 
 .main.desktop .matchTabLayout .tabNavWrap {
   grid-column: 1;
-  margin: 0 1rem 0.25rem 1rem;
+  margin: 0 8rem 0.25rem 8rem;
 }
 
 .main.desktop .matchTabLayout .matchStats {

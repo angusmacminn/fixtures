@@ -138,7 +138,7 @@ export default function Game() {
                       <TimeSlider minute={selectedMinute} onChange={setSelectedMinute} />
                     </div>
                     <div className={styles.matchStatsComponent}>
-                      <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} />
+                      <Stats gameData={data} homeTeam={homeTeam} awayTeam={awayTeam} isDesktop={isDesktop} />
                     </div>
 
                     

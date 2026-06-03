@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 import styles from "@/styles/Stats.module.scss";
+import { getTeamAcronym } from "@/data/teamAcronyms";
 
-export default function Stats({ gameData, homeTeam, awayTeam }) {
+export default function Stats({ gameData, homeTeam, awayTeam, isDesktop }) {
     const stats = useMemo(() => {
+    
+
         const shots = { home: 0, away: 0 };
         const shotsOnTarget = { home: 0, away: 0 };
         const xg = { home: 0, away: 0 };
@@ -104,6 +107,9 @@ export default function Stats({ gameData, homeTeam, awayTeam }) {
         );
     };
 
+    const homeAcronym = getTeamAcronym(homeTeam);
+    const awayAcronym = getTeamAcronym(awayTeam);
+
 
     const formatXg = (val) => val.toFixed(2);
     return (
@@ -113,6 +119,13 @@ export default function Stats({ gameData, homeTeam, awayTeam }) {
                     Stats
                 </h2>
             </div>
+            {isDesktop && (
+                <div className={styles.teamColumnLabel}>
+                    <span className={styles.teamLabel}>{homeAcronym}</span>
+                    <span className={styles.labelSpacer} aria-hidden="true" />
+                    <span className={styles.teamLabel}>{awayAcronym}</span>
+                </div>
+            )}
         <StatRow home={stats.shots.home} away={stats.shots.away} label="Shots" />
         <StatRow home={stats.shotsOnTarget.home} away={stats.shotsOnTarget.away} label="Shots on Target" />
         <StatRow home={stats.xg.home} away={stats.xg.away} label="xG" format={formatXg} />

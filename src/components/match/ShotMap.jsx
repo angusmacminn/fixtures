@@ -105,7 +105,7 @@ export default function ShotMap({
               y="0"
               width="0.5"
               height="80"
-              fill="rgba(255,255,255,0.15)"
+              fill="rgba(255,255,255,0.25)"
             />
 
             {/* Left penalty box */}
@@ -115,7 +115,7 @@ export default function ShotMap({
               width="20"
               height="40"
               fill="none"
-              stroke="rgba(255,255,255,0.15)"
+              stroke="rgba(255,255,255,0.25)"
               strokeWidth="0.5"
             />
 
@@ -126,7 +126,7 @@ export default function ShotMap({
               width="20"
               height="40"
               fill="none"
-              stroke="rgba(255,255,255,0.15)"
+              stroke="rgba(255,255,255,0.25)"
               strokeWidth="0.5"
             />
 
