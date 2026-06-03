@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import styles from "@/styles/ShotMap.module.scss";
-import { getTeamColorWithOpacity } from "@/data/teamColours";
 import TeamSelector from "@/components/TeamSelector";
 
 export default function ShotMap({
@@ -144,11 +143,7 @@ export default function ShotMap({
                   cx={pos.x}
                   cy={pos.y}
                   r={size / 2}
-                  fill={
-                    isGoal
-                      ? "#70E000"
-                      : getTeamColorWithOpacity(shot.team, 0.85)
-                  }
+                  fill={isGoal ? "#70E000" : "red"}
                   animate={{
                     opacity: visible ? (isHovered ? 1 : 0.85) : 0,
                     scale: visible ? 1 : 0.5,

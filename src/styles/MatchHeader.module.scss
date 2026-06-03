@@ -92,6 +92,8 @@
     grid-column: 3;
     grid-row: 2;
     justify-self: stretch;
+    justify-content: flex-start;
+    align-items: flex-end;
 }
 
 .scorerRow {
