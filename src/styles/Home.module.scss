@@ -107,8 +107,12 @@ $spacing-unit: 1rem;
 
 .main.desktop .altTabLayout .tabNavWrap {
   max-width: $container-max-width;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 8rem 0.25rem 8rem;
+}
+
+.heatmapControlsContainer {
+  width: 100%;
+  max-width: 1000px;
 }
 
 .title {

@@ -151,21 +151,23 @@ export default function Game() {
             {activeTab === 'heatmaps' && (
                 
                 <div className={styles.heatmapsContainer}>
-                    <TeamSelector
-                        homeTeam={homeTeam}
-                        awayTeam={awayTeam}
-                        value={selectedTeam}
-                        onChange={setSelectedTeam}
-                        layoutId="heatmapTeamPill"
-                        showBoth={false}
-                        variant="heatmapVariant"
-                    />
-                    <HeatMapControls 
-                        selectedEventType={selectedEventType}
-                        onEventTypeChange={setSelectedEventType}
-                        threeDeeView={threeDeeView}
-                        onThreeDeeViewChange={setThreeDeeView}
-                    />
+                    <div className={styles.heatmapControlsContainer}>
+                        <TeamSelector
+                            homeTeam={homeTeam}
+                            awayTeam={awayTeam}
+                            value={selectedTeam}
+                            onChange={setSelectedTeam}
+                            layoutId="heatmapTeamPill"
+                            showBoth={false}
+                            variant="heatmapVariant"
+                        />
+                        <HeatMapControls 
+                            selectedEventType={selectedEventType}
+                            onEventTypeChange={setSelectedEventType}
+                            threeDeeView={threeDeeView}
+                            onThreeDeeViewChange={setThreeDeeView}
+                        />
+                    </div>
                 <motion.div
                     ref={scope}
                     style={{
