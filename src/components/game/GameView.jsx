@@ -9,7 +9,8 @@ import LineupPitch from "@/components/lineup/LineupPitch";
 import { getMatchColors } from "@/data/teamColours";
 import { motion, useAnimate, useMotionValue, useTransform } from "motion/react";
 import ThreeDGridHeatMap from "@/components/heatmaps/3DGridHeatMap";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import getMaxMatchMinute from "@/utils/getMaxMatchMinute";
 import HeatMapControls from "@/components/heatmaps/HeatMapControls";
 import TimeSlider from "@/components/TimeSlider";
 import TabNavigation from "@/components/TabNavigation";
@@ -18,11 +19,12 @@ import TeamSelector from "@/components/TeamSelector";
 export default function GameView({ matchId, headerData, gameData = [] }) {
   const events = Array.isArray(gameData) ? gameData : [];
   const hasEvents = events.length > 0;
+  const maxMinute = useMemo(() => getMaxMatchMinute(events), [events]);
 
   const [selectedTeam, setSelectedTeam] = useState("both");
   const [selectedEventType, setSelectedEventType] = useState("Pass");
-  const [selectedMinute, setSelectedMinute] = useState(90);
-  const [heatMapMinute, setHeatMapMinute] = useState(90);
+  const [selectedMinute, setSelectedMinute] = useState(maxMinute);
+  const [heatMapMinute, setHeatMapMinute] = useState(maxMinute);
   const [activeTab, setActiveTab] = useState("match");
   const [threeDeeView, setThreeDeeView] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -30,11 +32,11 @@ export default function GameView({ matchId, headerData, gameData = [] }) {
   useEffect(() => {
     setActiveTab("match");
     setSelectedTeam("both");
-    setSelectedMinute(90);
-    setHeatMapMinute(90);
+    setSelectedMinute(maxMinute);
+    setHeatMapMinute(maxMinute);
     setSelectedEventType("Pass");
     setThreeDeeView(false);
-  }, [matchId]);
+  }, [matchId, maxMinute]);
 
   useEffect(() => {
     const media = window.matchMedia("(min-width: 800px)");
@@ -129,7 +131,11 @@ export default function GameView({ matchId, headerData, gameData = [] }) {
                       selectedTeam={selectedTeam}
                       setSelectedTeam={setSelectedTeam}
                     />
-                    <TimeSlider minute={selectedMinute} onChange={setSelectedMinute} />
+                    <TimeSlider
+                      minute={selectedMinute}
+                      onChange={setSelectedMinute}
+                      maxMinute={maxMinute}
+                    />
                   </>
                 ) : (
                   <p>No event data for this match.</p>
@@ -221,6 +227,7 @@ export default function GameView({ matchId, headerData, gameData = [] }) {
                   <TimeSlider
                     minute={heatMapMinute}
                     onChange={setHeatMapMinute}
+                    maxMinute={maxMinute}
                     variant="heatmapVariant"
                   />
                 </>

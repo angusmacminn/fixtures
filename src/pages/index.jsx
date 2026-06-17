@@ -31,11 +31,7 @@ export default function Home() {
             </div>
           </nav>
 
-          <section className={styles.heroCard}>
-            <h1 className={styles.heroTitle}>Football Match Visualizations</h1>
-            
-          </section>
-
+  
           <section className={styles.gameList}>
       {matches.map((match) => (
         <article key={match.match_id} className={styles.gameCard}>

@@ -3,19 +3,19 @@ import { useState, useRef, useId, useCallback } from "react";
 import styles from "@/styles/TimeSlider.module.scss";
 
 const MIN_MINUTE = 0;
-const MAX_MINUTE = 90;
+const REGULATION_MAX = 90;
 
-function clampMinute(value) {
-    return Math.max(MIN_MINUTE, Math.min(MAX_MINUTE, value));
+function clampMinute(value, maxMinute) {
+    return Math.max(MIN_MINUTE, Math.min(maxMinute, value));
 }
 
-function minuteFromClientX(clientX, rect) {
+function minuteFromClientX(clientX, rect, maxMinute) {
     const x = clientX - rect.left;
     const percent = Math.max(0, Math.min(1, x / rect.width));
-    return Math.round(percent * MAX_MINUTE);
+    return Math.round(percent * maxMinute);
 }
 
-export default function TimeSlider({ minute, onChange, variant = "" }) {
+export default function TimeSlider({ minute, onChange, maxMinute = REGULATION_MAX, variant = "" }) {
     const [isDragging, setIsDragging] = useState(false);
     const labelId = useId();
 
@@ -35,10 +35,10 @@ export default function TimeSlider({ minute, onChange, variant = "" }) {
                 return;
             }
             const rect = track.getBoundingClientRect();
-            onChange(minuteFromClientX(latestClientXRef.current, rect));
+            onChange(minuteFromClientX(latestClientXRef.current, rect, maxMinute));
             rafRef.current = null;
         });
-    }, [onChange]);
+    }, [onChange, maxMinute]);
 
     const endDrag = useCallback(() => {
         if (rafRef.current) {
@@ -92,7 +92,7 @@ export default function TimeSlider({ minute, onChange, variant = "" }) {
                 e.preventDefault();
                 return;
             case "End":
-                onChange(MAX_MINUTE);
+                onChange(maxMinute);
                 e.preventDefault();
                 return;
             default:
@@ -100,7 +100,7 @@ export default function TimeSlider({ minute, onChange, variant = "" }) {
         }
 
         e.preventDefault();
-        onChange(clampMinute(minute + delta));
+        onChange(clampMinute(minute + delta, maxMinute));
     };
 
     const height = (lineMinute) => {
@@ -127,7 +127,7 @@ export default function TimeSlider({ minute, onChange, variant = "" }) {
                 aria-label="Match minute"
                 aria-describedby={labelId}
                 aria-valuemin={MIN_MINUTE}
-                aria-valuemax={MAX_MINUTE}
+                aria-valuemax={maxMinute}
                 aria-valuenow={minute}
                 aria-valuetext={`${minute} minutes`}
                 data-dragging={isDragging || undefined}
@@ -137,7 +137,7 @@ export default function TimeSlider({ minute, onChange, variant = "" }) {
                 onPointerCancel={handlePointerCancel}
                 onKeyDown={handleKeyDown}
             >
-                {Array.from({ length: 90 }, (_, i) => (
+                {Array.from({ length: maxMinute + 1 }, (_, i) => (
                     <div key={i} className={styles.lineHitArea} aria-hidden="true">
                         <motion.div
                             className={styles.line}
@@ -148,14 +148,38 @@ export default function TimeSlider({ minute, onChange, variant = "" }) {
                 ))}
 
                 <span className={styles.label} style={{ left: "0%", transform: "translateX(0)" }} aria-hidden="true">0</span>
-                <span className={styles.label} style={{ left: "50%", transform: "translateX(-50%)" }} aria-hidden="true">45</span>
-                <span className={styles.label} style={{ left: "100%", transform: "translateX(-100%)" }} aria-hidden="true">90</span>
+                <span
+                    className={styles.label}
+                    style={{ left: `${(45 / maxMinute) * 100}%`, transform: "translateX(-50%)" }}
+                    aria-hidden="true"
+                >
+                    45
+                </span>
+                <span
+                    className={styles.label}
+                    style={{
+                        left: `${(Math.min(REGULATION_MAX, maxMinute) / maxMinute) * 100}%`,
+                        transform: "translateX(-50%)",
+                    }}
+                    aria-hidden="true"
+                >
+                    90
+                </span>
+                {/* {maxMinute > REGULATION_MAX && (
+                    <span
+                        className={styles.label}
+                        style={{ left: "100%", transform: "translateX(-100%)" }}
+                        aria-hidden="true"
+                    >
+                        {maxMinute}
+                    </span>
+                )} */}
 
                 <span
                     className={styles.selectedLabel}
                     aria-hidden="true"
                     style={{
-                        left: `${(minute / MAX_MINUTE) * 100}%`,
+                        left: `${(minute / maxMinute) * 100}%`,
                         transform: "translateX(-50%)",
                     }}
                 >
