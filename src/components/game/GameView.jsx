@@ -221,6 +221,7 @@ export default function GameView({ matchId, headerData, gameData = [] }) {
                         eventType={selectedEventType}
                         minute={heatMapMinute}
                         flipX={flipHeatmapX}
+                        interactive={threeDeeView}
                       />
                     </motion.div>
                   </motion.div>

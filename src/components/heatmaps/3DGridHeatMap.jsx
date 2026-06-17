@@ -1,5 +1,5 @@
-import { useMemo, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useMemo, useRef, useEffect } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import useGridHeatmapData from "@/utils/useGridHeatMapData";
@@ -288,6 +288,16 @@ function TerrainMesh({ gridCounts, gridSize, maxCount }) {
   );
 }
 
+function CanvasPointerGate({ interactive }) {
+  const gl = useThree((state) => state.gl);
+
+  useEffect(() => {
+    gl.domElement.style.pointerEvents = interactive ? "auto" : "none";
+  }, [gl, interactive]);
+
+  return null;
+}
+
 export default function ThreeDGridHeatMap({
   gameData,
   team,
@@ -295,6 +305,7 @@ export default function ThreeDGridHeatMap({
   eventType,
   minute = 90,
   flipX = true,
+  interactive = false,
 }) {
   const { gridCounts, gridSize, maxCount } = useGridHeatmapData(gameData, {
     team,
@@ -304,12 +315,21 @@ export default function ThreeDGridHeatMap({
   });
 
   return (
-    <div style={{ width: "100%", height: "100%", minHeight: 300 }}>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        minHeight: 300,
+        pointerEvents: interactive ? "auto" : "none",
+      }}
+    >
       <Canvas
         camera={{ position: [60, 50, -152], fov: 45 }}
         gl={{ antialias: true }}
         fog={new THREE.Fog(0x0e1118, 40, 220)}
+        style={{ pointerEvents: interactive ? "auto" : "none" }}
       >
+        <CanvasPointerGate interactive={interactive} />
         <ambientLight intensity={0.15} />
         <OrbitControls
           target={[60, 0, -40]}
@@ -319,6 +339,7 @@ export default function ThreeDGridHeatMap({
           minPolarAngle={Math.PI / 3}
           minAzimuthAngle={-Math.PI / 6}
           maxAzimuthAngle={Math.PI / 6}
+          enableZoom={false}
         />
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[60, PITCH_OFFSET, -40]}>
           <planeGeometry args={[PITCH_WIDTH, PITCH_HEIGHT]} />

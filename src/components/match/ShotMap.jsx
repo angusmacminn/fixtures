@@ -16,20 +16,28 @@ export default function ShotMap({
 
   // All shots for the selected team, computed once
   const shots = useMemo(() => {
-    const rawShots = gameData.filter((event) => event.type?.name === "Shot");
+    const rawShots = gameData.filter(
+      (event) =>
+        event.type?.name === "Shot" ||
+        (event.type?.name === "Own Goal Against" && event.location),
+    );
     const teamFiltered = !team
       ? rawShots
       : rawShots.filter((shot) => shot.team?.name === team);
 
-    return teamFiltered.map((shot) => ({
-      id: shot.id,
-      player: shot.player?.name,
-      team: shot.team?.name,
-      location: shot.location,
-      outcome: shot.shot?.outcome?.name,
-      xg: shot.shot?.statsbomb_xg || 0,
-      minute: shot.minute,
-    }));
+    return teamFiltered.map((shot) => {
+      const isOwnGoal = shot.type?.name === "Own Goal Against";
+
+      return {
+        id: shot.id,
+        player: shot.player?.name,
+        team: shot.team?.name,
+        location: shot.location,
+        outcome: isOwnGoal ? "Own Goal" : shot.shot?.outcome?.name,
+        xg: shot.shot?.statsbomb_xg || 0,
+        minute: shot.minute,
+      };
+    });
   }, [gameData, team]);
   // normalize function for shot position
   const normalizePosition = (shot) => {
@@ -133,7 +141,7 @@ export default function ShotMap({
             {shots.map((shot) => {
               const pos = normalizePosition(shot);
               const isHovered = hoveredShot?.id === shot.id;
-              const isGoal = shot.outcome === "Goal";
+              const isGoal = shot.outcome === "Goal" || shot.outcome === "Own Goal";
               const visible = shot.minute <= minute;
               const size = 4 + shot.xg * 8;
 
