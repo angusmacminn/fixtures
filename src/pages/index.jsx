@@ -2,6 +2,8 @@ import Head from "next/head";
 import styles from "@/styles/Home.module.scss";
 import Link from "next/link";
 import matchInfo from "@/data/15-16-PLFixtures.json";
+import HeroHeatMap from "@/components/HeroHeatMap";
+
 
 export default function Home() {
   const matches = [...matchInfo].sort(
@@ -30,6 +32,23 @@ export default function Home() {
               
             </div>
           </nav>
+
+          <section className={styles.heroCard}>
+            <div className={styles.heroContent}>
+              <h1 className={styles.heroTitle}>Fixtures 15/16</h1>
+              <div className={styles.heroHeatMap}>
+                <HeroHeatMap />
+              </div>
+            </div>
+            <div className={styles.heroText}>
+              <p className={styles.heroSubtitle}>
+              Premier League fixtures, match stats, and data from the 2015-2016 season. Open a match to view stats, shot maps, and heatmaps.
+              </p>
+              <p className={styles.heroSubtitle}>
+              Created by Angus MacMinn, Data sourced via SportsBomb
+              </p>
+            </div>
+          </section>
 
   
           <section className={styles.gameList}>

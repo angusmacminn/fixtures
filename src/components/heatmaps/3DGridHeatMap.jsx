@@ -298,6 +298,88 @@ function CanvasPointerGate({ interactive }) {
   return null;
 }
 
+const ORBIT_TARGET = [60, 0, -40];
+
+function SceneControls({ camera: cameraPreset }) {
+  const controlsRef = useRef();
+  const initialized = useRef(false);
+  const { camera } = useThree();
+  const target = useMemo(() => new THREE.Vector3(...ORBIT_TARGET), []);
+
+  useEffect(() => {
+    initialized.current = false;
+  }, [cameraPreset]);
+
+  useFrame(() => {
+    if (initialized.current) return;
+
+    const controls = controlsRef.current;
+    if (!controls) return;
+
+    const spherical = new THREE.Spherical(
+      cameraPreset.distance,
+      cameraPreset.phi,
+      cameraPreset.theta
+    );
+    const offset = new THREE.Vector3().setFromSpherical(spherical);
+
+    camera.position.copy(target).add(offset);
+    camera.fov = cameraPreset.fov;
+    camera.updateProjectionMatrix();
+
+    controls.target.copy(target);
+    controls.minDistance = cameraPreset.minDistance;
+    controls.maxDistance = cameraPreset.maxDistance;
+    controls.update();
+
+    initialized.current = true;
+  });
+
+  return (
+    <OrbitControls
+      ref={controlsRef}
+      target={ORBIT_TARGET}
+      minDistance={cameraPreset.minDistance}
+      maxDistance={cameraPreset.maxDistance}
+      maxPolarAngle={Math.PI / 2.2}
+      minPolarAngle={Math.PI / 3}
+      minAzimuthAngle={-Math.PI / 6}
+      maxAzimuthAngle={Math.PI / 6}
+      enableZoom={false}
+    />
+  );
+}
+
+const CAMERA_PRESETS = {
+  default: {
+    distance: 121,
+    phi: 1.146,
+    theta: Math.PI,
+    fov: 45,
+    minDistance: 70,
+    maxDistance: 150,
+    minHeight: 300,
+  },
+  hero: {
+    distance: 250,
+    phi: 1.146,
+    theta: Math.PI,
+    fov: 42,
+    minDistance: 72,
+    maxDistance: 320,
+    minHeight: 0,
+  },
+  heroMobile: {
+    distance: 72,
+    phi: 0.955,
+    theta: Math.PI,
+    fov: 60,
+    minDistance: 40,
+    maxDistance: 120,
+    minHeight: 0,
+  },
+};
+
 export default function ThreeDGridHeatMap({
   gameData,
   team,
@@ -306,6 +388,7 @@ export default function ThreeDGridHeatMap({
   minute = 90,
   flipX = true,
   interactive = false,
+  variant = "default",
 }) {
   const { gridCounts, gridSize, maxCount } = useGridHeatmapData(gameData, {
     team,
@@ -314,33 +397,30 @@ export default function ThreeDGridHeatMap({
     flipX,
   });
 
+  const camera = CAMERA_PRESETS[variant] ?? CAMERA_PRESETS.default;
+
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
-        minHeight: 300,
+        minHeight: camera.minHeight,
         pointerEvents: interactive ? "auto" : "none",
       }}
     >
       <Canvas
-        camera={{ position: [60, 50, -152], fov: 45 }}
+        camera={{ fov: camera.fov }}
         gl={{ antialias: true }}
         fog={new THREE.Fog(0x0e1118, 40, 220)}
-        style={{ pointerEvents: interactive ? "auto" : "none" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          pointerEvents: interactive ? "auto" : "none",
+        }}
       >
         <CanvasPointerGate interactive={interactive} />
         <ambientLight intensity={0.15} />
-        <OrbitControls
-          target={[60, 0, -40]}
-          minDistance={70}
-          maxDistance={150}
-          maxPolarAngle={Math.PI / 2.2}
-          minPolarAngle={Math.PI / 3}
-          minAzimuthAngle={-Math.PI / 6}
-          maxAzimuthAngle={Math.PI / 6}
-          enableZoom={false}
-        />
+        <SceneControls camera={camera} />
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[60, PITCH_OFFSET, -40]}>
           <planeGeometry args={[PITCH_WIDTH, PITCH_HEIGHT]} />
           <meshBasicMaterial

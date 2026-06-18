@@ -45,6 +45,56 @@ $spacing-unit: 1rem;
   --col-gap: 1.5rem;
 }
 
+.heroCard h1 {
+  font-size: clamp(2rem, 8vw, 4rem);
+}
+
+.heroContent {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.heroHeatMap {
+  width: 100%;
+  min-width: 0;
+  min-height: 220px;
+  aspect-ratio: 3 / 2;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+@media (max-width: 700px) {
+  .homeMain {
+    padding: 1rem;
+  }
+
+  .heroCard {
+    padding: 1rem;
+  }
+
+  .heroContent {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .heroHeatMap {
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    order: 2;
+  }
+
+  .heroTitle {
+    order: 1;
+  }
+}
+
 .workspace {
   display: flex;
   flex-direction: column;
@@ -128,7 +178,7 @@ $spacing-unit: 1rem;
   gap: 1rem;
   margin: 1rem;
   padding: 1rem 0.5rem 2rem;
-  
+
   max-width: $container-max-width;
   background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
@@ -153,7 +203,7 @@ $spacing-unit: 1rem;
 .homeMain {
   min-height: 100vh;
   padding: 1.5rem;
-  max-width: 700px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
