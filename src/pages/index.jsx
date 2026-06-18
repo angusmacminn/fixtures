@@ -3,6 +3,7 @@ import styles from "@/styles/Home.module.scss";
 import Link from "next/link";
 import matchInfo from "@/data/15-16-PLFixtures.json";
 import HeroHeatMap from "@/components/HeroHeatMap";
+import RandomGameButton from "@/components/RandomGameButton";
 
 
 export default function Home() {
@@ -44,6 +45,7 @@ export default function Home() {
               <p className={styles.heroSubtitle}>
               Premier League fixtures, match stats, and data from the 2015-2016 season. Open a match to view stats, shot maps, and heatmaps.
               </p>
+              <RandomGameButton matches={matches} />
               <p className={styles.heroSubtitle}>
               Created by Angus MacMinn, Data sourced via SportsBomb
               </p>

@@ -268,6 +268,27 @@ $spacing-unit: 1rem;
   line-height: 1.5;
 }
 
+.heroButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 0.65rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(112, 224, 0, 0.35);
+  background: var(--color-accent-muted);
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: rgba(112, 224, 0, 0.7);
+    transform: translateY(-1px);
+  }
+}
+
 .gameList {
   display: grid;
   grid-template-columns: 1fr;

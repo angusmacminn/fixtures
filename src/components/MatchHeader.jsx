@@ -1,6 +1,7 @@
 import styles from "@/styles/MatchHeader.module.scss";
 import { motion } from "motion/react";
 import { getTeamAcronym } from "@/data/teamAcronyms";
+import { getGoalsFromEvents } from "@/utils/getGoalEvents";
 import { useMemo } from "react";
 
 function formatMatchDate(dateStr) {
@@ -13,11 +14,6 @@ function formatMatchDate(dateStr) {
     });
 }
 
-function getLastName(fullName) {
-    if (!fullName) return "";
-    const parts = String(fullName).trim().split(/\s+/);
-    return parts[parts.length - 1] ?? "";
-}
 
 export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
     const homeTeamName = matchData.home_team.home_team_name;
@@ -32,23 +28,11 @@ export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
     const awayAcronym = getTeamAcronym(awayTeamName);
 
     const { homeScorers, awayScorers } = useMemo(() => {
-        const goalShots = (gameData || []).filter(
-            (e) => e.type?.name === "Shot" && e.shot?.outcome?.name === "Goal"
-        );
-
-        const mapped = goalShots
-            .map((e) => ({
-                key: e.id ?? `${e.team?.name ?? "team"}-${e.minute ?? 0}-${e.second ?? 0}`,
-                team: e.team?.name,
-                minute: e.minute ?? 0,
-                second: e.second ?? 0,
-                lastName: getLastName(e.player?.name),
-            }))
-            .sort((a, b) => (a.minute - b.minute) || (a.second - b.second));
+        const goals = getGoalsFromEvents(gameData);
 
         return {
-            homeScorers: mapped.filter((g) => g.team === homeTeamName),
-            awayScorers: mapped.filter((g) => g.team === awayTeamName),
+            homeScorers: goals.filter((g) => g.team === homeTeamName),
+            awayScorers: goals.filter((g) => g.team === awayTeamName),
         };
     }, [gameData, homeTeamName, awayTeamName]);
 
@@ -85,7 +69,10 @@ export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
                             {homeScorers.map((s) => (
                                 <div key={s.key} className={styles.scorerRow}>
                                     <span className={styles.scorerDot} />
-                                    <span className={styles.scorerName}>{s.lastName}</span>
+                                    <span className={styles.scorerName}>
+                                        {s.lastName}
+                                        {s.isOwnGoal ? " (OG)" : ""}
+                                    </span>
                                     <span className={styles.scorerMinute}>{s.minute}'</span>
                                 </div>
                             ))}
@@ -97,7 +84,10 @@ export default function MatchHeader({ matchData, gameData = [], isDesktop }) {
                             {awayScorers.map((s) => (
                                 <div key={s.key} className={styles.scorerRow}>
                                     <span className={styles.scorerDot} />
-                                    <span className={styles.scorerName}>{s.lastName}</span>
+                                    <span className={styles.scorerName}>
+                                        {s.lastName}
+                                        {s.isOwnGoal ? " (OG)" : ""}
+                                    </span>
                                     <span className={styles.scorerMinute}>{s.minute}'</span>
                                 </div>
                             ))}
