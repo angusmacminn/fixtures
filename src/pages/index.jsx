@@ -98,12 +98,21 @@ export default function Home() {
                           {match.stadium?.name?.trim() ?? ""}
                         </span>
                       </div>
-                      <span className={styles.gameCardAction}>
-                        Open Match
-                        <span className={styles.gameCardArrow} aria-hidden="true">
-                          →
-                        </span>
-                      </span>
+                      <svg
+                        className={styles.gameCardArrow}
+                        aria-hidden="true"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.75"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 12h12" />
+                        <path d="m13 7 5 5-5 5" />
+                      </svg>
                     </Link>
                   ))}
                 </div>

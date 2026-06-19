@@ -367,12 +367,10 @@ $spacing-unit: 1rem;
     opacity: 1;
   }
 
-  &:hover .gameCardAction {
-    color: var(--color-text-primary);
-  }
-
   &:hover .gameCardArrow {
+    opacity: 1;
     transform: translateX(2px);
+    color: var(--color-text-primary);
   }
 }
 
@@ -404,20 +402,17 @@ $spacing-unit: 1rem;
   font-size: 0.95rem;
 }
 
-.gameCardAction {
-  align-self: flex-end;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  margin-top: auto;
-  font-size: 0.9rem;
-  // font-weight: 600;
-  color: var(--color-text-secondary);
-}
-
 .gameCardArrow {
-  display: inline-block;
-  transition: transform 0.2s ease;
+  align-self: flex-end;
+  margin-top: auto;
+  display: block;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  color: var(--color-text-secondary);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
 }
 
 
