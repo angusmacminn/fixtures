@@ -45,10 +45,12 @@ export default function Home() {
               <p className={styles.heroSubtitle}>
               Premier League fixtures, match stats, and data from the 2015-2016 season. Open a match to view stats, shot maps, and heatmaps.
               </p>
-              <RandomGameButton matches={matches} />
-              <p className={styles.heroSubtitle}>
-              Created by Angus MacMinn, Data sourced via SportsBomb
-              </p>
+              <div className={styles.heroFooter}>
+                  <p className={styles.heroSubtitle}>
+                  Created by Angus MacMinn, Data sourced via SportsBomb
+                  </p>
+                  <RandomGameButton matches={matches} />
+              </div>
             </div>
           </section>
 

@@ -70,6 +70,12 @@ $spacing-unit: 1rem;
   padding-top: 1rem;
 }
 
+
+.heroFooter {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media (max-width: 700px) {
   .homeMain {
     padding: 1rem;
@@ -93,6 +99,8 @@ $spacing-unit: 1rem;
   .heroTitle {
     order: 1;
   }
+
+  
 }
 
 .workspace {
