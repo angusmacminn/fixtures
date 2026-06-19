@@ -158,8 +158,7 @@ function TerrainMesh({ gridCounts, gridSize, maxCount }) {
     const colors = new Float32Array(vertexCount * 3);
     const indices = [];
 
-    // Build explicit world-space coordinates so X/Z mapping matches SVG 1:1:
-    // x: [0..120], z: [0..-80]
+    // Pitch coordinates match the 2D SVG: x [0..120], z [0..-80].
     let ptr = 0;
     for (let vz = 0; vz < vertsZ; vz++) {
       const z = -(vz / segZ) * PITCH_HEIGHT;
@@ -198,8 +197,8 @@ function TerrainMesh({ gridCounts, gridSize, maxCount }) {
     for (let i = 0; i < count; i++) {
       const x = pos.getX(i);
       const z = pos.getZ(i);
-      const gc = (PITCH_WIDTH - x) / gridSize - 0.5;
-      const gr = -z / gridSize - 0.5;
+      const gc = x / gridSize - 0.5;
+      const gr = (PITCH_HEIGHT + z) / gridSize - 0.5;
 
       const raw = bilinearSample(gridCounts, gr, gc);
       const normalized = maxCount > 0 ? raw / maxCount : 0;
@@ -288,6 +287,8 @@ function TerrainMesh({ gridCounts, gridSize, maxCount }) {
   );
 }
 
+const ORBIT_TARGET = [60, 0, -40];
+
 function CanvasPointerGate({ interactive }) {
   const gl = useThree((state) => state.gl);
 
@@ -297,8 +298,6 @@ function CanvasPointerGate({ interactive }) {
 
   return null;
 }
-
-const ORBIT_TARGET = [60, 0, -40];
 
 function SceneControls({ camera: cameraPreset }) {
   const controlsRef = useRef();
@@ -354,7 +353,7 @@ const CAMERA_PRESETS = {
   default: {
     distance: 121,
     phi: 1.146,
-    theta: Math.PI,
+    theta: 0,
     fov: 45,
     minDistance: 70,
     maxDistance: 150,
@@ -363,7 +362,7 @@ const CAMERA_PRESETS = {
   hero: {
     distance: 320,
     phi: 1.146,
-    theta: Math.PI,
+    theta: 0,
     fov: 22,
     minDistance: 72,
     maxDistance: 320,
@@ -372,7 +371,7 @@ const CAMERA_PRESETS = {
   heroMobile: {
     distance: 72,
     phi: 0.955,
-    theta: Math.PI,
+    theta: 0,
     fov: 60,
     minDistance: 40,
     maxDistance: 120,
@@ -386,7 +385,7 @@ export default function ThreeDGridHeatMap({
   color,
   eventType,
   minute = 90,
-  flipX = true,
+  flipX = false,
   interactive = false,
   variant = "default",
 }) {

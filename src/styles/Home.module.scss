@@ -78,6 +78,15 @@ $spacing-unit: 1rem;
   padding-top: 1rem;
 }
 
+.heroLink {
+  color: var(--color-text-primary);
+  
+  
+  &:hover {
+    color: var(--color-text-secondary);
+  }
+}
+
 
 .heroFooter {
   display: flex;
@@ -104,6 +113,13 @@ $spacing-unit: 1rem;
     order: 1;
   }
 
+  .heroFooter {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  
   
 }
 

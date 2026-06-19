@@ -66,7 +66,9 @@ export default function Home() {
               </p>
               <div className={styles.heroFooter}>
                   <p className={styles.heroSubtitle}>
-                  Created by Angus MacMinn, Data sourced via SportsBomb
+                  Created by  
+                  <Link className={styles.heroLink} href="https://www.angusmacminn.com" target="_blank"> Angus MacMinn</Link>,
+                   data sourced via <Link className={styles.heroLink} href="https://github.com/statsbomb/open-data" target="_blank">SportsBomb Open Data</Link>
                   </p>
                   <RandomGameButton matches={matches} />
               </div>
