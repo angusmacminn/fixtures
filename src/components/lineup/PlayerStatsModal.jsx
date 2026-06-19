@@ -57,7 +57,7 @@ export default function PlayerStatsModal({ open, onClose, player, teamName, game
                 <header className={styles.header}>
                     <span className={styles.jersey}>#{player?.jerseyNumber ?? "—"}</span>
                     <h2 id="player-modal-title" className={styles.title}>
-                        {player?.playerName ?? player?.lastName ?? "Player"}
+                        {player?.nickname ?? player?.playerName ?? player?.lastName ?? "Player"}
                     </h2>
                     <p className={styles.team}>{teamName}</p>
                 </header>

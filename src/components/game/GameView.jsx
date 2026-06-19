@@ -16,7 +16,7 @@ import TimeSlider from "@/components/TimeSlider";
 import TabNavigation from "@/components/TabNavigation";
 import TeamSelector from "@/components/TeamSelector";
 
-export default function GameView({ matchId, headerData, gameData = [] }) {
+export default function GameView({ matchId, headerData, gameData = [], playerNicknames = {} }) {
   const events = Array.isArray(gameData) ? gameData : [];
   const hasEvents = events.length > 0;
   const maxMinute = useMemo(() => getMaxMatchMinute(events), [events]);
@@ -247,6 +247,7 @@ export default function GameView({ matchId, headerData, gameData = [] }) {
                     gameData={events}
                     homeTeamName={homeTeam}
                     awayTeamName={awayTeam}
+                    playerNicknames={playerNicknames}
                   />
                 ) : (
                   <p>No event data for this match.</p>

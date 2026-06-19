@@ -4,12 +4,14 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import matchInfo from "@/data/15-16-PLFixtures.json";
 import GameView from "@/components/game/GameView";
+import GameViewSkeleton from "@/components/skeleton/GameViewSkeleton";
 
 export default function GamePage() {
   const router = useRouter();
   const { matchId } = router.query;
 
   const [gameData, setGameData] = useState(null);
+  const [playerNicknames, setPlayerNicknames] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,14 +29,23 @@ export default function GamePage() {
         if (!res.ok) throw new Error("Failed to load match");
         return res.json();
       })
-      .then(setGameData)
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setGameData(data);
+          setPlayerNicknames({});
+          return;
+        }
+        setGameData(data.events ?? []);
+        setPlayerNicknames(data.playerNicknames ?? {});
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, [matchId]);
 
-  if (!router.isReady) return <div>Loading…</div>;
+  if (!router.isReady || loading) {
+    return <GameViewSkeleton headerData={headerData} />;
+  }
   if (!headerData) return <div>Match not found in fixtures list</div>;
-  if (loading) return <div>Loading match data…</div>;
   if (error) return <div>Error: {error}</div>;
   if (!gameData) return <div>No match data</div>;
 
@@ -44,6 +55,7 @@ export default function GamePage() {
       matchId={id}
       headerData={headerData}
       gameData={gameData ?? []}
+      playerNicknames={playerNicknames}
     />
   );
 }

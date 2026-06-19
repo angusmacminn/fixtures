@@ -1,5 +1,9 @@
 const STATSBOMB_EVENTS_URL =
   "https://cdn.jsdelivr.net/gh/statsbomb/open-data@master/data/events";
+const STATSBOMB_LINEUPS_URL =
+  "https://cdn.jsdelivr.net/gh/statsbomb/open-data@master/data/lineups";
+
+import buildPlayerNicknameMap from "@/utils/buildPlayerNicknameMap";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -14,21 +18,28 @@ export default async function handler(req, res) {
   }
 
   try {
-    const url = `${STATSBOMB_EVENTS_URL}/${id}.json`;
-    const response = await fetch(url);
+    const [eventsResponse, lineupsResponse] = await Promise.all([
+      fetch(`${STATSBOMB_EVENTS_URL}/${id}.json`),
+      fetch(`${STATSBOMB_LINEUPS_URL}/${id}.json`),
+    ]);
 
-    if (response.status === 404) {
+    if (eventsResponse.status === 404) {
       return res.status(404).json({ message: "Match events not found" });
     }
-    if (!response.ok) {
-      throw new Error(`StatsBomb fetch failed: ${response.status}`);
+    if (!eventsResponse.ok) {
+      throw new Error(`StatsBomb events fetch failed: ${eventsResponse.status}`);
     }
 
-    const events = await response.json();
+    const events = await eventsResponse.json();
+    let playerNicknames = {};
 
-    // Optional later: trim here before sending to client
+    if (lineupsResponse.ok) {
+      const lineups = await lineupsResponse.json();
+      playerNicknames = buildPlayerNicknameMap(lineups);
+    }
+
     res.setHeader("Cache-Control", "s-maxage=86400, stale-while-revalidate");
-    return res.status(200).json(events);
+    return res.status(200).json({ events, playerNicknames });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Failed to load match data" });

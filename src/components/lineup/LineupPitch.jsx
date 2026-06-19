@@ -2,6 +2,7 @@ import { useId, useState } from "react";
 import useLineupData from "@/utils/useLineupData";
 import useMediaQuery from "@/utils/useMediaQuery";
 import { getMatchColors } from "@/data/teamColours";
+import { getMarkerStyles } from "@/utils/getContrastTextColor";
 import PlayerStatsModal from "@/components/lineup/PlayerStatsModal";
 import styles from "@/styles/LineupPitch.module.scss";
 
@@ -153,6 +154,7 @@ function PlayerMarkers({
     lastNameClass,
 }) {
     const map = side === "home" ? layout.mapHome : layout.mapAway;
+    const markerStyles = getMarkerStyles(fill);
 
     return (
         <g aria-label={`${teamName} lineup`}>
@@ -174,14 +176,17 @@ function PlayerMarkers({
                         <circle
                             r={4.2}
                             fill={fill}
-                            stroke="rgba(255,255,255,0.4)"
+                            stroke={markerStyles.circleStroke}
                             strokeWidth="0.35"
                         />
                         <text
                             textAnchor="middle"
                             dy="0.35em"
                             className={jerseyClass}
-                            fill="#fff"
+                            fill={markerStyles.textColor}
+                            stroke={markerStyles.numberStroke}
+                            strokeWidth={markerStyles.numberStrokeWidth}
+                            paintOrder="stroke"
                         >
                             {player.jerseyNumber}
                         </text>
@@ -195,12 +200,12 @@ function PlayerMarkers({
     );
 }
 
-export default function LineupPitch({ gameData, homeTeamName, awayTeamName }) {
+export default function LineupPitch({ gameData, homeTeamName, awayTeamName, playerNicknames = {} }) {
     const uid = useId();
     const isDesktop = useMediaQuery(DESKTOP_QUERY);
     const layout = isDesktop ? HORIZONTAL : VERTICAL;
     const [selectedPlayer, setSelectedPlayer] = useState(null);
-    const { home, away } = useLineupData(gameData, homeTeamName, awayTeamName);
+    const { home, away } = useLineupData(gameData, homeTeamName, awayTeamName, playerNicknames);
     const colors = getMatchColors(homeTeamName, awayTeamName);
 
     const patternId = `lineupGrid-${uid}`;

@@ -1,9 +1,13 @@
 import { useMemo } from 'react';
+import getPlayerShortName from '@/utils/getPlayerShortName';
 
-function getLastName(fullName) {
-    if (!fullName) return '';
-    const parts = String(fullName).trim().split(/\s+/);
-    return parts[parts.length - 1] ?? '';
+function resolveNickname(player, playerNicknames) {
+    if (!player || !playerNicknames) return null;
+    return (
+        playerNicknames[player.id] ??
+        playerNicknames[player.name] ??
+        null
+    );
 }
 
 /**
@@ -72,7 +76,7 @@ function placePlayers(lineup) {
  * Expects two "Starting XI" events (one per team) with tactics.lineup.
  * @returns { home: { teamName, formation, players }, away: { ... } }
  */
-export default function useLineupData(gameData, homeTeamName, awayTeamName) {
+export default function useLineupData(gameData, homeTeamName, awayTeamName, playerNicknames = {}) {
     return useMemo(() => {
         const events = Array.isArray(gameData) ? gameData : [];
         const startingXIs = events.filter((e) => e.type?.name === 'Starting XI');
@@ -89,13 +93,20 @@ export default function useLineupData(gameData, homeTeamName, awayTeamName) {
                     jersey_number: entry.jersey_number,
                 }))
             );
-            const players = placed.map((p) => ({
-                playerName: p.player?.name,
-                lastName: getLastName(p.player?.name),
-                jerseyNumber: String(p.jersey_number ?? ''),
-                x: p.x,
-                y: p.y,
-            }));
+            const players = placed.map((p) => {
+                const playerName = p.player?.name;
+                const nickname = resolveNickname(p.player, playerNicknames);
+                const shortName = getPlayerShortName(playerName, nickname);
+
+                return {
+                    playerName,
+                    nickname,
+                    lastName: shortName,
+                    jerseyNumber: String(p.jersey_number ?? ''),
+                    x: p.x,
+                    y: p.y,
+                };
+            });
             return {
                 teamName: event.team?.name,
                 formation,
@@ -107,7 +118,7 @@ export default function useLineupData(gameData, homeTeamName, awayTeamName) {
             home: homeEvent ? buildLineup(homeEvent) : { teamName: homeTeamName, formation: null, players: [] },
             away: awayEvent ? buildLineup(awayEvent) : { teamName: awayTeamName, formation: null, players: [] },
         };
-    }, [gameData, homeTeamName, awayTeamName]);
+    }, [gameData, homeTeamName, awayTeamName, playerNicknames]);
 }
 
 export { placePlayers, POSITION_COORDINATES };

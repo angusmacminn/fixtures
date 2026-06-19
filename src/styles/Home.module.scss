@@ -247,14 +247,14 @@ $spacing-unit: 1rem;
 
 .heroCard {
   padding: 1.2rem;
-  border: 1px solid var(--color-border);
-  background: linear-gradient(
-      120deg,
-      rgba(112, 224, 0, 0.08),
-      rgba(112, 224, 0, 0.02) 40%,
-      transparent 80%
-    ),
-    var(--color-bg-elevated);
+  // border: 1px solid var(--color-border);
+  // background: linear-gradient(
+  //     120deg,
+  //     rgba(112, 224, 0, 0.08),
+  //     rgba(112, 224, 0, 0.02) 40%,
+  //     transparent 80%
+  //   ),
+  //   var(--color-bg-elevated);
   border-radius: 10px;
   text-align: left;
 }
@@ -332,29 +332,29 @@ $spacing-unit: 1rem;
 
 .gameCard {
   padding: 1rem;
-  border: 1px solid var(--color-border);
-  border-radius: 10px;
-  background:
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, var(--color-heat-25) 16%, transparent) 0%,
-      transparent 42%,
-      color-mix(in srgb, var(--color-heat-75) 12%, transparent) 100%
-    ),
-    radial-gradient(
-      ellipse 85% 65% at 100% 0%,
-      color-mix(in srgb, var(--color-heat-50) 10%, transparent),
-      transparent 58%
-    ),
-    radial-gradient(
-      ellipse 70% 50% at 0% 100%,
-      color-mix(in srgb, var(--color-heat-0) 18%, transparent),
-      transparent 50%
-    ),
-    var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+  // border-radius: 10px;
+  // background:
+  //   linear-gradient(
+  //     145deg,
+  //     color-mix(in srgb, var(--color-heat-25) 16%, transparent) 0%,
+  //     transparent 42%,
+  //     color-mix(in srgb, var(--color-heat-75) 12%, transparent) 100%
+  //   ),
+  //   radial-gradient(
+  //     ellipse 85% 65% at 100% 0%,
+  //     color-mix(in srgb, var(--color-heat-50) 10%, transparent),
+  //     transparent 58%
+  //   ),
+  //   radial-gradient(
+  //     ellipse 70% 50% at 0% 100%,
+  //     color-mix(in srgb, var(--color-heat-0) 18%, transparent),
+  //     transparent 50%
+  //   ),
+  //   var(--color-bg-elevated);
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 2rem;
   min-height: 9rem;
   text-decoration: none;
   color: inherit;
@@ -362,7 +362,7 @@ $spacing-unit: 1rem;
   transition: border-color 0.2s ease, transform 0.2s ease;
 
   &:hover {
-    border-color: color-mix(in srgb, var(--color-heat-75) 35%, var(--color-border));
+    border-color: var(--color-accent);
     transform: translateY(-1px);
     opacity: 1;
   }
@@ -379,7 +379,7 @@ $spacing-unit: 1rem;
 .gameMeta {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
   flex: 1;
 }
 

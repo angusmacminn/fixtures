@@ -62,7 +62,7 @@ export default function Home() {
             </div>
             <div className={styles.heroText}>
               <p className={styles.heroSubtitle}>
-              Premier League fixtures, match stats, and data from the 2015-2016 season. Open a match to view stats, shot maps, and heatmaps.
+              A data-driven exploration of the 2015–16 Premier League season. Open a match to view stats, shot maps, and heatmaps.
               </p>
               <div className={styles.heroFooter}>
                   <p className={styles.heroSubtitle}>

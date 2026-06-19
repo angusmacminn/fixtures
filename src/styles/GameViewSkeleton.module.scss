@@ -1,0 +1,68 @@
+.matchHeaderSkeleton {
+  .metaRow {
+    gap: 1rem;
+  }
+
+  .scoreRow {
+    align-items: center;
+  }
+}
+
+.tabNavSkeleton {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.shotMapSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.shotMapHeaderSkeleton {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+}
+
+.shotMapHeaderText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.teamSelectorSkeleton {
+  display: flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.statsSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: var(--color-bg-elevated);
+}
+
+.statsHeaderSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.teamLabelsSkeleton {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+}

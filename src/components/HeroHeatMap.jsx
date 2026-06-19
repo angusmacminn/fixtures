@@ -24,7 +24,13 @@ export default function HeroHeatMap({ matchId = HERO_MATCH_ID }) {
         if (!res.ok) throw new Error("Failed to load");
         return res.json();
       })
-      .then(setGameData)
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setGameData(data);
+          return;
+        }
+        setGameData(data.events ?? []);
+      })
       .catch(() => setGameData([]));
   }, [matchId]);
 
