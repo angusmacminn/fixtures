@@ -52,16 +52,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.homeMain}>
-        <div className={styles.homeShell}>
-          <nav className={styles.homeNav}>
-            <span className={styles.brand}>Fixtures</span>
-            <div className={styles.navLinks}>
-              <span className={styles.activeNav}>Home</span>
-              
-            </div>
-          </nav>
-
+      <main className={styles.homeContent}>
           <section className={styles.heroCard}>
             <div className={styles.heroContent}>
               <h1 className={styles.heroTitle}>Fixtures 15/16</h1>
@@ -113,7 +104,6 @@ export default function Home() {
               </section>
             ))}
           </div>
-        </div>
       </main>
     </>
   );

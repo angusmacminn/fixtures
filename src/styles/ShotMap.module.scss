@@ -38,6 +38,11 @@
     color: var(--color-text-secondary);
 }
 
+.shotMapSubtitle {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
 @media (max-width: 420px) {
 
   .shotMapHeader {

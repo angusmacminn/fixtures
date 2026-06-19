@@ -117,7 +117,7 @@ export default function TimeSlider({ minute, onChange, maxMinute = REGULATION_MA
     return (
         <div className={`${styles.sliderWrapper} ${styles[variant]}`}>
             <div className={styles.timeSliderLabel} id={labelId}>
-                <p>Drag or use arrow keys to adjust minute</p>
+                <p>Drag, click, or use arrow keys to adjust minute</p>
             </div>
             <div
                 ref={trackRef}
@@ -165,15 +165,7 @@ export default function TimeSlider({ minute, onChange, maxMinute = REGULATION_MA
                 >
                     90
                 </span>
-                {/* {maxMinute > REGULATION_MAX && (
-                    <span
-                        className={styles.label}
-                        style={{ left: "100%", transform: "translateX(-100%)" }}
-                        aria-hidden="true"
-                    >
-                        {maxMinute}
-                    </span>
-                )} */}
+                
 
                 <span
                     className={styles.selectedLabel}

@@ -113,6 +113,7 @@ export default function GameView({ matchId, headerData, gameData = [] }) {
             />
           </div>
 
+          <div className={styles.tabContentShell}>
           {activeTab === "match" && (
             <div
               className={`${styles.matchStats} ${
@@ -253,6 +254,7 @@ export default function GameView({ matchId, headerData, gameData = [] }) {
               </div>
             </div>
           )}
+          </div>
         </div>
       </div>
     </section>

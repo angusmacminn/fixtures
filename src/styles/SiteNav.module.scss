@@ -1,0 +1,42 @@
+.siteNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  border-radius: 10px;
+}
+
+.brand {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-text-secondary);
+  }
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.navLink {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-text-primary);
+  }
+}
+
+.activeNav {
+  color: var(--color-text-primary);
+}

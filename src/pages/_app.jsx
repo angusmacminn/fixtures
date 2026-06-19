@@ -1,4 +1,5 @@
 import "@/styles/globals.scss";
+import AppLayout from "@/components/AppLayout";
 import localFont from 'next/font/local'
 
 const helvetica = localFont({
@@ -35,7 +36,9 @@ const helvetica = localFont({
 export default function App({ Component, pageProps }) {
   return (
     <div className={helvetica.className}>
-      <Component {...pageProps} />
+      <AppLayout>
+        <Component {...pageProps} />
+      </AppLayout>
     </div>
   );
 }

@@ -361,10 +361,10 @@ const CAMERA_PRESETS = {
     minHeight: 300,
   },
   hero: {
-    distance: 250,
+    distance: 320,
     phi: 1.146,
     theta: Math.PI,
-    fov: 42,
+    fov: 22,
     minDistance: 72,
     maxDistance: 320,
     minHeight: 0,

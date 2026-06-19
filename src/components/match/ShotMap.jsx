@@ -59,6 +59,9 @@ export default function ShotMap({
         <div className={styles.shotMapHeader}>
           <div className={styles.shotMapTitle}>
             <h2>Attempts</h2>
+            <p className={styles.shotMapSubtitle}>
+              Hover or tap for details
+            </p>
             <div className={styles.shotMapLegend}>
               <div className={styles.legendItem}>
                 <div className={styles.legendColorGoal}></div>

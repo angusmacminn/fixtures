@@ -23,11 +23,19 @@ $spacing-unit: 1rem;
   flex-direction: column;
   min-height: 80vh;
   text-align: center;
-  
+  width: 100%;
+}
+
+.tabContentShell {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .matchStats {
-  margin: 1rem 0.5rem;
+  width: 100%;
+  margin: 1rem 0;
 }
 
 
@@ -77,10 +85,6 @@ $spacing-unit: 1rem;
 }
 
 @media (max-width: 700px) {
-  .homeMain {
-    padding: 1rem;
-  }
-
   .heroCard {
     padding: 1rem;
   }
@@ -113,12 +117,20 @@ $spacing-unit: 1rem;
 }
 
 .tabNavWrap {
-  margin: 0 1rem 0.5rem;
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto 0.5rem;
+  padding: 0 1rem;
 }
 
-.main.desktop .tabNavWrap {
+.stickyHeader {
+  width: 100%;
   max-width: $container-max-width;
-  margin: 0 8rem 0.25rem 8rem;
+  margin: 0 auto;
+}
+
+.matchHeader {
+  width: 100%;
 }
 
 .main.mobile .matchHeader {
@@ -134,7 +146,7 @@ $spacing-unit: 1rem;
   grid-template-columns: 1fr var(--right-w);
   gap: var(--col-gap);
   align-items: start;
-  padding: 0 1rem;
+  padding: 0;
 }
 
 .main.desktop .matchStatsLayout .shotmapComponent {
@@ -184,10 +196,9 @@ $spacing-unit: 1rem;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  margin: 1rem;
+  width: 100%;
+  margin: 1rem 0;
   padding: 1rem 0.5rem 2rem;
-
-  max-width: $container-max-width;
   background-color: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
   border-radius: 10px;
@@ -208,46 +219,10 @@ $spacing-unit: 1rem;
   aspect-ratio: 3 / 2;
 }
 
-.homeMain {
-  min-height: 100vh;
-  padding: 1.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.homeShell {
-  max-width: $container-max-width;
-  margin: 0 auto;
+.homeContent {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-}
-
-.homeNav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 1rem;
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-elevated);
-  border-radius: 10px;
-}
-
-.brand {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-}
-
-.navLinks {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  color: var(--color-text-secondary);
-}
-
-.activeNav {
-  color: var(--color-text-primary);
 }
 
 .heroCard {
