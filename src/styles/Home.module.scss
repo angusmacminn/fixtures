@@ -232,7 +232,11 @@ $spacing-unit: 1rem;
   position: relative;
   width: 100%;
   max-width: 1000px;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 2 / 3;
+
+  @media (min-width: 800px) {
+    aspect-ratio: 3 / 2;
+  }
 }
 
 .homeContent {
