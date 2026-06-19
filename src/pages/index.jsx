@@ -6,11 +6,39 @@ import HeroHeatMap from "@/components/HeroHeatMap";
 import RandomGameButton from "@/components/RandomGameButton";
 
 
+function formatMatchDate(dateStr) {
+  if (!dateStr) return "";
+  return new Date(dateStr).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+function groupMatchesByWeek(matches) {
+  const byWeek = matches.reduce((acc, match) => {
+    const week = match.match_week;
+    if (!acc[week]) acc[week] = [];
+    acc[week].push(match);
+    return acc;
+  }, {});
+
+  return Object.keys(byWeek)
+    .map(Number)
+    .sort((a, b) => a - b)
+    .map((week) => ({
+      week,
+      matches: byWeek[week].sort(
+        (a, b) => new Date(a.match_date) - new Date(b.match_date)
+      ),
+    }));
+}
+
 export default function Home() {
   const matches = [...matchInfo].sort(
     (a, b) => new Date(a.match_date) - new Date(b.match_date)
   );
-
+  const gameweeks = groupMatchesByWeek(matches);
 
   return (
     <>
@@ -54,25 +82,37 @@ export default function Home() {
             </div>
           </section>
 
-  
-          <section className={styles.gameList}>
-      {matches.map((match) => (
-        <article key={match.match_id} className={styles.gameCard}>
-          <div className={styles.gameMeta}>
-            <span className={styles.gameLabel}>
-              GW {match.match_week} · {match.match_date}
-            </span>
-            <h2 className={styles.gameTitle}>
-              {match.home_team.home_team_name} {match.home_score} – {match.away_score}{" "}
-              {match.away_team.away_team_name}
-            </h2>
+          <div className={styles.gameweeksList}>
+            {gameweeks.map(({ week, matches: weekMatches }) => (
+              <section key={week} className={styles.gameweekSection}>
+                <h2 className={styles.gameweekHeader}>Gameweek {week}</h2>
+                <div className={styles.gameList}>
+                  {weekMatches.map((match) => (
+                    <article key={match.match_id} className={styles.gameCard}>
+                      <div className={styles.gameMeta}>
+                        <span className={styles.gameLabel}>
+                          {formatMatchDate(match.match_date)}
+                        </span>
+                        <h3 className={styles.gameTitle}>
+                          {match.home_team.home_team_name} {match.home_score} –{" "}
+                          {match.away_score} {match.away_team.away_team_name}
+                        </h3>
+                        <span className={styles.gameStadium}>
+                          {match.stadium?.name?.trim() ?? ""}
+                        </span>
+                      </div>
+                      <Link
+                        className={styles.gameButton}
+                        href={`/game/${match.match_id}`}
+                      >
+                        Open Match
+                      </Link>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ))}
           </div>
-          <Link className={styles.gameButton} href={`/game/${match.match_id}`}>
-            Open Match
-          </Link>
-        </article>
-      ))}
-    </section>
         </div>
       </main>
     </>
