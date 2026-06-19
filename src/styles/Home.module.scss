@@ -334,16 +334,53 @@ $spacing-unit: 1rem;
   padding: 1rem;
   border: 1px solid var(--color-border);
   border-radius: 10px;
-  background: var(--color-bg-elevated);
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--color-heat-25) 16%, transparent) 0%,
+      transparent 42%,
+      color-mix(in srgb, var(--color-heat-75) 12%, transparent) 100%
+    ),
+    radial-gradient(
+      ellipse 85% 65% at 100% 0%,
+      color-mix(in srgb, var(--color-heat-50) 10%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 0% 100%,
+      color-mix(in srgb, var(--color-heat-0) 18%, transparent),
+      transparent 50%
+    ),
+    var(--color-bg-elevated);
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  min-height: 9rem;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--color-heat-75) 35%, var(--color-border));
+    transform: translateY(-1px);
+    opacity: 1;
+  }
+
+  &:hover .gameCardAction {
+    color: var(--color-text-primary);
+  }
+
+  &:hover .gameCardArrow {
+    transform: translateX(2px);
+  }
 }
 
 .gameMeta {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  flex: 1;
 }
 
 .gameLabel {
@@ -367,23 +404,20 @@ $spacing-unit: 1rem;
   font-size: 0.95rem;
 }
 
-.gameButton {
+.gameCardAction {
+  align-self: flex-end;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 0.55rem 0.85rem;
-  border-radius: 8px;
-  border: 1px solid rgba(112, 224, 0, 0.35);
-  background: var(--color-accent-muted);
-  color: var(--color-text-primary);
+  gap: 0.35rem;
+  margin-top: auto;
   font-size: 0.9rem;
-  white-space: nowrap;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  // font-weight: 600;
+  color: var(--color-text-secondary);
 }
 
-.gameButton:hover {
-  border-color: rgba(112, 224, 0, 0.7);
-  transform: translateY(-1px);
+.gameCardArrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
 }
 
 

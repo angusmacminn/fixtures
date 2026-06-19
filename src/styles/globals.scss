@@ -18,6 +18,14 @@
   // ── Accent ──
   --color-accent:        #70E000;  // primary green highlight
   --color-accent-muted:  rgba(112, 224, 0, 0.12); // subtle green tint for backgrounds
+
+  // ── Heatmap scale (low → high intensity) ──
+  --color-heat-0:   hsl(265, 75%, 8%);   // deep indigo
+  --color-heat-25:  hsl(285, 70%, 25%);  // purple
+  --color-heat-50:  hsl(330, 75%, 38%);  // magenta
+  --color-heat-75:  hsl(25, 90%, 55%);   // orange
+  --color-heat-orange:  hsla(25, 90%, 55%, 0.523);   // orange
+  --color-heat-100: hsl(50, 95%, 75%);   // warm yellow
 }
 
 // ──────────────────────────────────────────────

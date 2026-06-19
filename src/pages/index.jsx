@@ -54,7 +54,7 @@ export default function Home() {
 
       <main className={styles.homeContent}>
           <section className={styles.heroCard}>
-            <div className={styles.heroContent}>
+            <div className={styles.heroContent}> 
               <h1 className={styles.heroTitle}>Fixtures 15/16</h1>
               <div className={styles.heroHeatMap}>
                 <HeroHeatMap />
@@ -81,7 +81,11 @@ export default function Home() {
                 <h2 className={styles.gameweekHeader}>Gameweek {week}</h2>
                 <div className={styles.gameList}>
                   {weekMatches.map((match) => (
-                    <article key={match.match_id} className={styles.gameCard}>
+                    <Link
+                      key={match.match_id}
+                      href={`/game/${match.match_id}`}
+                      className={styles.gameCard}
+                    >
                       <div className={styles.gameMeta}>
                         <span className={styles.gameLabel}>
                           {formatMatchDate(match.match_date)}
@@ -94,13 +98,13 @@ export default function Home() {
                           {match.stadium?.name?.trim() ?? ""}
                         </span>
                       </div>
-                      <Link
-                        className={styles.gameButton}
-                        href={`/game/${match.match_id}`}
-                      >
+                      <span className={styles.gameCardAction}>
                         Open Match
-                      </Link>
-                    </article>
+                        <span className={styles.gameCardArrow} aria-hidden="true">
+                          →
+                        </span>
+                      </span>
+                    </Link>
                   ))}
                 </div>
               </section>

@@ -302,6 +302,8 @@ function CanvasPointerGate({ interactive }) {
 function SceneControls({ camera: cameraPreset }) {
   const controlsRef = useRef();
   const initialized = useRef(false);
+  const userInteracting = useRef(false);
+  const baseAzimuth = useRef(0);
   const { camera } = useThree();
   const target = useMemo(() => new THREE.Vector3(...ORBIT_TARGET), []);
 
@@ -309,29 +311,39 @@ function SceneControls({ camera: cameraPreset }) {
     initialized.current = false;
   }, [cameraPreset]);
 
-  useFrame(() => {
-    if (initialized.current) return;
-
+  useFrame((state) => {
     const controls = controlsRef.current;
     if (!controls) return;
 
-    const spherical = new THREE.Spherical(
-      cameraPreset.distance,
-      cameraPreset.phi,
-      cameraPreset.theta
-    );
-    const offset = new THREE.Vector3().setFromSpherical(spherical);
+    if (!initialized.current) {
+      const spherical = new THREE.Spherical(
+        cameraPreset.distance,
+        cameraPreset.phi,
+        cameraPreset.theta
+      );
+      const offset = new THREE.Vector3().setFromSpherical(spherical);
 
-    camera.position.copy(target).add(offset);
-    camera.fov = cameraPreset.fov;
-    camera.updateProjectionMatrix();
+      camera.position.copy(target).add(offset);
+      camera.fov = cameraPreset.fov;
+      camera.updateProjectionMatrix();
 
-    controls.target.copy(target);
-    controls.minDistance = cameraPreset.minDistance;
-    controls.maxDistance = cameraPreset.maxDistance;
-    controls.update();
+      controls.target.copy(target);
+      controls.minDistance = cameraPreset.minDistance;
+      controls.maxDistance = cameraPreset.maxDistance;
+      controls.update();
 
-    initialized.current = true;
+      baseAzimuth.current = controls.getAzimuthalAngle();
+      initialized.current = true;
+      return;
+    }
+
+    if (cameraPreset.autoRotate && !userInteracting.current) {
+      const speed = cameraPreset.autoRotateSpeed ?? 0.3;
+      const range = cameraPreset.autoRotateRange ?? 0.1;
+      const swing = Math.sin(state.clock.elapsedTime * speed) * range;
+      controls.setAzimuthalAngle(baseAzimuth.current + swing);
+      controls.update();
+    }
   });
 
   return (
@@ -345,6 +357,15 @@ function SceneControls({ camera: cameraPreset }) {
       minAzimuthAngle={-Math.PI / 6}
       maxAzimuthAngle={Math.PI / 6}
       enableZoom={false}
+      onStart={() => {
+        userInteracting.current = true;
+      }}
+      onEnd={() => {
+        userInteracting.current = false;
+        if (controlsRef.current) {
+          baseAzimuth.current = controlsRef.current.getAzimuthalAngle();
+        }
+      }}
     />
   );
 }
@@ -367,6 +388,9 @@ const CAMERA_PRESETS = {
     minDistance: 72,
     maxDistance: 320,
     minHeight: 0,
+    autoRotate: true,
+    autoRotateSpeed: 0.35,
+    autoRotateRange: 0.09,
   },
   heroMobile: {
     distance: 72,
@@ -376,6 +400,9 @@ const CAMERA_PRESETS = {
     minDistance: 40,
     maxDistance: 120,
     minHeight: 0,
+    autoRotate: true,
+    autoRotateSpeed: 0.3,
+    autoRotateRange: 0.07,
   },
 };
 
