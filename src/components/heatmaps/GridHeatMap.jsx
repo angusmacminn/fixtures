@@ -49,16 +49,7 @@ export default function GridHeatMap({ gameData, team, color, eventType, minute =
     
     return (
         <div className={styles.shotMapContainer}>
-            {team && (
-                <div className={styles.attackIndicator}>
-                    <span
-                        className={styles.attackSwatch}
-                        style={{ background:  "#ffffff" }}
-                    />
-                    <span>Attacking</span>
-                    <span className={styles.attackArrow}>→</span>
-                </div>
-            )}
+            
             <svg 
                 viewBox="0 0 120 80"
                 className={styles.pitchSvg}
