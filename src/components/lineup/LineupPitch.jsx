@@ -1,9 +1,11 @@
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import useLineupData from "@/utils/useLineupData";
 import useMediaQuery from "@/utils/useMediaQuery";
+import buildSubstitutesFromLineups from "@/utils/buildSubstitutesFromLineups";
 import { getMatchColors } from "@/data/teamColours";
 import { getMarkerStyles } from "@/utils/getContrastTextColor";
 import PlayerStatsModal from "@/components/lineup/PlayerStatsModal";
+import SubstitutesList from "@/components/lineup/SubstitutesList";
 import styles from "@/styles/LineupPitch.module.scss";
 
 const GRID_SIZE = 4;
@@ -200,12 +202,22 @@ function PlayerMarkers({
     );
 }
 
-export default function LineupPitch({ gameData, homeTeamName, awayTeamName, playerNicknames = {} }) {
+export default function LineupPitch({
+    gameData,
+    homeTeamName,
+    awayTeamName,
+    playerNicknames = {},
+    lineups = [],
+}) {
     const uid = useId();
     const isDesktop = useMediaQuery(DESKTOP_QUERY);
     const layout = isDesktop ? HORIZONTAL : VERTICAL;
     const [selectedPlayer, setSelectedPlayer] = useState(null);
     const { home, away } = useLineupData(gameData, homeTeamName, awayTeamName, playerNicknames);
+    const { home: homeSubstitutes, away: awaySubstitutes } = useMemo(
+        () => buildSubstitutesFromLineups(lineups, homeTeamName, awayTeamName, playerNicknames),
+        [lineups, homeTeamName, awayTeamName, playerNicknames]
+    );
     const colors = getMatchColors(homeTeamName, awayTeamName);
 
     const patternId = `lineupGrid-${uid}`;
@@ -216,11 +228,12 @@ export default function LineupPitch({ gameData, homeTeamName, awayTeamName, play
 
     return (
         <div className={styles.container}>
-            <svg
-                viewBox={`0 0 ${layout.w} ${layout.h}`}
-                className={styles.pitchSvg}
-                preserveAspectRatio="xMidYMid meet"
-            >
+            <div className={styles.pitchWrap}>
+                <svg
+                    viewBox={`0 0 ${layout.w} ${layout.h}`}
+                    className={styles.pitchSvg}
+                    preserveAspectRatio="xMidYMid meet"
+                >
                 <defs>
                     <pattern
                         id={patternId}
@@ -265,6 +278,21 @@ export default function LineupPitch({ gameData, homeTeamName, awayTeamName, play
                 />
             </svg>
 
+                {home.players.length === 0 && away.players.length === 0 && (
+                    <p className={styles.emptyMessage}>No lineup data for this match.</p>
+                )}
+            </div>
+
+            <SubstitutesList
+                homeTeamName={homeTeamName}
+                awayTeamName={awayTeamName}
+                homeSubstitutes={homeSubstitutes}
+                awaySubstitutes={awaySubstitutes}
+                homeColor={colors?.home ?? "#333"}
+                awayColor={colors?.away ?? "#555"}
+                onPlayerClick={handlePlayerClick}
+            />
+
             <PlayerStatsModal
                 open={!!selectedPlayer}
                 onClose={() => setSelectedPlayer(null)}
@@ -273,10 +301,6 @@ export default function LineupPitch({ gameData, homeTeamName, awayTeamName, play
                 gameData={gameData}
                 awayTeamName={awayTeamName}
             />
-
-            {home.players.length === 0 && away.players.length === 0 && (
-                <p className={styles.emptyMessage}>No lineup data for this match.</p>
-            )}
         </div>
     );
 }

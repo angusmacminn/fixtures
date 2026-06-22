@@ -1,6 +1,13 @@
 .container {
     width: 100%;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.pitchWrap {
+    position: relative;
+    width: 100%;
     border-radius: 8px;
     overflow: hidden;
     background: radial-gradient(
@@ -8,7 +15,11 @@
         var(--color-bg-elevated),
         var(--color-bg-primary)
     );
-    position: relative;
+    aspect-ratio: 2 / 3;
+
+    @media (min-width: 800px) {
+        aspect-ratio: 3 / 2;
+    }
 }
 
 .pitchSvg {
@@ -47,4 +58,116 @@
     margin: 0;
     color: var(--color-text-secondary);
     font-size: 0.9rem;
+}
+
+.substitutesSection {
+    width: 100%;
+    text-align: left;
+}
+
+.substitutesTitle {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+}
+
+.substitutesGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+
+    @media (min-width: 700px) {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+}
+
+.substitutesColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+.substitutesHeading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+.substitutesTeamDot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+.substitutesEmpty {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-tertiary);
+}
+
+.substitutesList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.substituteButton {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.45rem 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+
+    &:hover {
+        background: var(--color-bg-surface);
+        border-color: var(--color-border);
+    }
+}
+
+.substituteJersey {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.75rem;
+    height: 1.75rem;
+    padding: 0 0.35rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.substituteName {
+    flex: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-primary);
+}
+
+.substituteMinute {
+    font-size: 0.8rem;
+    color: var(--color-text-tertiary);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
 }

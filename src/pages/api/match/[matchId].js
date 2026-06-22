@@ -32,14 +32,15 @@ export default async function handler(req, res) {
 
     const events = await eventsResponse.json();
     let playerNicknames = {};
+    let lineups = [];
 
     if (lineupsResponse.ok) {
-      const lineups = await lineupsResponse.json();
+      lineups = await lineupsResponse.json();
       playerNicknames = buildPlayerNicknameMap(lineups);
     }
 
     res.setHeader("Cache-Control", "s-maxage=86400, stale-while-revalidate");
-    return res.status(200).json({ events, playerNicknames });
+    return res.status(200).json({ events, playerNicknames, lineups });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Failed to load match data" });

@@ -12,6 +12,7 @@ export default function GamePage() {
 
   const [gameData, setGameData] = useState(null);
   const [playerNicknames, setPlayerNicknames] = useState({});
+  const [lineups, setLineups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -33,10 +34,12 @@ export default function GamePage() {
         if (Array.isArray(data)) {
           setGameData(data);
           setPlayerNicknames({});
+          setLineups([]);
           return;
         }
         setGameData(data.events ?? []);
         setPlayerNicknames(data.playerNicknames ?? {});
+        setLineups(data.lineups ?? []);
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
@@ -56,6 +59,7 @@ export default function GamePage() {
       headerData={headerData}
       gameData={gameData ?? []}
       playerNicknames={playerNicknames}
+      lineups={lineups}
     />
   );
 }
