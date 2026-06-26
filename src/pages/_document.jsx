@@ -6,6 +6,7 @@ export default function Document() {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       <body>
